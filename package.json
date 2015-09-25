@@ -1,9 +1,9 @@
 {
   "name": "@importio/huge-table",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "lib/index.js",
-  "jsnext:main": "lib/index.js",
+  "jsnext:main": "src/index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
