@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "lib/index.js",
-  "jsnext:main": "lib/index.js"
+  "jsnext:main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
