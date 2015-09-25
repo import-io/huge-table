@@ -5,7 +5,7 @@ Table component to handle huge sets of data, based on Facebook's FixedDataTable.
 ## How to use it
 
 ```javascript
-// data and schema should come from the API
+// data and schema examples can be found inside the examples directory.
 
 var mountNode = document.getElementById('table-results');
 
