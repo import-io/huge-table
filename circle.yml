@@ -5,7 +5,7 @@
   test:
     override:
       - npm run lint
-      - npm test
+      - npm test-circle
       - npm run release
   deployment:
     production:
