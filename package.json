@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "lib/index.js",
+  "jsnext:main": "lib/index.js"
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
@@ -13,7 +14,7 @@
     "less": "lessc src/HugeTable.less dist/HugeTable.css",
     "release": "npm run babel && npm run less",
     "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter",
-    "npmrc": "printf \"_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n\" > .npmrc"
+    "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
   },
   "author": "Yacine Rezgui (@yrezgui)",
   "license": "MIT",
