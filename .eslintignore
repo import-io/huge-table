@@ -1,0 +1,8 @@
+lib
+dist
+node_modules
+src/ZyngaScroller.js
+src/Animate.js
+examples/src/schema.js
+examples/src/data.js
+examples/dist
