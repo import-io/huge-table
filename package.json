@@ -1,6 +1,6 @@
 {
-  "name": "@importio/huge-table",
-  "version": "4.0.1",
+  "name": "huge-table",
+  "version": "4.0.2",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
@@ -17,7 +17,7 @@
     "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
   },
   "author": "Yacine Rezgui (@yrezgui)",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/import-io/frontend-packages"
