@@ -45,6 +45,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.0.2
+
+**Bug/Patch fixes**
+
+- Open sourcing the project.
+
 ### 4.0.1
 
 **Bug/Patch fixes**
