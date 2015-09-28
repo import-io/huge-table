@@ -1,8 +1,8 @@
 {
   "name": "huge-table",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "lint": "eslint .",

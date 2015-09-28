@@ -45,7 +45,13 @@ Build the project in a production ready way.
 
 ## Changelog
 
-### 4.0.2
+### 4.0.4
+
+**Bug/Patch fixes**
+
+- Fixing the `main` property in package.json.
+
+### 4.0.3
 
 **Bug/Patch fixes**
 
