@@ -49,6 +49,12 @@ Build the project in a production ready way.
 
 **Bug/Patch fixes**
 
+- Updating the repository link in the package.json.
+
+### 4.0.2
+
+**Bug/Patch fixes**
+
 - Open sourcing the project.
 
 ### 4.0.1

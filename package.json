@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
@@ -20,7 +20,7 @@
   "license": "Apache 2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/import-io/frontend-packages"
+    "url": "https://github.com/import-io/huge-table"
   },
   "dependencies": {
     "fixed-data-table": "^0.2.0",
