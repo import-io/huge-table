@@ -16,5 +16,5 @@ export const HEADER_HEIGHT            = headerHeight;
 export const MIN_COLUMN_WIDTH         = 120;
 export const ROW_NUMBER_COLUMN_WIDTH  = rowNumberColumnWidth;
 export const FLEX_GROW                = 1;
-export const CELL_EXPANDER_WIDTH      = 25;
+export const CELL_EXPANDER_WIDTH      = 35;
 export const RETURNED_DATA_TYPES      = ['currency', 'utc', 'text', 'alt', 'title', 'source'];
