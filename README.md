@@ -45,6 +45,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.0.5
+
+**Bug/Patch fixes**
+
+- Fixing the badge for displaying multiple values, when cell has an array of values.
+
 ### 4.0.4
 
 **Bug/Patch fixes**

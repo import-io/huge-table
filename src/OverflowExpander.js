@@ -20,7 +20,7 @@ export default class OverflowExpander extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
+    this.setState({ //eslint-disable-line react/no-did-mount-set-state
       doesOverflow: this.doesOverflow(),
     });
   }
@@ -29,7 +29,7 @@ export default class OverflowExpander extends React.Component {
     const doesOverflow = this.doesOverflow();
 
     if (prevState.doesOverflow !== doesOverflow) {
-      this.setState({
+      this.setState({ //eslint-disable-line react/no-did-update-set-state
         doesOverflow,
       });
     }
