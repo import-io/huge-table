@@ -36,7 +36,7 @@ export default class OverflowExpander extends React.Component {
   }
 
   doesOverflow() {
-    const size = this.refs.measure.getDOMNode().clientWidth;
+    const size = this.refs.measure.clientWidth;
     return size >= this.props.availableWidth;
   }
 

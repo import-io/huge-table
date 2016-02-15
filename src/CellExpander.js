@@ -20,7 +20,7 @@ export class CellExpander extends React.Component {
 
   renderPopover() {
     return (
-      <Popover>
+      <Popover id="details-popover">
         {this.props.children}
       </Popover>
     );

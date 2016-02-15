@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -9,7 +9,7 @@
     "test": "mocha",
     "examples-watch": "webpack --config ./examples/webpack.config.js --progress --colors --watch",
     "examples-build": "webpack --config ./examples/webpack.config.js --progress --colors",
-    "examples-serve": "serve -p 8080 examples/",
+    "examples-serve": "serve -p 8083 examples/",
     "babel": "rm -rf dist/ && mkdir dist/ && babel src --out-dir dist",
     "less": "lessc src/HugeTable.less dist/HugeTable.css",
     "release": "npm run babel && npm run less",
@@ -23,11 +23,13 @@
     "url": "https://github.com/import-io/huge-table"
   },
   "dependencies": {
-    "fixed-data-table": "^0.2.0",
+    "fixed-data-table": "^0.5.0",
     "keymirror": "^0.1.1",
-    "react": "^0.13.3",
-    "react-bootstrap": "^0.24.2",
-    "react-portal": "^0.7.0"
+    "react": "^0.14.6",
+    "react-addons-test-utils": "^0.14.7",
+    "react-bootstrap": "^0.28.3",
+    "react-dom": "^0.14.7",
+    "react-portal": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.21",
@@ -52,7 +54,7 @@
     "serve": "^1.4.0",
     "sinon": "^1.15.3",
     "sinon-chai": "^2.8.0",
-    "skin-deep": "^0.6.0",
+    "skin-deep": "^0.14.0",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
     "webpack": "^1.9.10"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class TouchableArea {
+export default class TouchableArea extends React.Component {
   static propTypes = {
     scroller: React.PropTypes.object,
     touchable: React.PropTypes.bool.isRequired,

@@ -45,6 +45,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.0.6
+
+**Bug/Patch fixes**
+
+- Updating to react 0.14.x.
+
 ### 4.0.5
 
 **Bug/Patch fixes**

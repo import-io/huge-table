@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import sd from 'skin-deep';
 import { expect } from 'chai';
 

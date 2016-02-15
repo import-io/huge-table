@@ -1,4 +1,5 @@
-import React      from 'react';
+import React from 'react';
+import { render } from 'react-dom';
 import { HugeTable } from '../../dist';
 
 import schema from './schema';
@@ -25,4 +26,4 @@ const options = {
   mixedContentImage: proxyImages,
 };
 
-React.render(<HugeTable data={data.results} schema={schema} options={options} />, mountNode);
+render(<HugeTable data={data.results} schema={schema} options={options} />, mountNode);
