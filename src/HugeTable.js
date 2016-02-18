@@ -16,6 +16,7 @@ export class HugeTable extends React.Component {
       height: React.PropTypes.number,
       width: React.PropTypes.number,
       mixedContentImage: React.PropTypes.func,
+      tableScrolled: React.PropTypes.func,
     }),
     schema: React.PropTypes.arrayOf(React.PropTypes.shape({
       name: React.PropTypes.string,
@@ -162,6 +163,10 @@ export class HugeTable extends React.Component {
       scrollLeft,
       scrollTop,
     });
+
+    if(this.props.options.tableScrolled) {
+      this.props.options.tableScrolled(scrollLeft, scrollTop);
+    }
   }
 
   onContentDimensionsChange(contentHeight, contentWidth) {
@@ -172,7 +177,7 @@ export class HugeTable extends React.Component {
   }
 
   render() {
-    const controlledScrolling = (this.state.scrollLeft !== undefined || this.state.scrollTop !== undefined);
+    const controlledScrolling = (this.state.scrollLeft !== undefined && this.state.scrollLeft !== 0) || (this.state.scrollTop !== undefined && this.state.scrollTop !== 0);
     const tableWidth = this.props.options.width;
     const tableHeight = this.props.options.height - Constants.HEADER_HEIGHT;
 

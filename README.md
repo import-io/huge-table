@@ -26,6 +26,7 @@ More comprehensive example can be found inside the [examples](examples) director
 - **options.height** - Height of the table component,
 - **options.width** - Width of the table component,
 - **options.mixedContentImage** - Function that can handle mixed content warnings for images being loaded inside the table. Function will be invoked with image URL, and allows developers to decide what do do when page is loaded for example with `https`, and image url has `http` protocol. Check `examples` directory for an example on how to use this.
+- **options.tableScrolled** - Function that will be called whenever the table has been scrolled. It can be used to hook to the scrolling of the table on mobile devices, and use it to adjust the view around the table according to the table scrolling.
 
 ## Commands
 
@@ -44,6 +45,16 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 4.1.0
+
+**API Additions**
+
+- Adding a, `options.tableScrolled` prop that can an event handler for scrolling inside the table.
+
+**Bug/Patch fixes**
+
+- Fixing the scrolls on desktop/mobile.
 
 ### 4.0.7
 
