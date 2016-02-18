@@ -45,6 +45,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.0.7
+
+**Bug/Patch fixes**
+
+- Adding support for scrolling on mobile, with dynamic data. Now when the data inside the table is updated, mobile scroll handle this case.
+
 ### 4.0.6
 
 **Bug/Patch fixes**

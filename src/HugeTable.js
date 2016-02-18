@@ -55,6 +55,10 @@ export class HugeTable extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.generateColumnToDataTypeMap(nextProps.schema);
     this.generateColumnWidths(nextProps.schema);
+
+    this.setState({
+      contentHeight: Constants.ROW_HEIGHT * nextProps.data.length + Constants.HEADER_HEIGHT,
+    });
   }
 
   generateColumnToDataTypeMap(schema) {

@@ -32,6 +32,17 @@ export default class TouchWrapper extends React.Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    const diffTableWidth = nextProps.tableWidth !== this.props.tableWidth;
+    const diffTableHeight = nextProps.tableHeight !== this.props.tableHeight;
+    const diffContentWidth = nextProps.contentWidth !== this.props.contentWidth;
+    const diffContentHeight = nextProps.contentHeight !== this.props.contentHeight;
+
+    if(diffTableWidth || diffTableHeight || diffContentWidth || diffContentHeight) {
+      this.scroller.setDimensions(nextProps.tableWidth, nextProps.tableHeight, nextProps.contentWidth, nextProps.contentHeight);
+    }
+  }
+
   onScroll = (scrollLeft, scrollTop) => {
     if(this.state.initialized) {
       this.props.onScroll(scrollLeft, scrollTop);
