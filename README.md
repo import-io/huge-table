@@ -50,7 +50,7 @@ Build the project in a production ready way.
 
 **API Additions**
 
-- moving to `fixed-data-table` v0.6.0 and supporting new cell renderers.
+- Moving to `fixed-data-table` v0.6.0 and supporting new cell renderers.
 
 ### 4.1.0
 
