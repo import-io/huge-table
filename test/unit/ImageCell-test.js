@@ -1,5 +1,5 @@
 import React from 'react';
-import sd from 'skin-deep';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
 import { ImageCell } from '../../src/ImageCell';
@@ -18,16 +18,15 @@ describe('ImageCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(ImageCell, {cellData, cellWidth: 452}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<ImageCell cellData={cellData} width={452} height={300} columnKey="someKey" />);
 
-      expect(vdom.type).to.equal('a');
-      expect(vdom.props.href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
-      expect(vdom.props.title).to.equal('Mathematics');
-
-      const div = vdom.props.children[0];
-
-      expect(div.props.style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.props().width).to.equal(452);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
+      expect(wrapper.find('a').props().title).to.equal('Mathematics');
+      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
     });
 
     it('should render an anchor and a div with only main property', () => {
@@ -42,16 +41,15 @@ describe('ImageCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(ImageCell, {cellData, cellWidth: 632}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<ImageCell cellData={cellData} width={632} height={300} columnKey="someKey" />);
 
-      expect(vdom.type).to.equal('a');
-      expect(vdom.props.href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
-      expect(vdom.props.title).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
-
-      const div = vdom.props.children[0];
-
-      expect(div.props.style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.props().width).to.equal(632);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
+      expect(wrapper.find('a').props().title).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
+      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
     });
 
     it('should render an anchor and a div with only main property and proxified image', () => {
@@ -75,16 +73,15 @@ describe('ImageCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(ImageCell, {cellData, cellWidth: 100, mixedContentImage: proxyImages}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<ImageCell cellData={cellData} width={100} height={300} columnKey="someKey" mixedContentImage={proxyImages} />);
 
-      expect(vdom.type).to.equal('a');
-      expect(vdom.props.href).to.equal('http://cdn.sstatic.net/math/img/icon-48.png');
-      expect(vdom.props.title).to.equal('http://cdn.sstatic.net/math/img/icon-48.png');
-
-      const div = vdom.props.children[0];
-
-      expect(div.props.style.backgroundImage).to.equal('url(https://images.weserv.nl/?url=cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.props().width).to.equal(100);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().href).to.equal('http://cdn.sstatic.net/math/img/icon-48.png');
+      expect(wrapper.find('a').props().title).to.equal('http://cdn.sstatic.net/math/img/icon-48.png');
+      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://images.weserv.nl/?url=cdn.sstatic.net/math/img/icon-48.png)');
     });
 
     it('should render an anchor and a div with empty properties', () => {
@@ -99,16 +96,15 @@ describe('ImageCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(ImageCell, {cellData, cellWidth: 763}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<ImageCell cellData={cellData} width={763} height={300} columnKey="someKey" />);
 
-      expect(vdom.type).to.equal('a');
-      expect(vdom.props.href).to.be.null;
-      expect(vdom.props.title).to.be.null;
-
-      const div = vdom.props.children[0];
-
-      expect(div.props.style.backgroundImage).to.be.null;
+      expect(wrapper.props().width).to.equal(763);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().href).to.be.null;
+      expect(wrapper.find('a').props().title).to.be.null;
+      expect(wrapper.find('.example-image').props().style.backgroundImage).to.be.null;
     });
   });
 });

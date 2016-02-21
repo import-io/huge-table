@@ -1,20 +1,20 @@
-const path              = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: {
-    demo: path.resolve(__dirname, 'src/demo.js'),
-  },
+  debug: true,
+  devtool: 'source-map',
+  entry: './example/demo.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    chunkFilename: '[id].js',
+    path: './example/public',
+    filename: 'bundle.js',
+    publicPath: '',
   },
   module: {
     loaders: [
       {
-        test: /\.jsx?$/, // A regexp to test the require path. accepts either js or jsx
-        loader: 'babel', // The module to load. "babel" is short for "babel-loader"
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0',
       },
       {
         test: /\.less$/,
@@ -29,6 +29,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('bundle.css'),
   ],
 };

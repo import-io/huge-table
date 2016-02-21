@@ -1,30 +1,30 @@
-import React            from 'react';
+import React from 'react';
+import { Cell } from 'fixed-data-table';
 import OverflowExpander from './OverflowExpander';
 
 const HORZ_PADDING = 5;
 
-export class TextCell extends React.Component {
-  static propTypes = {
-    cellData: React.PropTypes.object.isRequired,
-    cellWidth: React.PropTypes.number.isRequired,
-  }
+export const TextCell = (props) => {
+  const content = props.cellData.text || props.cellData.main || '';
 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const content = this.props.cellData.text || this.props.cellData.main || '';
-    return (
+  return (
+    <Cell {...props}>
       <div
+        className="text-cell"
         style={{
           float: 'left',
-          width: this.props.cellWidth,
           padding: `0 ${HORZ_PADDING}px`,
         }}
       >
-        <OverflowExpander availableWidth={this.props.cellWidth - HORZ_PADDING * 2}>{content}</OverflowExpander>
+        <OverflowExpander availableWidth={props.width - HORZ_PADDING * 2}>{content}</OverflowExpander>
       </div>
-    );
-  }
-}
+    </Cell>
+  );
+};
+
+TextCell.propTypes = {
+  cellData: React.PropTypes.object.isRequired,
+  width: React.PropTypes.number.isRequired,
+  height: React.PropTypes.number.isRequired,
+  columnKey: React.PropTypes.string.isRequired,
+};

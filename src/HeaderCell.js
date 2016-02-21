@@ -1,27 +1,25 @@
 import React from 'react';
+import { Cell } from 'fixed-data-table';
 
-export class HeaderCell extends React.Component {
-  static propTypes = {
-    label: React.PropTypes.string.isRequired,
-    cellWidth: React.PropTypes.number.isRequired,
-  }
+export const HeaderCell = ({textValue, ...props}) => {
+  const style = {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textAlign: 'left',
+    padding: '0 5px',
+  };
 
-  constructor(props) {
-    super(props);
-  }
+  return (
+    <Cell {...props}>
+      <div style={style} title={textValue}>{textValue}</div>
+    </Cell>
+  );
+};
 
-  render() {
-    const style = {
-      width: this.props.cellWidth,
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      textAlign: 'left',
-      padding: '0 5px',
-    };
-
-    return (
-      <div style={style} title={this.props.label}>{this.props.label}</div>
-    );
-  }
-}
+HeaderCell.propTypes = {
+  columnKey: React.PropTypes.string.isRequired,
+  textValue: React.PropTypes.string.isRequired,
+  height: React.PropTypes.number.isRequired,
+  width: React.PropTypes.number.isRequired,
+};

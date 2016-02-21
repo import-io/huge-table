@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { HugeTable } from '../../dist';
+import { HugeTable } from '../src';
 
 import schema from './schema';
 import data from './data';
 
-require('../../dist/HugeTable.css');
-require('../../node_modules/bootstrap/less/bootstrap.less');
+import '../src/HugeTable.less';
+import '../node_modules/bootstrap/less/bootstrap.less';
 
 function proxyImages (imageUrl) {
   // Just return falsy image urls.

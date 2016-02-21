@@ -1,23 +1,24 @@
-import React          from 'react';
-import { ImageCell }  from './ImageCell';
-import { UrlCell }    from './UrlCell';
-import { TextCell }   from './TextCell';
+import React from 'react';
+
+import { ImageCell } from './ImageCell';
+import { UrlCell } from './UrlCell';
+import { TextCell } from './TextCell';
 import * as Constants from './constants';
 
-export function getComponentDataType (columnDataType, cellData, cellWidth, key, mixedContentImage) {
+export function getComponentDataType (columnDataType, cellData, cellWidth, cellHeight, key, columnKey, mixedContentImage) {
   if (!columnDataType) {
     return null;
   }
 
   switch(columnDataType) {
     case Constants.ColumnTypes.URL:
-      return <UrlCell cellData={cellData} cellWidth={cellWidth} key={key} />;
+      return <UrlCell cellData={cellData} width={cellWidth} height={cellHeight} key={key} columnKey={columnKey} />;
 
     case Constants.ColumnTypes.IMAGE:
-      return <ImageCell cellData={cellData} cellWidth={cellWidth} key={key} mixedContentImage={mixedContentImage} />;
+      return <ImageCell cellData={cellData} width={cellWidth} height={cellHeight} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
 
     default:
-      return <TextCell cellData={cellData} cellWidth={cellWidth} key={key} />;
+      return <TextCell cellData={cellData} width={cellWidth} height={cellHeight} key={key} columnKey={columnKey} />;
   }
 }
 

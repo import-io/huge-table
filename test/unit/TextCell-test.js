@@ -1,5 +1,5 @@
 import React from 'react';
-import sd from 'skin-deep';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
 import { TextCell } from '../../src/TextCell';
@@ -18,12 +18,13 @@ describe('TextCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(TextCell, {cellData, cellWidth: 250}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} height={300} columnKey="someKey" />);
 
-      expect(vdom.type).to.equal('div');
-      expect(vdom.props.children.props.children).to.equal('2 answers');
-      expect(vdom.props.style.width).to.equal(250);
+      expect(wrapper.props().width).to.equal(250);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+      expect(wrapper.find('OverflowExpander').props().children).to.equal(cellData.main);
     });
 
     it('should render a div with text property as textContent', () => {
@@ -38,12 +39,13 @@ describe('TextCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(TextCell, {cellData, cellWidth: 249}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<TextCell cellData={cellData} width={249} height={300} columnKey="someKey" />);
 
-      expect(vdom.type).to.equal('div');
-      expect(vdom.props.children.props.children).to.equal('13 hours ago');
-      expect(vdom.props.style.width).to.equal(249);
+      expect(wrapper.props().width).to.equal(249);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+      expect(wrapper.find('OverflowExpander').props().children).to.equal(cellData.text);
     });
 
     it('should render an empty div', () => {
@@ -58,12 +60,13 @@ describe('TextCell', () => {
         utc: null,
       };
 
-      const tree = sd.shallowRender(React.createElement(TextCell, {cellData, cellWidth: 100}));
-      const vdom = tree.getRenderOutput();
+      const wrapper = shallow(<TextCell cellData={cellData} width={100} height={300} columnKey="someKey" />);
 
-      expect(vdom.type).to.equal('div');
-      expect(vdom.props.children.props.children).to.equal('');
-      expect(vdom.props.style.width).to.equal(100);
+      expect(wrapper.props().width).to.equal(100);
+      expect(wrapper.props().height).to.equal(300);
+      expect(wrapper.props().columnKey).to.equal('someKey');
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+      expect(wrapper.find('OverflowExpander').props().children).to.equal('');
     });
   });
 });

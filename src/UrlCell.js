@@ -1,37 +1,36 @@
 import React from 'react';
+import { Cell } from 'fixed-data-table';
 import OverflowExpander from './OverflowExpander';
 
 const HORZ_PADDING = 5;
 
-export class UrlCell extends React.Component {
-  static propTypes = {
-    cellData: React.PropTypes.object.isRequired,
-    cellWidth: React.PropTypes.number.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const content = this.props.cellData.text || this.props.cellData.main;
-    return (
+export const UrlCell = (props) => {
+  const content = props.cellData.text || props.cellData.main;
+  return (
+    <Cell {...props}>
       <div
+        className="url-cell"
         style={{
           float: 'left',
-          width: this.props.cellWidth,
           padding: `0 ${HORZ_PADDING}px`,
         }}
       >
         <a
           className="url-cell-content"
-          href={this.props.cellData.main}
-          title={this.props.cellData.title || this.props.cellData.text || this.props.cellData.main}
+          href={props.cellData.main}
+          title={props.cellData.title || props.cellData.text || props.cellData.main}
           target={'_blank'}
         >
-          <OverflowExpander availableWidth={this.props.cellWidth - HORZ_PADDING * 2}>{content}</OverflowExpander>
+          <OverflowExpander availableWidth={props.width - HORZ_PADDING * 2}>{content}</OverflowExpander>
         </a>
       </div>
-    );
-  }
-}
+    </Cell>
+  );
+};
+
+UrlCell.propTypes = {
+  cellData: React.PropTypes.object.isRequired,
+  width: React.PropTypes.number.isRequired,
+  height: React.PropTypes.number.isRequired,
+  columnKey: React.PropTypes.string.isRequired,
+};

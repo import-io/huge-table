@@ -1,2 +1,2 @@
---compilers babel:babel/register
+--require babel-core/register
 --recursive

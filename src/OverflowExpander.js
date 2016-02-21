@@ -10,9 +10,6 @@ export default class OverflowExpander extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-
     this.state = {
       doesOverflow: false,
       showPopover: false,
@@ -35,12 +32,12 @@ export default class OverflowExpander extends React.Component {
     }
   }
 
-  doesOverflow() {
+  doesOverflow = () => {
     const size = this.refs.measure.clientWidth;
     return size >= this.props.availableWidth;
   }
 
-  handleMouseEnter(e) {
+  handleMouseEnter = (e) => {
     const clientRect = e.target.getBoundingClientRect();
     const docWidth = document.body.getBoundingClientRect().width;
     const leftSide = clientRect.left + this.props.availableWidth > docWidth / 2;
@@ -55,13 +52,11 @@ export default class OverflowExpander extends React.Component {
     });
   }
 
-  handleMouseLeave() {
+  handleMouseLeave = () => {
     this.setState({
       showPopover: false,
     });
   }
-
-
 
   render() {
     return (

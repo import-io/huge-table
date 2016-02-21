@@ -1,13 +1,12 @@
-import React          from 'react';
-import FixedDataTable from 'fixed-data-table';
+import React from 'react';
+import { Table, Column } from 'fixed-data-table';
+
 import * as Constants from './constants';
 import * as CellUtils from './CellUtils';
-
-import { ListCell }   from './ListCell';
+import { ListCell } from './ListCell';
 import { HeaderCell } from './HeaderCell';
-import TouchWrapper   from './TouchWrapper';
-
-const { Table, Column } = FixedDataTable;
+import { TextCell } from './TextCell';
+import TouchWrapper from './TouchWrapper';
 
 export class HugeTable extends React.Component {
   static propTypes = {
@@ -27,16 +26,6 @@ export class HugeTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.rowGetter                  = this.rowGetter.bind(this);
-    this.cellDataGetter             = this.cellDataGetter.bind(this);
-    this.cellRenderer               = this.cellRenderer.bind(this);
-    this.rowNumberCellRenderer      = this.rowNumberCellRenderer.bind(this);
-    this.headerRenderer             = this.headerRenderer.bind(this);
-    this.createColumn               = this.createColumn.bind(this);
-    this.onColumnResizeEndCallback  = this.onColumnResizeEndCallback.bind(this);
-    this.onContentDimensionsChange  = this.onContentDimensionsChange.bind(this);
-    this.onScroll                   = this.onScroll.bind(this);
-
     this.state = {
       columnWidths: {},
       isColumnResizing: undefined,
@@ -54,15 +43,19 @@ export class HugeTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.generateColumnToDataTypeMap(nextProps.schema);
-    this.generateColumnWidths(nextProps.schema);
+    if(this.props.schema !== nextProps.schema) {
+      this.generateColumnToDataTypeMap(nextProps.schema);
+      this.generateColumnWidths(nextProps.schema);
+    }
 
-    this.setState({
-      contentHeight: Constants.ROW_HEIGHT * nextProps.data.length + Constants.HEADER_HEIGHT,
-    });
+    if(this.props.data.length !== nextProps.data.length) {
+      this.setState({
+        contentHeight: Constants.ROW_HEIGHT * nextProps.data.length + Constants.HEADER_HEIGHT,
+      });
+    }
   }
 
-  generateColumnToDataTypeMap(schema) {
+  generateColumnToDataTypeMap = (schema) => {
     const columnNameToDataTypeMap = {};
 
     schema.forEach((schemaItem) => {
@@ -72,7 +65,7 @@ export class HugeTable extends React.Component {
     this.setState({columnNameToDataTypeMap});
   }
 
-  generateColumnWidths(schema, dataKey, newColumnWidth) {
+  generateColumnWidths = (schema, columnKey, newColumnWidth) => {
     const columnWidths = {};
     let isColumnResizing;
     let contentWidth;
@@ -85,8 +78,8 @@ export class HugeTable extends React.Component {
       columnWidths[schemaItem.name] = defaultColumnWidth;
     });
 
-    if (dataKey) {
-      columnWidths[dataKey] = newColumnWidth;
+    if (columnKey) {
+      columnWidths[columnKey] = newColumnWidth;
       isColumnResizing = false;
     }
 
@@ -99,66 +92,46 @@ export class HugeTable extends React.Component {
     });
   }
 
-  getDataTypeFromColumnName (columnName) {
-    return this.state.columnNameToDataTypeMap[columnName];
-  }
-
-  rowGetter(rowIndex) {
-    return this.props.data[rowIndex];
-  }
-
-  cellDataGetter(cellDataKey, rowObject) {
+  cellRenderer = ({rowIndex, width, height, schemaItemName}) => {
+    const rowObject = this.props.data[rowIndex];
     const cellData = {};
-    cellData.main = rowObject[cellDataKey];
-    Constants.RETURNED_DATA_TYPES.forEach(function (dataType) {
-      cellData[dataType] = rowObject[cellDataKey + '/_' + dataType] || null;
+    cellData.main = rowObject[schemaItemName];
+    Constants.RETURNED_DATA_TYPES.forEach(dataType => {
+      cellData[dataType] = rowObject[schemaItemName + '/_' + dataType] || null;
     });
-    return cellData;
-  }
 
-  cellRenderer(cellData, dataKey, rowData, rowIndex, columnData, cellWidth) {
-    const columnDataType = this.getDataTypeFromColumnName(dataKey);
+    const columnDataType = this.state.columnNameToDataTypeMap[schemaItemName];
 
     // If cellData is an array, run cellRenderer on each array item
     if (Array.isArray(cellData.main)) {
-      return <ListCell cellData={cellData} type={columnDataType} cellWidth={cellWidth} mixedContentImage={this.props.options.mixedContentImage} />;
+      return <ListCell cellData={cellData} type={columnDataType} width={width} height={height} columnKey={schemaItemName} mixedContentImage={this.props.options.mixedContentImage} />;
     }
 
     // handle the cell based on the type of the column
-    return CellUtils.getComponentDataType(columnDataType, cellData, cellWidth, undefined, this.props.options.mixedContentImage);
+    return CellUtils.getComponentDataType(columnDataType, cellData, width, height, undefined, schemaItemName, this.props.options.mixedContentImage);
   }
 
-  rowNumberCellRenderer(cellData, cellDataKey, rowData, rowIndex) {
-    return rowIndex + 1;
-  }
-
-  headerRenderer(label, cellDataKey, columnData, rowData, cellWidth) {
-    return (
-      <HeaderCell label={label} cellWidth={cellWidth} />
-    );
-  }
-
-  createColumn(schemaItem) {
+  createColumn = (schemaItem) => {
     return (
       <Column
-        label={schemaItem.name}
+        header={props => (
+          <HeaderCell {...props} textValue={schemaItem.name}/>
+        )}
+        columnKey={schemaItem.name}
         minWidth={Constants.MIN_COLUMN_WIDTH}
         width={this.state.columnWidths[schemaItem.name]}
-        dataKey={schemaItem.name}
-        headerRenderer={this.headerRenderer}
-        cellDataGetter={this.cellDataGetter}
-        cellRenderer={this.cellRenderer}
+        cell={(props) => this.cellRenderer({...props, schemaItemName: schemaItem.name})}
         key={schemaItem.name}
         isResizable
       />
     );
   }
 
-  onColumnResizeEndCallback(newColumnWidth, dataKey) {
-    this.generateColumnWidths(this.props.schema, dataKey, newColumnWidth);
+  onColumnResizeEndCallback = (newColumnWidth, columnKey) => {
+    this.generateColumnWidths(this.props.schema, columnKey, newColumnWidth);
   }
 
-  onScroll(scrollLeft, scrollTop) {
+  onScroll = (scrollLeft, scrollTop) => {
     this.setState({
       scrollLeft,
       scrollTop,
@@ -169,7 +142,7 @@ export class HugeTable extends React.Component {
     }
   }
 
-  onContentDimensionsChange(contentHeight, contentWidth) {
+  onContentDimensionsChange = (contentHeight, contentWidth) => {
     this.setState({
       contentWidth,
       contentHeight,
@@ -191,7 +164,6 @@ export class HugeTable extends React.Component {
       >
         <Table
           rowHeight={Constants.ROW_HEIGHT}
-          rowGetter={this.rowGetter}
           rowsCount={this.props.data.length}
           width={tableWidth}
           scrollLeft={this.state.scrollLeft}
@@ -206,14 +178,13 @@ export class HugeTable extends React.Component {
         >
           <Column
             key="hugetable-index-column"
-            dataKey="hugetable-index-column"
+            columnKey="hugetable-index-column"
             width={Constants.ROW_NUMBER_COLUMN_WIDTH}
-            cellRenderer={this.rowNumberCellRenderer}
+            cell={(props) => <TextCell {...props} columnKey="hugetable-index-column" cellData={{main: props.rowIndex+1}}/>}
           />
           {this.props.schema.map(this.createColumn)}
         </Table>
       </TouchWrapper>
     );
   }
-
 }
