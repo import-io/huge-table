@@ -11,4 +11,4 @@
     production:
       branch: "master"
       commands:
-        - npm publish
+        - npm run npmrc && npm publish

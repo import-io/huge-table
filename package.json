@@ -12,7 +12,8 @@
     "babel": "rm -rf dist/ && mkdir dist/ && babel src --out-dir dist",
     "less": "lessc src/HugeTable.less dist/HugeTable.css",
     "release": "npm run babel && npm run less",
-    "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter"
+    "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter",
+    "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
   },
   "author": "Yacine Rezgui (@yrezgui)",
   "license": "Apache-2.0",
