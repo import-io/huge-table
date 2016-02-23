@@ -46,6 +46,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.2.1
+
+**Bug/Patch fixes**
+
+- Fixing column resizing issues.
+
 ### 4.2.0
 
 **API Additions**

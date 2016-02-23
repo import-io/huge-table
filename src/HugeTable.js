@@ -35,7 +35,7 @@ export class HugeTable extends React.Component {
 
   componentWillMount() {
     this.generateColumnToDataTypeMap(this.props.schema);
-    this.generateColumnWidths(this.props.schema);
+    this.generateColumnWidths(this.props.schema, this.props.options.width);
 
     this.setState({
       contentHeight: Constants.ROW_HEIGHT * this.props.data.length + Constants.HEADER_HEIGHT,
@@ -45,7 +45,10 @@ export class HugeTable extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(this.props.schema !== nextProps.schema) {
       this.generateColumnToDataTypeMap(nextProps.schema);
-      this.generateColumnWidths(nextProps.schema);
+    }
+
+    if(this.props.schema !== nextProps.schema || this.props.options.width !== nextProps.options.width) {
+      this.generateColumnWidths(nextProps.schema, nextProps.options.width);
     }
 
     if(this.props.data.length !== nextProps.data.length) {
@@ -65,13 +68,13 @@ export class HugeTable extends React.Component {
     this.setState({columnNameToDataTypeMap});
   }
 
-  generateColumnWidths = (schema, columnKey, newColumnWidth) => {
+  generateColumnWidths = (schema, width, columnKey, newColumnWidth) => {
     const columnWidths = {};
     let isColumnResizing;
     let contentWidth;
 
     // Table width - rowNumberColumn (width + border) - columns border / columnsCount
-    const calculatedWidth = (this.props.options.width - Constants.ROW_NUMBER_COLUMN_WIDTH - 5 - (this.props.schema.length * 2)) / this.props.schema.length;
+    const calculatedWidth = (width - Constants.ROW_NUMBER_COLUMN_WIDTH - 5 - (schema.length * 2)) / Math.max(schema.length, 1);
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
 
     schema.forEach((schemaItem) => {
@@ -128,7 +131,7 @@ export class HugeTable extends React.Component {
   }
 
   onColumnResizeEndCallback = (newColumnWidth, columnKey) => {
-    this.generateColumnWidths(this.props.schema, columnKey, newColumnWidth);
+    this.generateColumnWidths(this.props.schema, this.props.options.width, columnKey, newColumnWidth);
   }
 
   onScroll = (scrollLeft, scrollTop) => {
