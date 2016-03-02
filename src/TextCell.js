@@ -22,5 +22,4 @@ export const TextCell = (props) => {
 TextCell.propTypes = {
   cellData: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
-  columnKey: React.PropTypes.string.isRequired,
 };

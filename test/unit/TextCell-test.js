@@ -18,11 +18,8 @@ describe('TextCell', () => {
         utc: null,
       };
 
-      const wrapper = shallow(<TextCell cellData={cellData} width={250} height={300} columnKey="someKey" />);
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
 
-      expect(wrapper.props().width).to.equal(250);
-      expect(wrapper.props().height).to.equal(300);
-      expect(wrapper.props().columnKey).to.equal('someKey');
       expect(wrapper.find('.text-cell').length).to.equal(1);
       expect(wrapper.find('OverflowExpander').props().children).to.equal(cellData.main);
     });
@@ -39,11 +36,8 @@ describe('TextCell', () => {
         utc: null,
       };
 
-      const wrapper = shallow(<TextCell cellData={cellData} width={249} height={300} columnKey="someKey" />);
+      const wrapper = shallow(<TextCell cellData={cellData} width={249}/>);
 
-      expect(wrapper.props().width).to.equal(249);
-      expect(wrapper.props().height).to.equal(300);
-      expect(wrapper.props().columnKey).to.equal('someKey');
       expect(wrapper.find('.text-cell').length).to.equal(1);
       expect(wrapper.find('OverflowExpander').props().children).to.equal(cellData.text);
     });
@@ -60,11 +54,8 @@ describe('TextCell', () => {
         utc: null,
       };
 
-      const wrapper = shallow(<TextCell cellData={cellData} width={100} height={300} columnKey="someKey" />);
+      const wrapper = shallow(<TextCell cellData={cellData} width={100} />);
 
-      expect(wrapper.props().width).to.equal(100);
-      expect(wrapper.props().height).to.equal(300);
-      expect(wrapper.props().columnKey).to.equal('someKey');
       expect(wrapper.find('.text-cell').length).to.equal(1);
       expect(wrapper.find('OverflowExpander').props().children).to.equal('');
     });

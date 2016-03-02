@@ -189,6 +189,9 @@ export class HugeTable extends React.Component {
             key="hugetable-index-column"
             columnKey="hugetable-index-column"
             width={Constants.ROW_NUMBER_COLUMN_WIDTH}
+            header={props => (
+              <HeaderCell {...props} textValue="#"/>
+            )}
             cell={(props) => <TextCell {...props} columnKey="hugetable-index-column" cellData={{main: props.rowIndex+1}}/>}
           />
           {this.props.schema.map(this.createColumn)}

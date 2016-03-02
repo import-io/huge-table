@@ -28,5 +28,4 @@ export const UrlCell = (props) => {
 UrlCell.propTypes = {
   cellData: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
-  columnKey: React.PropTypes.string.isRequired,
 };

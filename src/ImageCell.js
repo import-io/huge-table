@@ -7,7 +7,6 @@ export class ImageCell extends React.Component {
   static propTypes = {
     cellData: React.PropTypes.object.isRequired,
     width: React.PropTypes.number.isRequired,
-    columnKey: React.PropTypes.string.isRequired,
     mixedContentImage: React.PropTypes.func,
   }
 

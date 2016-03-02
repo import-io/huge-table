@@ -50,7 +50,8 @@ Build the project in a production ready way.
 
 **Bug/Patch fixes**
 
-- Fixing the display of the ListCells to correctly include CellExpanders.
+- Fixing the display of the ListCells to correctly include CellExpanders,
+- Adding "#" to the first column header.
 
 ### 4.2.1
 
