@@ -2,7 +2,7 @@ import React from 'react';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
-export const CellExpander = ({shouldFloatRight = false, children}) => {
+export const CellExpander = ({children}) => {
   return (
     <OverlayTrigger
        rootClose
@@ -16,8 +16,10 @@ export const CellExpander = ({shouldFloatRight = false, children}) => {
     >
       <span
         style={{
-          margin: '10px 5px',
-          float: shouldFloatRight ? 'right' : undefined,
+          position: 'absolute',
+          top: '65%',
+          left: '75%',
+          cursor: 'pointer',
         }}
         className="badge"
       >
@@ -28,6 +30,5 @@ export const CellExpander = ({shouldFloatRight = false, children}) => {
 };
 
 CellExpander.propTypes = {
-  shouldFloatRight: React.PropTypes.bool,
   children: React.PropTypes.any,
 };

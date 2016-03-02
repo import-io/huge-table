@@ -1,24 +1,35 @@
 import React from 'react';
+import { Cell } from 'fixed-data-table';
 
 import { ImageCell } from './ImageCell';
 import { UrlCell } from './UrlCell';
 import { TextCell } from './TextCell';
 import * as Constants from './constants';
 
-export function getComponentDataType (columnDataType, cellData, cellWidth, cellHeight, key, columnKey, mixedContentImage) {
+export function getComponentDataType ({columnDataType, cellData, cellWidth, cellHeight, key, columnKey, mixedContentImage}) {
   if (!columnDataType) {
     return null;
   }
 
+  const cellContent = getComponentContent({columnDataType, cellData, cellWidth, key, columnKey, mixedContentImage});
+
+  return (
+    <Cell height={cellHeight} width={cellWidth} columnKey={columnKey}>
+      {cellContent}
+    </Cell>
+  );
+}
+
+export function getComponentContent({columnDataType, cellData, cellWidth, key, columnKey, mixedContentImage}) { // eslint-disable-line react/no-multi-comp
   switch(columnDataType) {
     case Constants.ColumnTypes.URL:
-      return <UrlCell cellData={cellData} width={cellWidth} height={cellHeight} key={key} columnKey={columnKey} />;
+      return <UrlCell cellData={cellData} width={cellWidth} key={key} columnKey={columnKey} />;
 
     case Constants.ColumnTypes.IMAGE:
-      return <ImageCell cellData={cellData} width={cellWidth} height={cellHeight} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
+      return <ImageCell cellData={cellData} width={cellWidth} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
 
     default:
-      return <TextCell cellData={cellData} width={cellWidth} height={cellHeight} key={key} columnKey={columnKey} />;
+      return <TextCell cellData={cellData} width={cellWidth} key={key} columnKey={columnKey} />;
   }
 }
 

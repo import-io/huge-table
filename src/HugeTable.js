@@ -111,7 +111,13 @@ export class HugeTable extends React.Component {
     }
 
     // handle the cell based on the type of the column
-    return CellUtils.getComponentDataType(columnDataType, cellData, width, height, undefined, schemaItemName, this.props.options.mixedContentImage);
+    return CellUtils.getComponentDataType({
+      columnDataType,
+      cellData,
+      cellWidth: width,
+      cellHeight: height,
+      columnKey: schemaItemName,
+      mixedContentImage: this.props.options.mixedContentImage});
   }
 
   createColumn = (schemaItem) => {

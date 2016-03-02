@@ -46,6 +46,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.2.2
+
+**Bug/Patch fixes**
+
+- Fixing the display of the ListCells to correctly include CellExpanders.
+
 ### 4.2.1
 
 **Bug/Patch fixes**

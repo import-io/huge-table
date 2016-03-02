@@ -1,50 +1,55 @@
-import React            from 'react';
-import * as CellUtils   from './CellUtils';
+import React from 'react';
+import { Cell } from 'fixed-data-table';
+
+import * as CellUtils from './CellUtils';
 import { CellExpander } from './CellExpander';
-import * as Constants   from './constants';
+import * as Constants from './constants';
 
 export const ListCell = ({type, cellData, width, height, columnKey, mixedContentImage}) => {
   const childrenCellData = CellUtils.generateChildCellData(cellData);
 
   if (childrenCellData.length === 1) {
-    return (
-      <div
-        className="list-cell-wrapper"
-      >
-        {CellUtils.getComponentDataType(type, childrenCellData[0], width, height, undefined, columnKey, mixedContentImage)}
-      </div>
-    );
+    return CellUtils.getComponentDataType({
+      columnDataType: type,
+      cellData: childrenCellData[0],
+      cellWidth: width,
+      cellHeight: height,
+      columnKey,
+      mixedContentImage,
+    });
   }
+
+  let cellWidth;
 
   if(type === 'IMAGE') {
-    const popoverImageWidth = Constants.MIN_COLUMN_WIDTH / childrenCellData.slice(1).length;
-
-    return (
-      <div
-        className="list-cell-wrapper"
-      >
-        {CellUtils.getComponentDataType(type, childrenCellData[0], width - Constants.CELL_EXPANDER_WIDTH, height, undefined, columnKey, mixedContentImage)}
-        <CellExpander shouldFloatRight>
-          {childrenCellData.map((cellData, key) => {
-            return CellUtils.getComponentDataType(type, cellData, popoverImageWidth, height, key, columnKey, mixedContentImage);
-          })}
-        </CellExpander>
-      </div>
-    );
+    cellWidth = Constants.MIN_COLUMN_WIDTH / childrenCellData.slice(1).length;
   } else {
-    return (
-      <div
-        className="list-cell-wrapper"
-      >
-        {CellUtils.getComponentDataType(type, childrenCellData[0], width, height, undefined, columnKey, mixedContentImage)}
-        <CellExpander>
-          {childrenCellData.map((cellData, key) => {
-            return CellUtils.getComponentDataType(type, cellData, Constants.MIN_COLUMN_WIDTH, height, key, columnKey);
-          })}
-        </CellExpander>
-      </div>
-    );
+    cellWidth = width;
   }
+
+  return (
+    <Cell height={height} width={width} columnKey={columnKey}>
+      {CellUtils.getComponentContent({
+        columnDataType: type,
+        cellData: childrenCellData[0],
+        cellWidth: width,
+        columnKey,
+        mixedContentImage,
+      })}
+      <CellExpander>
+        {childrenCellData.map((cellData, key) => {
+          return CellUtils.getComponentContent({
+            columnDataType: type,
+            cellData,
+            cellWidth,
+            key,
+            columnKey,
+            mixedContentImage,
+          });
+        })}
+      </CellExpander>
+    </Cell>
+  );
 };
 
 ListCell.propTypes = {
