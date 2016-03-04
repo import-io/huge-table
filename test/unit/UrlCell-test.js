@@ -81,7 +81,7 @@ describe('UrlCell', () => {
       const wrapper = shallow(<UrlCell cellData={cellData} width={763} />);
 
       expect(wrapper.find('.url-cell').length).to.equal(1);
-      expect(wrapper.find('.url-cell-content').find('OverflowExpander').props().children).to.be.null;
+      expect(wrapper.find('.url-cell-content').find('OverflowExpander').props().children).to.equal('null');
       expect(wrapper.find('.url-cell-content').props().title).to.be.null;
       expect(wrapper.find('.url-cell-content').props().href).to.be.null;
     });

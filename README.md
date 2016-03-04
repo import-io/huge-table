@@ -46,6 +46,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 4.2.3
+
+**Bug/Patch fixes**
+
+- Fixing the support for JSON object fields.
+
 ### 4.2.2
 
 **Bug/Patch fixes**

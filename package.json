@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "mocha",
-    "example": "webpack-dev-server --config webpack.config.js --progress --colors --port 8084 --inline --content-base example/public/ --history-api-fallback",
+    "start": "webpack-dev-server --config webpack.config.js --progress --colors --port 8084 --inline --content-base example/public/ --history-api-fallback",
     "babel": "rm -rf dist/ && mkdir dist/ && babel src --out-dir dist",
     "less": "lessc src/HugeTable.less dist/HugeTable.css",
     "release": "npm run babel && npm run less",

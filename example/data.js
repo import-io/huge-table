@@ -18,9 +18,9 @@ module.exports = {
       'by_label': 'by',
       'question_link\/_title': 'This question has been arbitrarily awarded 207.784 hotness points',
       'posttag_links\/_text': [
-        'code-golf',
-        'string',
-        'subsequence'
+        {_text: 'code-golf'},
+        {_text: 'string'},
+        {_text: 'subsequence'},
       ],
       'metainfo_values': '12 answers | asked 2 hours ago',
       'on_label': 'on',

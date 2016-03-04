@@ -4,7 +4,9 @@ import OverflowExpander from './OverflowExpander';
 const HORZ_PADDING = 5;
 
 export const UrlCell = (props) => {
-  const content = props.cellData.text || props.cellData.main;
+  let content = props.cellData.text || props.cellData.main;
+  content = typeof content === 'object' ?  JSON.stringify(content) : content;
+
   return (
     <div
       className="url-cell"
