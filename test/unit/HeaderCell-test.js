@@ -7,7 +7,7 @@ import { HeaderCell } from '../../src/HeaderCell';
 describe('HeaderCell', () => {
   describe('render', () => {
     it('should render a div with label property as textContent', () => {
-      const wrapper = shallow(<HeaderCell textValue="YOLO" width={249} height={300} columnKey="someKey" />);
+      const wrapper = shallow(<HeaderCell cellData={{main: 'YOLO'}} width={249} height={300} columnKey="someKey" />);
 
       expect(wrapper.props().width).to.equal(249);
       expect(wrapper.props().height).to.equal(300);

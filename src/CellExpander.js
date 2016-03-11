@@ -2,30 +2,33 @@ import React from 'react';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
-export const CellExpander = ({children}) => {
+export const CellExpander = ({firstElement, children}) => {
   return (
-    <OverlayTrigger
-       rootClose
-       trigger="click"
-       placement="top"
-       overlay={(
-         <Popover id="details-popover">
-           {children}
-         </Popover>
-       )}
-    >
-      <span
-        style={{
-          position: 'absolute',
-          top: '65%',
-          left: '75%',
-          cursor: 'pointer',
-        }}
-        className="badge"
+    <div>
+      {firstElement}
+      <OverlayTrigger
+         rootClose
+         trigger="click"
+         placement="top"
+         overlay={(
+           <Popover id="details-popover">
+             {children}
+           </Popover>
+         )}
       >
-        ...
-      </span>
-    </OverlayTrigger>
+        <span
+          style={{
+            position: 'absolute',
+            top: 'calc(100% - 25px)',
+            left: 'calc(100% - 30px)',
+            cursor: 'pointer',
+          }}
+          className="badge"
+        >
+          ...
+        </span>
+      </OverlayTrigger>
+    </div>
   );
 };
 

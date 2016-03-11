@@ -1,12 +1,13 @@
 import React from 'react';
-import { Table, Column } from 'fixed-data-table';
+import { Table, Column, Cell } from 'fixed-data-table';
 
 import * as Constants from './constants';
 import * as CellUtils from './CellUtils';
-import { ListCell } from './ListCell';
 import { HeaderCell } from './HeaderCell';
 import { TextCell } from './TextCell';
 import TouchWrapper from './TouchWrapper';
+import { RETURNED_DATA_TYPES } from './constants';
+
 
 export class HugeTable extends React.Component {
   static propTypes = {
@@ -21,6 +22,12 @@ export class HugeTable extends React.Component {
       name: React.PropTypes.string,
       type: React.PropTypes.string,
     })),
+    renderers: React.PropTypes.shape(RETURNED_DATA_TYPES.reduce((initial, next) => {
+      return {
+        ...initial,
+        [next]: React.PropTypes.func,
+      };
+    }, {HEADER: React.PropTypes.func})),
   }
 
   constructor(props) {
@@ -95,6 +102,32 @@ export class HugeTable extends React.Component {
     });
   }
 
+  createColumn = (schemaItem) => {
+    return (
+      <Column
+        header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
+        columnKey={schemaItem.name}
+        minWidth={Constants.MIN_COLUMN_WIDTH}
+        width={this.state.columnWidths[schemaItem.name]}
+        cell={(props) => this.cellRenderer({...props, schemaItemName: schemaItem.name})}
+        key={schemaItem.name}
+        isResizable
+      />
+    );
+  }
+
+  renderHeader = (props) => {
+    if(this.props.renderers && this.props.renderers.HEADER && typeof this.props.renderers.HEADER === 'function') {
+      return (
+        <Cell {...props}>
+          {this.props.renderers.HEADER(props)}
+        </Cell>
+      );
+    } else {
+      return <HeaderCell {...props} />;
+    }
+  }
+
   cellRenderer = ({rowIndex, width, height, schemaItemName}) => {
     const rowObject = this.props.data[rowIndex];
     const cellData = {};
@@ -104,35 +137,19 @@ export class HugeTable extends React.Component {
     });
 
     const columnDataType = this.state.columnNameToDataTypeMap[schemaItemName];
+    const cellCustomRenderer = this.props.renderers && this.props.renderers[columnDataType];
 
-    // If cellData is an array, run cellRenderer on each array item
-    if (Array.isArray(cellData.main)) {
-      return <ListCell cellData={cellData} type={columnDataType} width={width} height={height} columnKey={schemaItemName} mixedContentImage={this.props.options.mixedContentImage} />;
-    }
-
-    // handle the cell based on the type of the column
-    return CellUtils.getComponentDataType({
-      columnDataType,
-      cellData,
-      cellWidth: width,
-      cellHeight: height,
-      columnKey: schemaItemName,
-      mixedContentImage: this.props.options.mixedContentImage});
-  }
-
-  createColumn = (schemaItem) => {
     return (
-      <Column
-        header={props => (
-          <HeaderCell {...props} textValue={schemaItem.name}/>
-        )}
-        columnKey={schemaItem.name}
-        minWidth={Constants.MIN_COLUMN_WIDTH}
-        width={this.state.columnWidths[schemaItem.name]}
-        cell={(props) => this.cellRenderer({...props, schemaItemName: schemaItem.name})}
-        key={schemaItem.name}
-        isResizable
-      />
+      <Cell>
+        {CellUtils.getComponentDataType({
+          columnDataType,
+          cellData,
+          width,
+          height,
+          columnKey: schemaItemName,
+          mixedContentImage: this.props.options.mixedContentImage,
+          cellCustomRenderer})}
+      </Cell>
     );
   }
 
@@ -189,10 +206,8 @@ export class HugeTable extends React.Component {
             key="hugetable-index-column"
             columnKey="hugetable-index-column"
             width={Constants.ROW_NUMBER_COLUMN_WIDTH}
-            header={props => (
-              <HeaderCell {...props} textValue="#"/>
-            )}
-            cell={(props) => <TextCell {...props} columnKey="hugetable-index-column" cellData={{main: props.rowIndex+1}}/>}
+            header={props => this.renderHeader({...props, cellData: {main: '#'}})}
+            cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
           />
           {this.props.schema.map(this.createColumn)}
         </Table>
