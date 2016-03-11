@@ -1,35 +1,59 @@
 import React from 'react';
-import { Cell } from 'fixed-data-table';
 
 import { ImageCell } from './ImageCell';
 import { UrlCell } from './UrlCell';
 import { TextCell } from './TextCell';
 import * as Constants from './constants';
+import { CellExpander } from './CellExpander';
 
-export function getComponentDataType ({columnDataType, cellData, cellWidth, cellHeight, key, columnKey, mixedContentImage}) {
+export function handleArrayOfData({columnDataType, cellData, width, height, key, columnKey, mixedContentImage, cellCustomRenderer}) {
+  const childrenCellData = generateChildCellData(cellData);
+
+  const properties = {
+    columnDataType,
+    cellData: childrenCellData[0],
+    width,
+    key,
+    columnKey,
+    mixedContentImage,
+    height,
+  };
+
+  if (childrenCellData.length === 1) {
+    return cellCustomRenderer(properties);
+  } else {
+    return (
+      <CellExpander firstElement={cellCustomRenderer(properties)}>
+        {childrenCellData.map((cellData, key) => cellCustomRenderer({...properties, cellData, key}))}
+      </CellExpander>
+    );
+  }
+}
+
+export function getComponentDataType ({columnDataType, cellData, width, height, key, columnKey, mixedContentImage, cellCustomRenderer = getComponentContent}) {
   if (!columnDataType) {
     return null;
   }
 
-  const cellContent = getComponentContent({columnDataType, cellData, cellWidth, key, columnKey, mixedContentImage});
+  const props = {columnDataType, cellData, key, columnKey, mixedContentImage, width, height};
 
-  return (
-    <Cell height={cellHeight} width={cellWidth} columnKey={columnKey}>
-      {cellContent}
-    </Cell>
-  );
+  if (Array.isArray(cellData.main)) {
+    return handleArrayOfData({...props, cellCustomRenderer});
+  } else {
+    return cellCustomRenderer(props);
+  }
 }
 
-export function getComponentContent({columnDataType, cellData, cellWidth, key, columnKey, mixedContentImage}) { // eslint-disable-line react/no-multi-comp
+export function getComponentContent({columnDataType, cellData, width, key, columnKey, mixedContentImage}) { // eslint-disable-line react/no-multi-comp
   switch(columnDataType) {
     case Constants.ColumnTypes.URL:
-      return <UrlCell cellData={cellData} width={cellWidth} key={key} columnKey={columnKey} />;
+      return <UrlCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
 
     case Constants.ColumnTypes.IMAGE:
-      return <ImageCell cellData={cellData} width={cellWidth} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
+      return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
 
     default:
-      return <TextCell cellData={cellData} width={cellWidth} key={key} columnKey={columnKey} />;
+      return <TextCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
   }
 }
 

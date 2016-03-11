@@ -22,7 +22,8 @@ More comprehensive example can be found inside the [examples](examples) director
 ## Table API
 
 - **data** - Takes an array of data that should be displayed inside the table,
-- **schema** - Takes an array of objects defining the name of particular fields to look for inside teh `data` array, and their type of data, which will tell the table which Cell type to use for displaying a particular column of data. Check `examples` directory for exemplary set of data and schema files.
+- **schema** - Takes an array of objects defining the name of particular fields to look for inside the `data` array, and their type of data, which will tell the table which Cell type to use for displaying a particular column of data. Check `examples` directory for exemplary set of data and schema files.
+- **renderers** - A map of cell renderers. This object can be used to define a custom cell renderer for column headers or cells of particular data type. Check the example to see how this can be used. Available renderer types are `{HEADER, DOUBLE, URL, STRING, IMAGE}`.
 - **options.height** - Height of the table component,
 - **options.width** - Width of the table component,
 - **options.mixedContentImage** - Function that can handle mixed content warnings for images being loaded inside the table. Function will be invoked with image URL, and allows developers to decide what do do when page is loaded for example with `https`, and image url has `http` protocol. Check `examples` directory for an example on how to use this.
@@ -45,6 +46,12 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 4.3.0
+
+**API Additions**
+
+- Adding `renderers` prop, which allow to specify custom renderers.
 
 ### 4.2.3
 
