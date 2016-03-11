@@ -27,7 +27,7 @@ export class HugeTable extends React.Component {
         ...initial,
         [next]: React.PropTypes.func,
       };
-    }, {header: React.PropTypes.func})),
+    }, {HEADER: React.PropTypes.func})),
   }
 
   constructor(props) {
