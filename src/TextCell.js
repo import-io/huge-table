@@ -6,16 +6,16 @@ const HORZ_PADDING = 5;
 export const TextCell = (props) => {
   let content;
 
-  if (props.cellData.type === 'STRING') {
-    content = props.cellData.text || props.cellData.main || '';
-    content = typeof content === 'object' ?  JSON.stringify(content) : content;
-
-  } else {
+  if (props.cellData.type === 'TEXT') {
     content = props.cellData.main.text;
     const href = props.cellData.main.href;
     if (href) {
       content = <a href={href} target="_blank">{content}</a>;
     }
+
+  } else {
+    content = props.cellData.text || props.cellData.main || '';
+    content = typeof content === 'object' ?  JSON.stringify(content) : content;
   }
 
   return (
