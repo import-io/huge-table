@@ -38,12 +38,28 @@ export class ImageCell extends React.Component {
   }
 
   render() {
-    const imageUrl = this.props.mixedContentImage ? this.props.mixedContentImage(this.props.cellData.main) : this.props.cellData.main;
+    const cellData = this.props.cellData;
+    let imageUrl, href, alt;
+
+    if (cellData.main && typeof cellData.main === 'object') {
+      imageUrl = cellData.main.src;
+      href = cellData.main.href || imageUrl;
+      alt = cellData.alt || cellData.main.alt;
+
+    } else {
+      imageUrl = cellData.main;
+      href = cellData.main;
+      alt = cellData.alt || cellData.main;
+    }
+
+    if (this.props.mixedContentImage) {
+      imageUrl =  this.props.mixedContentImage(imageUrl);
+    }
 
     return (
       <a
-        href={this.props.cellData.main}
-        title={this.props.cellData.alt || this.props.cellData.main}
+        href={href}
+        title={alt}
         target="_blank"
         style={{
           display: 'inline-block',
@@ -76,7 +92,7 @@ export class ImageCell extends React.Component {
               <img
                 style={{width: '100%'}}
                 src={imageUrl}
-                title={this.props.cellData.alt || this.props.cellData.main}
+                title={alt}
               />
             </div>
           </div>

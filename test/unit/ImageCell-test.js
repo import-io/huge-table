@@ -94,5 +94,53 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').props().title).to.be.null;
       expect(wrapper.find('.example-image').props().style.backgroundImage).to.be.null;
     });
+
+    it('should render and image when passed in a object', () => {
+
+      const cellData = {
+        alt: 'Mathematics',
+        currency: null,
+        main: {
+          src: 'https://cdn.sstatic.net/math/img/icon-48.png',
+        },
+        source: null,
+        text: null,
+        title: null,
+        utc: null,
+      };
+
+      const wrapper = shallow(<ImageCell cellData={cellData} width={452}/>);
+
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
+      expect(wrapper.find('a').props().title).to.equal('Mathematics');
+      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+    });
+
+    it('should render and image and link when passed in a object', () => {
+
+      const cellData = {
+        alt: 'Mathematics',
+        currency: null,
+        main: {
+          src: 'https://cdn.sstatic.net/math/img/icon-48.png',
+          href: 'https://duckduckgo.com',
+        },
+        source: null,
+        text: null,
+        title: null,
+        utc: null,
+      };
+
+      const wrapper = shallow(<ImageCell cellData={cellData} width={452}/>);
+
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().href).to.equal('https://duckduckgo.com');
+      expect(wrapper.find('a').props().title).to.equal('Mathematics');
+      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+    });
+
+
+
   });
 });

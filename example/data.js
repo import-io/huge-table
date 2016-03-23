@@ -50,7 +50,11 @@ module.exports = {
     },
     {
       'link': 'http:\/\/math.stackexchange.com\/questions\/1334678\/does-mathematics-become-circular-at-the-bottom-what-is-at-the-bottom-of-mathema',
-      'image\/_alt': 'Mathematics',
+      'image': {
+        src: 'http:\/\/cdn.sstatic.net\/math\/img\/icon-48.png',
+        href: 'http:\/\/duckduckgo.com',
+        alt: 'Mathematics'
+      },
       'questionhost_link': 'http:\/\/math.stackexchange.com',
       'by_label': 'by',
       'question_link\/_title': 'This question has been arbitrarily awarded 128.537 hotness points',
@@ -59,9 +63,11 @@ module.exports = {
         'logic',
         'foundations'
       ],
-      'metainfo_values': '8 answers | asked 8 hours ago',
+      'metainfo_values': {
+        text: '8 answers | asked 8 hours ago',
+        href: 'http:\/\/cdn.sstatic.net\/math\/img\/icon-48.png'
+      },
       'on_label': 'on',
-      'image': 'http:\/\/cdn.sstatic.net\/math\/img\/icon-48.png',
       'question_link': 'http:\/\/math.stackexchange.com\/questions\/1334678\/does-mathematics-become-circular-at-the-bottom-what-is-at-the-bottom-of-mathema',
       'posttag_links': [
         'http:\/\/math.stackexchange.com\/questions\/tagged\/elementary-set-theory',
@@ -83,7 +89,10 @@ module.exports = {
     },
     {
       'link': 'http:\/\/academia.stackexchange.com\/questions\/47576\/dealing-with-students-who-sent-empty-emails-but-the-homework-attached',
-      'image\/_alt': 'Academia',
+      'image': {
+        src: 'http:\/\/cdn.sstatic.net\/academia\/img\/icon-48.png',
+        alt: 'Academia'
+      },
       'questionhost_link': 'http:\/\/academia.stackexchange.com',
       'by_label': 'by',
       'question_link\/_title': 'This question has been arbitrarily awarded 82.887 hotness points',
@@ -94,9 +103,10 @@ module.exports = {
         'international-students',
         'homework'
       ],
-      'metainfo_values': '6 answers | asked 22 hours ago',
+      'metainfo_values': {
+        text: '6 answers | asked 22 hours ago'
+      },
       'on_label': 'on',
-      'image': 'http:\/\/cdn.sstatic.net\/academia\/img\/icon-48.png',
       'question_link': 'http:\/\/academia.stackexchange.com\/questions\/47576\/dealing-with-students-who-sent-empty-emails-but-the-homework-attached',
       'posttag_links': [
         'http:\/\/academia.stackexchange.com\/questions\/tagged\/etiquette',
@@ -931,7 +941,7 @@ module.exports = {
     },
     {
       'name': 'metainfo_values',
-      'type': 'STRING'
+      'type': 'TEXT'
     },
     {
       'name': 'metainfo_values_numbers',

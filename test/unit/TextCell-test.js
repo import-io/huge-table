@@ -16,6 +16,7 @@ describe('TextCell', () => {
         text: null,
         title: null,
         utc: null,
+        type: 'STRING',
       };
 
       const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
@@ -34,6 +35,7 @@ describe('TextCell', () => {
         text: '13 hours ago',
         title: null,
         utc: null,
+        type: 'STRING',
       };
 
       const wrapper = shallow(<TextCell cellData={cellData} width={249}/>);
@@ -52,12 +54,59 @@ describe('TextCell', () => {
         text: null,
         title: null,
         utc: null,
+        type: 'STRING',
       };
 
       const wrapper = shallow(<TextCell cellData={cellData} width={100} />);
 
       expect(wrapper.find('.text-cell').length).to.equal(1);
       expect(wrapper.find('OverflowExpander').props().children).to.equal('');
+    });
+
+
+    it('should render content of type TEXT', () => {
+
+      const cellData = {
+        alt: null,
+        currency: null,
+        main: {
+          text: '2 answers',
+        },
+        source: null,
+        text: null,
+        title: null,
+        utc: null,
+        type: 'TEXT',
+      };
+
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
+
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+      expect(wrapper.find('a').length).to.equal(0);
+      expect(wrapper.find('OverflowExpander').props().children).to.equal(cellData.main.text);
+    });
+
+    it('should render content of type TEXT as a link when it has href property', () => {
+
+      const cellData = {
+        alt: null,
+        currency: null,
+        main: {
+          text: '2 answers',
+          href: 'https://duckduckgo.com',
+        },
+        source: null,
+        text: null,
+        title: null,
+        utc: null,
+        type: 'TEXT',
+      };
+
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
+
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+      expect(wrapper.find('a').length).to.equal(1);
+      expect(wrapper.find('a').props().children).to.equal(cellData.main.text);
     });
   });
 });
