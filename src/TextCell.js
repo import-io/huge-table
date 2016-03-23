@@ -7,10 +7,14 @@ export const TextCell = (props) => {
   let content;
 
   if (props.cellData.type === 'TEXT') {
-    content = props.cellData.main.text;
-    const href = props.cellData.main.href;
-    if (href) {
-      content = <a href={href} target="_blank">{content}</a>;
+    if (!props.cellData.main) {
+      content = '';
+    } else {
+      content = props.cellData.main.text;
+      const href = props.cellData.main.href;
+      if (href) {
+        content = <a href={href} target="_blank">{content}</a>;
+      }
     }
 
   } else {
