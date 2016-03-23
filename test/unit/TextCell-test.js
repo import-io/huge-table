@@ -108,5 +108,16 @@ describe('TextCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().children).to.equal(cellData.main.text);
     });
+
+    it('should attempt to render content of any type without erroring', () => {
+
+      const cellData = {
+        main: 1,
+      };
+
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+    });
+
   });
 });
