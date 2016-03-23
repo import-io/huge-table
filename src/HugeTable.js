@@ -138,6 +138,7 @@ export class HugeTable extends React.Component {
 
     const columnDataType = this.state.columnNameToDataTypeMap[schemaItemName];
     const cellCustomRenderer = this.props.renderers && this.props.renderers[columnDataType];
+    cellData.type = columnDataType;
 
     return (
       <Cell>
