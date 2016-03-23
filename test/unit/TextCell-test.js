@@ -119,5 +119,27 @@ describe('TextCell', () => {
       expect(wrapper.find('.text-cell').length).to.equal(1);
     });
 
+    it('should handle undefined values of type STRING', () => {
+
+      const cellData = {
+        main: undefined,
+        type: 'STRING',
+      };
+
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+    });
+
+    it('should handle undefined values of type TEXT', () => {
+
+      const cellData = {
+        main: undefined,
+        type: 'TEXT',
+      };
+
+      const wrapper = shallow(<TextCell cellData={cellData} width={250} />);
+      expect(wrapper.find('.text-cell').length).to.equal(1);
+    });
+
   });
 });
