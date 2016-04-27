@@ -27,7 +27,7 @@ export const CellExpander = ({firstElement, children}) => {
           style={{
             position: 'absolute',
             top: 'calc(100% - 25px)',
-            left: 'calc(100% - 95px)',
+            left: '10px',
             cursor: 'pointer',
           }}
           className="label label-outline"

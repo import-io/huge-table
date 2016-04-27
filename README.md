@@ -47,6 +47,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 5.0.2
+
+**Style changes**
+
+- Changing the default position of cell expander.
+
 ### 5.0.1
 
 **Style changes**
