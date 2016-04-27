@@ -47,6 +47,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 5.0.1
+
+**Style changes**
+
+- Fixing the display of more values label.
+
 ### 5.0.0
 
 **Style changes**
