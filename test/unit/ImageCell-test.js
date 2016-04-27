@@ -23,7 +23,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
       expect(wrapper.find('a').props().title).to.equal('Mathematics');
-      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.find('.example-image').props().src).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
     });
 
     it('should render an anchor and a div with only main property', () => {
@@ -43,7 +43,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
       expect(wrapper.find('a').props().title).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
-      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.find('.example-image').props().src).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
     });
 
     it('should render an anchor and a div with only main property and proxified image', () => {
@@ -72,7 +72,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().href).to.equal('http://cdn.sstatic.net/math/img/icon-48.png');
       expect(wrapper.find('a').props().title).to.equal('http://cdn.sstatic.net/math/img/icon-48.png');
-      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://images.weserv.nl/?url=cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.find('.example-image').props().src).to.equal('https://images.weserv.nl/?url=cdn.sstatic.net/math/img/icon-48.png');
     });
 
     it('should render an anchor and a div with empty properties', () => {
@@ -92,7 +92,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().href).to.be.null;
       expect(wrapper.find('a').props().title).to.be.null;
-      expect(wrapper.find('.example-image').props().style.backgroundImage).to.be.null;
+      expect(wrapper.find('.example-image').props().src).to.be.null;
     });
 
     it('should render and image when passed in a object', () => {
@@ -114,7 +114,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().href).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
       expect(wrapper.find('a').props().title).to.equal('Mathematics');
-      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.find('.example-image').props().src).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
     });
 
     it('should render and image and link when passed in a object', () => {
@@ -137,7 +137,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('a').length).to.equal(1);
       expect(wrapper.find('a').props().href).to.equal('https://duckduckgo.com');
       expect(wrapper.find('a').props().title).to.equal('Mathematics');
-      expect(wrapper.find('.example-image').props().style.backgroundImage).to.equal('url(https://cdn.sstatic.net/math/img/icon-48.png)');
+      expect(wrapper.find('.example-image').props().src).to.equal('https://cdn.sstatic.net/math/img/icon-48.png');
     });
 
 
