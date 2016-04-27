@@ -47,6 +47,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 5.0.0
+
+**Style changes**
+
+- Modifying styles of the elements.
+
 ### 4.3.0
 
 **API Additions**

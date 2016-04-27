@@ -3,6 +3,8 @@ import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 export const CellExpander = ({firstElement, children}) => {
+  const innerText = `+ ${Array.isArray(children) ? children.length : 0} more items`;
+
   return (
     <div>
       {firstElement}
@@ -12,7 +14,12 @@ export const CellExpander = ({firstElement, children}) => {
          placement="top"
          overlay={(
            <Popover id="details-popover">
-             {children}
+             {children.map((c, id) => (
+               <div key={id}>
+                 {c}
+                 <br/>
+               </div>
+             ))}
            </Popover>
          )}
       >
@@ -20,12 +27,12 @@ export const CellExpander = ({firstElement, children}) => {
           style={{
             position: 'absolute',
             top: 'calc(100% - 25px)',
-            left: 'calc(100% - 30px)',
+            left: 'calc(100% - 95px)',
             cursor: 'pointer',
           }}
-          className="badge"
+          className="label label-outline"
         >
-          ...
+          {innerText}
         </span>
       </OverlayTrigger>
     </div>

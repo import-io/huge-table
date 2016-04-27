@@ -67,15 +67,12 @@ export class ImageCell extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <div
+        <img
           className="example-image"
+          src={imageUrl ? imageUrl : null}
           style={{
-            backgroundImage: imageUrl ? `url(${imageUrl})` : null,
-            backgroundSize: 'contain',
-            backgroundPositionY: 'center',
-            backgroundRepeat: 'no-repeat',
-            height: Constants.ROW_HEIGHT - 10,
-            width: this.props.width - 20,
+            maxHeight: Constants.ROW_HEIGHT - 10,
+            maxWidth: this.props.width - 20,
           }}
         />
         <Portal isOpened={!!(imageUrl && this.state.showPopover)}>
