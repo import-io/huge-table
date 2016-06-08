@@ -60,6 +60,10 @@ export class ImageCell extends React.Component {
       alt = cellData.alt || cellData.main;
     }
 
+    if ( ! imageUrl ) {
+      return <span/>;
+    }
+
     if (this.props.mixedContentImage) {
       imageUrl =  this.props.mixedContentImage(imageUrl);
     }
@@ -78,7 +82,7 @@ export class ImageCell extends React.Component {
         <img
           ref="img"
           className="example-image"
-          src={imageUrl ? imageUrl : null}
+          src={imageUrl}
           style={{
             maxHeight: Constants.ROW_HEIGHT - 10,
             maxWidth: this.props.width - 20,

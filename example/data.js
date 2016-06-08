@@ -89,8 +89,7 @@ module.exports = {
     {
       'link': 'http:\/\/academia.stackexchange.com\/questions\/47576\/dealing-with-students-who-sent-empty-emails-but-the-homework-attached',
       'image': {
-        src: 'http:\/\/cdn.sstatic.net\/academia\/img\/icon-48.png',
-        alt: 'Academia'
+
       },
       'questionhost_link': 'http:\/\/academia.stackexchange.com',
       'by_label': 'by',

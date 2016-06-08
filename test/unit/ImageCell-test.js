@@ -75,7 +75,7 @@ describe('ImageCell', () => {
       expect(wrapper.find('.example-image').props().src).to.equal('https://images.weserv.nl/?url=cdn.sstatic.net/math/img/icon-48.png');
     });
 
-    it('should render an anchor and a div with empty properties', () => {
+    it('should render an emopty span with no url', () => {
 
       const cellData = {
         alt: null,
@@ -89,10 +89,10 @@ describe('ImageCell', () => {
 
       const wrapper = shallow(<ImageCell cellData={cellData} width={763} />);
 
-      expect(wrapper.find('a').length).to.equal(1);
-      expect(wrapper.find('a').props().href).to.be.null;
-      expect(wrapper.find('a').props().title).to.be.null;
-      expect(wrapper.find('.example-image').props().src).to.be.null;
+      expect(wrapper.find('a').length).to.equal(0);
+      expect(wrapper.find('span').length).to.equal(1);
+      expect(wrapper.length).to.equal(1);
+      expect(wrapper.text()).to.equal('');
     });
 
     it('should render and image when passed in a object', () => {
