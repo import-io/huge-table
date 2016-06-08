@@ -29,7 +29,6 @@ export const CellExpander = ({firstElement, children}) => {
             top: 'calc(100% - 25px)',
             left: '10px',
             cursor: 'pointer',
-            textShadow: '0px 1px 5px black',
           }}
           className="label label-outline"
         >
