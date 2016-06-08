@@ -37,6 +37,14 @@ export class ImageCell extends React.Component {
     });
   }
 
+  handleImageLoaded() {
+    // Treat 5x5 pixels as less as visually meaningless
+    // load about:blank to show the alt text instead
+    if (this.refs.img.width * this.refs.img.height <= 25) {
+      this.refs.img.src = 'about:blank';
+    }
+  }
+
   render() {
     const cellData = this.props.cellData;
     let imageUrl, href, alt;
@@ -68,12 +76,19 @@ export class ImageCell extends React.Component {
         onMouseLeave={this.handleMouseLeave}
       >
         <img
+          ref='img'
           className="example-image"
           src={imageUrl ? imageUrl : null}
           style={{
             maxHeight: Constants.ROW_HEIGHT - 10,
             maxWidth: this.props.width - 20,
+            minHeight: 5,
+            minWidth: 5,
           }}
+          title={alt}
+          alt={alt ? alt : 'Image'}
+          onLoad={this.handleImageLoaded.bind(this)}
+
         />
         <Portal isOpened={!!(imageUrl && this.state.showPopover)}>
           <div className="popover fade right in" style={{
@@ -90,7 +105,9 @@ export class ImageCell extends React.Component {
                 style={{width: '100%'}}
                 src={imageUrl}
                 title={alt}
+                alt={alt ? alt : 'Image'}
               />
+              <span>{alt}</span>
             </div>
           </div>
         </Portal>
