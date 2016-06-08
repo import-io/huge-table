@@ -76,7 +76,7 @@ export class ImageCell extends React.Component {
         onMouseLeave={this.handleMouseLeave}
       >
         <img
-          ref='img'
+          ref="img"
           className="example-image"
           src={imageUrl ? imageUrl : null}
           style={{
