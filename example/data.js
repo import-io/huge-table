@@ -51,9 +51,8 @@ module.exports = {
     {
       'link': 'http:\/\/math.stackexchange.com\/questions\/1334678\/does-mathematics-become-circular-at-the-bottom-what-is-at-the-bottom-of-mathema',
       'image': {
-        src: 'http:\/\/cdn.sstatic.net\/math\/img\/icon-48.png',
-        href: 'http:\/\/duckduckgo.com',
-        alt: 'Mathematics'
+        src: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Clear1x1.gif',
+        href: 'http:\/\/duckduckgo.com'
       },
       'questionhost_link': 'http:\/\/math.stackexchange.com',
       'by_label': 'by',
