@@ -49,7 +49,7 @@ Build the project in a production ready way.
 
 ### 5.1.0
 
-**APi Addition**
+**API Addition**
 
 - Updating mixedContentImageHelper to use the new API, supporting both referer and url.
 
