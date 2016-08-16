@@ -65,7 +65,7 @@ export class ImageCell extends React.Component {
     }
 
     if (this.props.mixedContentImage) {
-      imageUrl =  this.props.mixedContentImage(imageUrl);
+      imageUrl =  this.props.mixedContentImage(imageUrl, imageUrl);
     }
 
     return (

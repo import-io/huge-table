@@ -47,6 +47,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 5.1.0
+
+**APi Addition**
+
+- Updating mixedContentImageHelper to use the new API, supporting both referer and url.
+
 ### 5.0.2
 
 **Style changes**
