@@ -85,7 +85,8 @@ export class HugeTable extends React.Component {
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
 
     schema.forEach((schemaItem) => {
-      columnWidths[schemaItem.name] = defaultColumnWidth;
+      this.state.columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+      columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name];
     });
 
     if (columnKey) {
