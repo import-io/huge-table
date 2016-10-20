@@ -83,14 +83,17 @@ export class HugeTable extends React.Component {
     // Table width - rowNumberColumn (width + border) - columns border / columnsCount
     const calculatedWidth = (width - Constants.ROW_NUMBER_COLUMN_WIDTH - 5 - (schema.length * 2)) / Math.max(schema.length, 1);
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
+    const savedColumnsWidth = JSON.parse(localStorage.getItem('columnWidths')) || {};
 
     schema.forEach((schemaItem) => {
-      this.state.columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+      this.state.columnWidths[schemaItem.name] = savedColumnsWidth[schemaItem.name] || this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
       columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name];
     });
 
     if (columnKey) {
       columnWidths[columnKey] = newColumnWidth;
+      savedColumnsWidth[columnKey] = newColumnWidth;
+      localStorage.setItem('columnWidths', JSON.stringify(savedColumnsWidth));
       isColumnResizing = false;
     }
 
