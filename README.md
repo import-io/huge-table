@@ -47,6 +47,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 5.1.2
+
+- Reading columnWidths from localStorage to keep track of user changed columns.
+
 ### 5.1.0
 
 **API Addition**

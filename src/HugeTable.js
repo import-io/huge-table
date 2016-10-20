@@ -38,6 +38,11 @@ export class HugeTable extends React.Component {
       isColumnResizing: undefined,
       columnNameToDataTypeMap: {},
     };
+
+    this.uniqueId = this.hashCode(props.schema.map(i=>i.name).join());
+    this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
+    this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
+
   }
 
   componentWillMount() {
@@ -75,6 +80,18 @@ export class HugeTable extends React.Component {
     this.setState({columnNameToDataTypeMap});
   }
 
+  hashCode = (string) => {
+    let hash = 0;
+    let i, char;
+    if (string.length == 0) return hash;
+    for (i = 0; i < string.length; i++) {
+      char = string.charCodeAt(i);
+      hash = ((hash<<5)-hash)+char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+  }
+
   generateColumnWidths = (schema, width, columnKey, newColumnWidth) => {
     const columnWidths = {};
     let isColumnResizing;
@@ -83,17 +100,16 @@ export class HugeTable extends React.Component {
     // Table width - rowNumberColumn (width + border) - columns border / columnsCount
     const calculatedWidth = (width - Constants.ROW_NUMBER_COLUMN_WIDTH - 5 - (schema.length * 2)) / Math.max(schema.length, 1);
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
-    const savedColumnsWidth = JSON.parse(localStorage.getItem('columnWidths')) || {};
 
     schema.forEach((schemaItem) => {
-      this.state.columnWidths[schemaItem.name] = savedColumnsWidth[schemaItem.name] || this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+      this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
       columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name];
     });
 
     if (columnKey) {
       columnWidths[columnKey] = newColumnWidth;
-      savedColumnsWidth[columnKey] = newColumnWidth;
-      localStorage.setItem('columnWidths', JSON.stringify(savedColumnsWidth));
+      this.savedColumnsWidth[this.uniqueId][columnKey] = newColumnWidth;
+      localStorage.setItem('huge-table-column-widths', JSON.stringify(this.savedColumnsWidth));
       isColumnResizing = false;
     }
 
