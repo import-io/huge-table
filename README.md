@@ -47,6 +47,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 5.1.3
+
+- Added id (string) to options so we can save in localStorage by id. Default to not saving if there is no id.
+
 ### 5.1.2
 
 - Reading columnWidths from localStorage to keep track of user changed columns.

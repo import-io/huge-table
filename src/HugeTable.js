@@ -17,6 +17,7 @@ export class HugeTable extends React.Component {
       width: React.PropTypes.number,
       mixedContentImage: React.PropTypes.func,
       tableScrolled: React.PropTypes.func,
+      id: React.PropTypes.string,
     }),
     schema: React.PropTypes.arrayOf(React.PropTypes.shape({
       name: React.PropTypes.string,
@@ -39,10 +40,11 @@ export class HugeTable extends React.Component {
       columnNameToDataTypeMap: {},
     };
 
-    this.uniqueId = this.hashCode(props.schema.map(i=>i.name).join());
-    this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
-    this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
-
+    this.uniqueId = props.options.id || null;
+    if (this.uniqueId){
+      this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
+      this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
+    }
   }
 
   componentWillMount() {
@@ -80,18 +82,6 @@ export class HugeTable extends React.Component {
     this.setState({columnNameToDataTypeMap});
   }
 
-  hashCode = (string) => {
-    let hash = 0;
-    let i, char;
-    if (string.length == 0) return hash;
-    for (i = 0; i < string.length; i++) {
-      char = string.charCodeAt(i);
-      hash = ((hash<<5)-hash)+char;
-      hash = hash & hash; // Convert to 32bit integer
-    }
-    return hash;
-  }
-
   generateColumnWidths = (schema, width, columnKey, newColumnWidth) => {
     const columnWidths = {};
     let isColumnResizing;
@@ -102,14 +92,20 @@ export class HugeTable extends React.Component {
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
 
     schema.forEach((schemaItem) => {
-      this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+      if (this.uniqueId){
+        this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+      } else {
+        this.state.columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+      }
       columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name];
     });
 
     if (columnKey) {
       columnWidths[columnKey] = newColumnWidth;
-      this.savedColumnsWidth[this.uniqueId][columnKey] = newColumnWidth;
-      localStorage.setItem('huge-table-column-widths', JSON.stringify(this.savedColumnsWidth));
+      if (this.uniqueId){
+        this.savedColumnsWidth[this.uniqueId][columnKey] = newColumnWidth;
+        localStorage.setItem('huge-table-column-widths', JSON.stringify(this.savedColumnsWidth));
+      }
       isColumnResizing = false;
     }
 

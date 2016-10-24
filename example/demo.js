@@ -25,6 +25,7 @@ const options = {
   height: 400,
   width: 600,
   mixedContentImage: proxyImages,
+  id: '1',
 };
 
 render(<HugeTable data={data.results} schema={schema} options={options} />, mountNode);
@@ -36,6 +37,7 @@ const options2 = {
   height: 800,
   width: 1200,
   mixedContentImage: proxyImages,
+  id: '2',
 };
 const renderers = {
   HEADER(properties) {
