@@ -47,7 +47,7 @@ Build the project in a production ready way.
 
 ## Changelog
 
-### 5.1.3
+### 5.2.0
 
 - Added id (string) to options so we can save in localStorage by id. Default to not saving if there is no id.
 
