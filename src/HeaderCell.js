@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cell } from 'fixed-data-table';
+import { Cell } from 'fixed-data-table-2';
 
 export const HeaderCell = ({cellData, ...props}) => {
   const content = cellData.main;
@@ -14,7 +14,7 @@ export const HeaderCell = ({cellData, ...props}) => {
 
   return (
     <Cell {...props}>
-      <div style={style} title={content}>{content}</div>
+      <div style={style} title={content}>{content} </div>
     </Cell>
   );
 };
