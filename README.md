@@ -1,6 +1,6 @@
 # HugeTable
 
-Table component to handle huge sets of data, based on Facebook's FixedDataTable.
+Table component to handle huge sets of data, based on Facebook's FixedDataTable and Schrodinger's Fixed Data Table 2
 
 ## How to use it
 
@@ -46,6 +46,16 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 6.1.0
+
+**API Additions**
+
+- Added `onSchemaChange` prop, which is a function that returns the updated schema after reordering columns.
+
+### 6.0.0
+
+- Added column reordering support and upgraded to [Fixed Data Table 2](https://github.com/schrodinger/fixed-data-table-2)
 
 ### 5.2.0
 
