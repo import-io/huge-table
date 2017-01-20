@@ -51,12 +51,16 @@ export class HugeTable extends React.Component {
 
   componentWillMount() {
     this.generateColumnToDataTypeMap(this.props.schema);
-    this.generateInitialColumnOrder(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
 
     this.setState({
       contentHeight: Constants.ROW_HEIGHT * this.props.data.length + Constants.HEADER_HEIGHT,
     });
+  }
+
+  componentDidMount() {
+    this.generateInitialColumnOrder(this.props.schema);
+
   }
 
   componentWillReceiveProps(nextProps) {
