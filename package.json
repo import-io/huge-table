@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "5.2.0",
+  "version": "6.0.0",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "fixed-data-table": "^0.6.0",
+    "fixed-data-table-2": "^0.7.10",
     "keymirror": "^0.1.1",
     "react": "^0.14.6",
     "react-addons-test-utils": "^0.14.7",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Column, Cell } from 'fixed-data-table';
+import { Table, Column, Cell } from 'fixed-data-table-2';
 
 import * as Constants from './constants';
 import * as CellUtils from './CellUtils';
@@ -38,6 +38,8 @@ export class HugeTable extends React.Component {
       columnWidths: {},
       isColumnResizing: undefined,
       columnNameToDataTypeMap: {},
+      columnOrder: [],
+      currentSchema: [],
     };
 
     this.uniqueId = props.options.id || null;
@@ -56,9 +58,15 @@ export class HugeTable extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.generateInitialColumnOrder(this.props.schema);
+
+  }
+
   componentWillReceiveProps(nextProps) {
     if(this.props.schema !== nextProps.schema) {
       this.generateColumnToDataTypeMap(nextProps.schema);
+      this.generateInitialColumnOrder(nextProps.schema);
     }
 
     if(this.props.schema !== nextProps.schema || this.props.options.width !== nextProps.options.width) {
@@ -70,6 +78,28 @@ export class HugeTable extends React.Component {
         contentHeight: Constants.ROW_HEIGHT * nextProps.data.length + Constants.HEADER_HEIGHT,
       });
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.columnOrder !== this.state.columnOrder) {
+      this.reorderSchema(this.props.schema, this.state.columnOrder);
+    }
+  }
+
+  reorderSchema = (schema, columnOrder) => {
+    const newSchema = [];
+    columnOrder.forEach(col => {
+      newSchema.push(schema.find(s => s.name === col));
+    });
+    this.setState({ currentSchema: newSchema });
+  }
+
+  generateInitialColumnOrder = (schema) => {
+    const columnOrder = schema.map(schemaItem => schemaItem.name);
+    this.setState({
+      columnOrder,
+    });
+    this.reorderSchema(this.props.schema, columnOrder);
   }
 
   generateColumnToDataTypeMap = (schema) => {
@@ -128,6 +158,7 @@ export class HugeTable extends React.Component {
         cell={(props) => this.cellRenderer({...props, schemaItemName: schemaItem.name})}
         key={schemaItem.name}
         isResizable
+        isReorderable
       />
     );
   }
@@ -192,11 +223,30 @@ export class HugeTable extends React.Component {
     });
   }
 
+  onColumnReorderEndCallback = (event) => {
+    const columnOrder = this.state.columnOrder.filter((columnKey) => {
+      return columnKey !== event.reorderColumn;
+    });
+
+    if (event.columnAfter) {
+      const index = columnOrder.indexOf(event.columnAfter);
+      columnOrder.splice(index, 0, event.reorderColumn);
+    } else {
+      // if (fixedColumns.indexOf(event.reorderColumn) !== -1) {
+      //   columnOrder.splice(fixedColumns.length - 1, 0, event.reorderColumn)
+      // } else {
+      columnOrder.push(event.reorderColumn);
+      // }
+    }
+    this.setState({
+      columnOrder,
+    });
+  }
+
   render() {
     const controlledScrolling = (this.state.scrollLeft !== undefined && this.state.scrollLeft !== 0) || (this.state.scrollTop !== undefined && this.state.scrollTop !== 0);
     const tableWidth = this.props.options.width;
     const tableHeight = this.props.options.height - Constants.HEADER_HEIGHT;
-
     return (
       <TouchWrapper
         onScroll={this.onScroll}
@@ -218,6 +268,8 @@ export class HugeTable extends React.Component {
           isColumnResizing={this.state.isColumnResizing}
           onColumnResizeEndCallback={this.onColumnResizeEndCallback}
           onContentDimensionsChange={this.onContentDimensionsChange}
+          onColumnReorderEndCallback={this.onColumnReorderEndCallback}
+        isColumnReordering={false}
         >
           <Column
             key="hugetable-index-column"
@@ -225,8 +277,9 @@ export class HugeTable extends React.Component {
             width={Constants.ROW_NUMBER_COLUMN_WIDTH}
             header={props => this.renderHeader({...props, cellData: {main: '#'}})}
             cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
+
           />
-          {this.props.schema.map(this.createColumn)}
+        {this.state.currentSchema.map(this.createColumn)}
         </Table>
       </TouchWrapper>
     );

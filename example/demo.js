@@ -53,6 +53,7 @@ const renderers = {
     //                                  that should be rendered on the cell, to satisfy React's rendering of lists of data.
     // `columnDataType`    - OPTIONAL - Defines the type of column. The same as the the key in the `renderers` object.
     // `mixedContentImage` - OPTIONAL - The same function that was passed to the `huge-table` props options.
+    //
     return <div>H: {properties.cellData.main}</div>;
   },
 };
