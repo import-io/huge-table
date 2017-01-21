@@ -20,6 +20,9 @@ function proxyImages (imageUrl) {
 
 const mountNode = document.getElementById('main');
 
+const onSchemaChangeCallback = () => {
+  console.debug('Schema changed!', schema);
+};
 
 const options = {
   height: 400,
@@ -28,7 +31,7 @@ const options = {
   id: '1',
 };
 
-render(<HugeTable data={data.results} schema={schema} options={options} />, mountNode);
+render(<HugeTable data={data.results} schema={schema} options={options} onSchemaChange={onSchemaChangeCallback} />, mountNode);
 
 // Rendereres example.
 
@@ -58,4 +61,4 @@ const renderers = {
   },
 };
 
-render(<HugeTable data={data.results} schema={schema} options={options2} renderers={renderers} />, mountNode2);
+render(<HugeTable data={data.results} schema={schema} options={options2} renderers={renderers} onSchemaChange={onSchemaChangeCallback} />, mountNode2);

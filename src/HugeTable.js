@@ -29,6 +29,7 @@ export class HugeTable extends React.Component {
         [next]: React.PropTypes.func,
       };
     }, {HEADER: React.PropTypes.func})),
+    onSchemaChange: React.PropTypes.func,
   }
 
   constructor(props) {
@@ -60,7 +61,6 @@ export class HugeTable extends React.Component {
 
   componentDidMount() {
     this.generateInitialColumnOrder(this.props.schema);
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -83,6 +83,9 @@ export class HugeTable extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.columnOrder !== this.state.columnOrder) {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
+    }
+    if (prevState.currentSchema !== this.state.currentSchema) {
+      this.props.onSchemaChange(this.state.currentSchema);
     }
   }
 
@@ -232,11 +235,7 @@ export class HugeTable extends React.Component {
       const index = columnOrder.indexOf(event.columnAfter);
       columnOrder.splice(index, 0, event.reorderColumn);
     } else {
-      // if (fixedColumns.indexOf(event.reorderColumn) !== -1) {
-      //   columnOrder.splice(fixedColumns.length - 1, 0, event.reorderColumn)
-      // } else {
       columnOrder.push(event.reorderColumn);
-      // }
     }
     this.setState({
       columnOrder,
