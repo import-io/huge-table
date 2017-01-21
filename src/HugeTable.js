@@ -7,6 +7,7 @@ import { HeaderCell } from './HeaderCell';
 import { TextCell } from './TextCell';
 import TouchWrapper from './TouchWrapper';
 import { RETURNED_DATA_TYPES } from './constants';
+import _ from 'lodash';
 
 
 export class HugeTable extends React.Component {
@@ -53,14 +54,10 @@ export class HugeTable extends React.Component {
   componentWillMount() {
     this.generateColumnToDataTypeMap(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
-
+    this.generateInitialColumnOrder(this.props.schema);
     this.setState({
       contentHeight: Constants.ROW_HEIGHT * this.props.data.length + Constants.HEADER_HEIGHT,
     });
-  }
-
-  componentDidMount() {
-    this.generateInitialColumnOrder(this.props.schema);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,7 +81,7 @@ export class HugeTable extends React.Component {
     if (prevState.columnOrder !== this.state.columnOrder) {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
     }
-    if (prevState.currentSchema !== this.state.currentSchema) {
+    if (prevState.currentSchema !== this.state.currentSchema && !_.isEqual(prevState.currentSchema, this.state.currentSchema)) {
       this.props.onSchemaChange(this.state.currentSchema);
     }
   }
