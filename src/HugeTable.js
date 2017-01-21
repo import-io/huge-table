@@ -78,7 +78,7 @@ export class HugeTable extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.columnOrder !== this.state.columnOrder) {
+    if (prevState.columnOrder !== this.state.columnOrder && !_.isEqual(prevState.columnOrder, this.state.columnOrder)) {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
     }
     if (prevState.currentSchema !== this.state.currentSchema && !_.isEqual(prevState.currentSchema, this.state.currentSchema)) {
