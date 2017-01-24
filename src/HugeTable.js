@@ -104,7 +104,7 @@ export class HugeTable extends React.Component {
     this.setState({
       columnOrder,
     });
-    this.reorderSchema(this.props.schema, columnOrder);
+    this.reorderSchema(schema, columnOrder);
   }
 
   generateColumnToDataTypeMap = (schema) => {
