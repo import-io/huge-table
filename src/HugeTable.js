@@ -51,13 +51,11 @@ export class HugeTable extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.generateColumnToDataTypeMap(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
     this.generateInitialColumnOrder(this.props.schema);
-    this.setState({
-      contentHeight: Constants.ROW_HEIGHT * this.props.data.length + Constants.HEADER_HEIGHT,
-    });
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,9 +69,7 @@ export class HugeTable extends React.Component {
     }
 
     if(this.props.data.length !== nextProps.data.length) {
-      this.setState({
-        contentHeight: Constants.ROW_HEIGHT * nextProps.data.length + Constants.HEADER_HEIGHT,
-      });
+      this.setContentHeight(nextProps.data);
     }
   }
 
@@ -89,9 +85,18 @@ export class HugeTable extends React.Component {
   reorderSchema = (schema, columnOrder) => {
     const newSchema = [];
     columnOrder.forEach(col => {
-      newSchema.push(schema.find(s => s.name === col));
+      const newSchemaItem = schema.find(s => s.name === col);
+      if (newSchemaItem) {
+        newSchema.push(newSchemaItem);
+      }
     });
     this.setState({ currentSchema: newSchema });
+  }
+
+  setContentHeight = (data) => {
+    this.setState({
+      contentHeight: Constants.ROW_HEIGHT * data.length + Constants.HEADER_HEIGHT,
+    });
   }
 
   generateInitialColumnOrder = (schema) => {
