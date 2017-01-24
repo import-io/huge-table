@@ -47,7 +47,7 @@ Build the project in a production ready way.
 
 ## Changelog
 
-### 6.1.3
+### 6.1.4
 - Styling changes, moving ellipsis to top
 - Added extra checks for schema and column changes so `onSchemaChange` fires less often
 
