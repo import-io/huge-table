@@ -42,7 +42,6 @@ export class HugeTable extends React.Component {
       columnNameToDataTypeMap: {},
       columnOrder: [],
       currentSchema: [],
-      columnMaxChar: {},
     };
 
     this.uniqueId = props.options.id || null;
