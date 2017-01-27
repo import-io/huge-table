@@ -183,7 +183,7 @@ export class HugeTable extends React.Component {
       maxColumnWidth = maxCharCount * Constants.CHAR_MULTIPLIER; 
     }
 
-    return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth
+    return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
   }
 
   getCellDataLength = cellData => {

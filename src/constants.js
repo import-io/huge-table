@@ -20,4 +20,4 @@ export const CELL_EXPANDER_WIDTH      = 35;
 export const RETURNED_DATA_TYPES      = ['currency', 'utc', 'text', 'alt', 'title', 'source'];
 export const MAX_TITLE_CHAR_COUNT 	  = 20;
 export const MAX_CONTENT_CHAR_COUNT   = 100;
-export const CHAR_MULTIPLIER          = 7
+export const CHAR_MULTIPLIER          = 7;
