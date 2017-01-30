@@ -127,10 +127,11 @@ export class HugeTable extends React.Component {
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
 
     schema.forEach((schemaItem) => {
+      const maxColumnWidth = this.getMaxColumnWidth(schemaItem, defaultColumnWidth);
       if (this.uniqueId){
-        this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+        this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       } else {
-        this.state.columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name] || defaultColumnWidth;
+        this.state.columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       }
       columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name];
     });
@@ -145,12 +146,56 @@ export class HugeTable extends React.Component {
     }
 
     contentWidth = schema.reduce((sum, item) => sum + columnWidths[item.name], 0) + Constants.ROW_NUMBER_COLUMN_WIDTH;
-
     this.setState({
       columnWidths,
       isColumnResizing,
       contentWidth,
     });
+  }
+
+  getMaxColumnWidth = (schemaItem, defaultColumnWidth) => {
+    let maxColumnWidth = 0;
+    let maxCharCount = 0;
+
+    //Calculate the max character count unless the content is an image
+    if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
+      this.props.data.forEach(row => {
+        let cellContent;
+        //If there is text associated with a link grab the text and use that as the count
+        if (row[schemaItem.name + '/_text'] !== undefined) {
+          cellContent = row[schemaItem.name + '/_text'];
+        } else {
+          cellContent = row[schemaItem.name];
+        }
+        const cellCharCount = this.getCellDataLength(cellContent);
+        maxCharCount = maxCharCount > cellCharCount ? maxCharCount : cellCharCount;
+      });
+  
+      //If the character count is less than the max of the title count 
+      //Set the column width based off of title char count
+      //Else set column width based off of content char count
+      if (maxCharCount < Constants.MAX_TITLE_CHAR_COUNT) {
+        maxCharCount = Math.max(schemaItem.name.length, maxCharCount);
+        maxCharCount = Math.min(maxCharCount, Constants.MAX_TITLE_CHAR_COUNT);
+      } else {
+        maxCharCount = Math.min(Constants.MAX_CONTENT_CHAR_COUNT, maxCharCount);
+      }
+      maxColumnWidth = maxCharCount * Constants.CHAR_MULTIPLIER; 
+    }
+
+    return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
+  }
+
+  getCellDataLength = cellData => {
+    if (typeof cellData === 'string') {
+      return cellData.length;
+    } else if (typeof cellData === 'number') {
+      return cellData;
+    } else if (Array.isArray(cellData)) {
+      return this.getCellDataLength(cellData[0]);
+    } else {
+      return 0;
+    }
   }
 
   createColumn = (schemaItem) => {
@@ -187,7 +232,6 @@ export class HugeTable extends React.Component {
     Constants.RETURNED_DATA_TYPES.forEach(dataType => {
       cellData[dataType] = rowObject[schemaItemName + '/_' + dataType] || null;
     });
-
     const columnDataType = this.state.columnNameToDataTypeMap[schemaItemName];
     const cellCustomRenderer = this.props.renderers && this.props.renderers[columnDataType];
     cellData.type = columnDataType;
