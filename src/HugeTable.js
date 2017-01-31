@@ -164,16 +164,12 @@ export class HugeTable extends React.Component {
     let maxColumnWidth = 0;
     let maxCharCount = 0;
     //Calculate the max character count unless the content is an image
-
-
-
     if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
       this.props.data.forEach(row => {
         let cellContent = this.getCellContent(row, schemaItem);
         const cellCharCount = this.getCellDataLength(cellContent);
         maxCharCount = maxCharCount > cellCharCount ? maxCharCount : cellCharCount;
       });
-  
       //If the character count is less than the max of the title count 
       //Set the column width based off of title char count
       //Else set column width based off of content char count
@@ -185,7 +181,6 @@ export class HugeTable extends React.Component {
       }
       maxColumnWidth = maxCharCount * Constants.CHAR_MULTIPLIER; 
     }
-
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
   }
 
