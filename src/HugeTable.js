@@ -163,17 +163,13 @@ export class HugeTable extends React.Component {
   getMaxColumnWidth = (schemaItem, defaultColumnWidth) => {
     let maxColumnWidth = 0;
     let maxCharCount = 0;
-
     //Calculate the max character count unless the content is an image
+
+
+
     if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
       this.props.data.forEach(row => {
-        let cellContent;
-        //If there is text associated with a link grab the text and use that as the count
-        if (row[schemaItem.name + '/_text'] !== undefined) {
-          cellContent = row[schemaItem.name + '/_text'];
-        } else {
-          cellContent = row[schemaItem.name];
-        }
+        let cellContent = this.getCellContent(row, schemaItem);
         const cellCharCount = this.getCellDataLength(cellContent);
         maxCharCount = maxCharCount > cellCharCount ? maxCharCount : cellCharCount;
       });
@@ -193,13 +189,32 @@ export class HugeTable extends React.Component {
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
   }
 
-  getCellDataLength = cellData => {
-    if (typeof cellData === 'string') {
-      return cellData.length;
-    } else if (typeof cellData === 'number') {
-      return cellData;
-    } else if (Array.isArray(cellData)) {
-      return this.getCellDataLength(cellData[0]);
+  getCellContent = (row, schemaItem) => {
+    let content;
+    if (schemaItem.type === Constants.ColumnTypes.TEXT) {
+      let cellData = Array.isArray(row[schemaItem.name]) ? row[schemaItem.name][0] : row[schemaItem.name];
+      if (cellData !== undefined) {
+        content = cellData.text !== undefined ? cellData.text : '';
+      } else {
+        content = '';
+      }
+    } else if (schemaItem.type === Constants.ColumnTypes.IMAGE) {
+      content = '';
+    } else {
+      content = row[schemaItem.name + '/_text'] !== undefined ? row[schemaItem.name + '/_text'] : row[schemaItem.name];
+    }
+    return content;
+  }
+
+  getCellDataLength = cellContent => {
+    if (typeof cellContent === 'string') {
+      return cellContent.length;
+    } else if (typeof cellContent === 'number') {
+      return cellContent;
+    } else if (Array.isArray(cellContent)) {
+      return this.getCellDataLength(cellContent[0]);
+    } else if (typeof cellContent === 'object') {
+      return JSON.stringify(cellContent).length;
     } else {
       return 0;
     }
