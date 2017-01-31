@@ -61,4 +61,4 @@ const renderers = {
   },
 };
 
-render(<HugeTable data={data.results} schema={schema} options={options2} renderers={renderers} onSchemaChange={onSchemaChangeCallback} />, mountNode2);
+render(<HugeTable data={data.results} schema={schema} options={options2} renderers={renderers} onSchemaChange={onSchemaChangeCallback} resizeByCharCount />, mountNode2);
