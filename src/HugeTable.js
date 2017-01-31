@@ -170,7 +170,6 @@ export class HugeTable extends React.Component {
 
   getMaxColumnWidth = (schemaItem, defaultColumnWidth) => {
     let maxColumnWidth = 0;
-    let maxCharCount = 0;
     //Calculate the column width unless the content is an image
     if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
       this.props.data.forEach(row => {
@@ -195,7 +194,7 @@ export class HugeTable extends React.Component {
 
   getContentSize = (txt, font) => {
     this.element = document.createElement('canvas');
-    this.context = this.element.getContext("2d");
+    this.context = this.element.getContext('2d');
     this.context.font = font;
     const tsize = {'width':this.context.measureText(txt).width};
     return tsize.width;
