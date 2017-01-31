@@ -31,7 +31,7 @@ export class HugeTable extends React.Component {
       };
     }, {HEADER: React.PropTypes.func})),
     onSchemaChange: React.PropTypes.func,
-    resizeByCharCount: React.PropTypes.bool,
+    resizeByContent: React.PropTypes.bool,
     getFontDetails: React.PropTypes.string,
   }
 
@@ -142,7 +142,7 @@ export class HugeTable extends React.Component {
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
 
     schema.forEach((schemaItem) => {
-      const maxColumnWidth = this.props.resizeByCharCount ? this.getMaxColumnWidth(schemaItem, defaultColumnWidth) : defaultColumnWidth;
+      const maxColumnWidth = this.props.resizeByContent ? this.getMaxColumnWidth(schemaItem, defaultColumnWidth) : defaultColumnWidth;
       if (this.uniqueId){
         this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       } else {
