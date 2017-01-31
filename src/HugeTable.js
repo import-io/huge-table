@@ -221,7 +221,7 @@ export class HugeTable extends React.Component {
     if (Array.isArray(cellContent)) {
       return this.getCellText(cellContent[0]);
     } else if (typeof cellContent === 'object') {
-      return JSON.stringify(cellContent).length;
+      return JSON.stringify(cellContent);
     } else {
       return cellContent;
     }
