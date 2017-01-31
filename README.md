@@ -47,6 +47,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.2.2
+
+- Return stringified object instead of string length
+
 ### 6.2.1
 
 **Style changes**
