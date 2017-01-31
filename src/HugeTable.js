@@ -31,6 +31,7 @@ export class HugeTable extends React.Component {
       };
     }, {HEADER: React.PropTypes.func})),
     onSchemaChange: React.PropTypes.func,
+    resizeByCharCount: React.PropTypes.bool,
   }
 
   constructor(props) {
@@ -78,7 +79,13 @@ export class HugeTable extends React.Component {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
     }
     if (prevState.currentSchema !== this.state.currentSchema && !_.isEqual(prevState.currentSchema, this.state.currentSchema)) {
-      this.props.onSchemaChange(this.state.currentSchema);
+      this.onSchemaChange(this.state.currentSchema);
+    }
+  }
+
+  onSchemaChange = schema => {
+    if (this.props.onSchemaChange) {
+      this.props.onSchemaChange(schema);
     }
   }
 
@@ -127,7 +134,7 @@ export class HugeTable extends React.Component {
     const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
 
     schema.forEach((schemaItem) => {
-      const maxColumnWidth = this.getMaxColumnWidth(schemaItem, defaultColumnWidth);
+      const maxColumnWidth = this.props.resizeByCharCount ? this.getMaxColumnWidth(schemaItem, defaultColumnWidth) : defaultColumnWidth;
       if (this.uniqueId){
         this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       } else {
@@ -156,21 +163,13 @@ export class HugeTable extends React.Component {
   getMaxColumnWidth = (schemaItem, defaultColumnWidth) => {
     let maxColumnWidth = 0;
     let maxCharCount = 0;
-
     //Calculate the max character count unless the content is an image
     if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
       this.props.data.forEach(row => {
-        let cellContent;
-        //If there is text associated with a link grab the text and use that as the count
-        if (row[schemaItem.name + '/_text'] !== undefined) {
-          cellContent = row[schemaItem.name + '/_text'];
-        } else {
-          cellContent = row[schemaItem.name];
-        }
+        const cellContent = this.getCellContent(row, schemaItem);
         const cellCharCount = this.getCellDataLength(cellContent);
         maxCharCount = maxCharCount > cellCharCount ? maxCharCount : cellCharCount;
       });
-  
       //If the character count is less than the max of the title count 
       //Set the column width based off of title char count
       //Else set column width based off of content char count
@@ -182,17 +181,35 @@ export class HugeTable extends React.Component {
       }
       maxColumnWidth = maxCharCount * Constants.CHAR_MULTIPLIER; 
     }
-
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
   }
 
-  getCellDataLength = cellData => {
-    if (typeof cellData === 'string') {
-      return cellData.length;
-    } else if (typeof cellData === 'number') {
-      return cellData;
-    } else if (Array.isArray(cellData)) {
-      return this.getCellDataLength(cellData[0]);
+  getCellContent = (row, schemaItem) => {
+    let content;
+    if (schemaItem.type === Constants.ColumnTypes.TEXT) {
+      const cellData = Array.isArray(row[schemaItem.name]) ? row[schemaItem.name][0] : row[schemaItem.name];
+      if (cellData !== undefined) {
+        content = cellData.text !== undefined ? cellData.text : '';
+      } else {
+        content = '';
+      }
+    } else if (schemaItem.type === Constants.ColumnTypes.IMAGE) {
+      content = '';
+    } else {
+      content = row[schemaItem.name + '/_text'] !== undefined ? row[schemaItem.name + '/_text'] : row[schemaItem.name];
+    }
+    return content;
+  }
+
+  getCellDataLength = cellContent => {
+    if (typeof cellContent === 'string') {
+      return cellContent.length;
+    } else if (typeof cellContent === 'number') {
+      return cellContent;
+    } else if (Array.isArray(cellContent)) {
+      return this.getCellDataLength(cellContent[0]);
+    } else if (typeof cellContent === 'object') {
+      return JSON.stringify(cellContent).length;
     } else {
       return 0;
     }
