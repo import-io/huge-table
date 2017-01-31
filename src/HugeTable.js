@@ -166,7 +166,7 @@ export class HugeTable extends React.Component {
     //Calculate the max character count unless the content is an image
     if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
       this.props.data.forEach(row => {
-        let cellContent = this.getCellContent(row, schemaItem);
+        const cellContent = this.getCellContent(row, schemaItem);
         const cellCharCount = this.getCellDataLength(cellContent);
         maxCharCount = maxCharCount > cellCharCount ? maxCharCount : cellCharCount;
       });
@@ -187,7 +187,7 @@ export class HugeTable extends React.Component {
   getCellContent = (row, schemaItem) => {
     let content;
     if (schemaItem.type === Constants.ColumnTypes.TEXT) {
-      let cellData = Array.isArray(row[schemaItem.name]) ? row[schemaItem.name][0] : row[schemaItem.name];
+      const cellData = Array.isArray(row[schemaItem.name]) ? row[schemaItem.name][0] : row[schemaItem.name];
       if (cellData !== undefined) {
         content = cellData.text !== undefined ? cellData.text : '';
       } else {
