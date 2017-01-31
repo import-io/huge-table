@@ -47,6 +47,13 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.2.1
+
+**Style changes**
+
+- Determine auto column width with canvas
+- Make auto resize column and onSchemaChange callback optional
+
 ### 6.2.0
 
 **Style changes**

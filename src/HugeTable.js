@@ -32,6 +32,7 @@ export class HugeTable extends React.Component {
     }, {HEADER: React.PropTypes.func})),
     onSchemaChange: React.PropTypes.func,
     resizeByCharCount: React.PropTypes.bool,
+    getFontDetails: React.PropTypes.string,
   }
 
   constructor(props) {
@@ -56,7 +57,6 @@ export class HugeTable extends React.Component {
     this.generateColumnToDataTypeMap(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
     this.generateInitialColumnOrder(this.props.schema);
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,6 +98,14 @@ export class HugeTable extends React.Component {
       }
     });
     this.setState({ currentSchema: newSchema });
+  }
+
+  getFontDetails = () => {
+    if (this.props.getFontDetails) {
+      return this.props.getFontDetails;
+    } else {
+      return Constants.FONT_DETAILS;
+    }
   }
 
   setContentHeight = (data) => {
@@ -163,25 +171,34 @@ export class HugeTable extends React.Component {
   getMaxColumnWidth = (schemaItem, defaultColumnWidth) => {
     let maxColumnWidth = 0;
     let maxCharCount = 0;
-    //Calculate the max character count unless the content is an image
+    //Calculate the column width unless the content is an image
     if (schemaItem.type !== Constants.ColumnTypes.IMAGE) {
       this.props.data.forEach(row => {
         const cellContent = this.getCellContent(row, schemaItem);
-        const cellCharCount = this.getCellDataLength(cellContent);
-        maxCharCount = maxCharCount > cellCharCount ? maxCharCount : cellCharCount;
+        const cellText = this.getCellText(cellContent);
+        const cellColumnWidth = this.getContentSize(cellText, this.getFontDetails()); 
+        maxColumnWidth = maxColumnWidth > cellColumnWidth ? maxColumnWidth : cellColumnWidth;
       });
-      //If the character count is less than the max of the title count 
-      //Set the column width based off of title char count
-      //Else set column width based off of content char count
-      if (maxCharCount < Constants.MAX_TITLE_CHAR_COUNT) {
-        maxCharCount = Math.max(schemaItem.name.length, maxCharCount);
-        maxCharCount = Math.min(maxCharCount, Constants.MAX_TITLE_CHAR_COUNT);
+      //If the content width is less than the max title width
+      //Set the column width based off of max title width
+      //Else set column width based off of content width
+      if (maxColumnWidth < Constants.MAX_TITLE_WIDTH) {
+        const titleWidth = this.getContentSize(schemaItem.name, this.getFontDetails());
+        maxColumnWidth = Math.max(titleWidth, maxColumnWidth);
+        maxColumnWidth = Math.min(maxColumnWidth, Constants.MAX_TITLE_WIDTH);
       } else {
-        maxCharCount = Math.min(Constants.MAX_CONTENT_CHAR_COUNT, maxCharCount);
-      }
-      maxColumnWidth = maxCharCount * Constants.CHAR_MULTIPLIER; 
+        maxColumnWidth = Math.min(Constants.MAX_CONTENT_WIDTH, maxColumnWidth);
+      } 
     }
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
+  }
+
+  getContentSize = (txt, font) => {
+    this.element = document.createElement('canvas');
+    this.context = this.element.getContext("2d");
+    this.context.font = font;
+    const tsize = {'width':this.context.measureText(txt).width};
+    return tsize.width;
   }
 
   getCellContent = (row, schemaItem) => {
@@ -201,17 +218,13 @@ export class HugeTable extends React.Component {
     return content;
   }
 
-  getCellDataLength = cellContent => {
-    if (typeof cellContent === 'string') {
-      return cellContent.length;
-    } else if (typeof cellContent === 'number') {
-      return cellContent;
-    } else if (Array.isArray(cellContent)) {
-      return this.getCellDataLength(cellContent[0]);
+  getCellText = cellContent => {
+    if (Array.isArray(cellContent)) {
+      return this.getCellText(cellContent[0]);
     } else if (typeof cellContent === 'object') {
       return JSON.stringify(cellContent).length;
     } else {
-      return 0;
+      return cellContent;
     }
   }
 
