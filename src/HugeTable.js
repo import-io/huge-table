@@ -51,6 +51,9 @@ export class HugeTable extends React.Component {
       this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
       this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
     }
+
+    this.maxTitleWidth = this.props.maxTitleWidth || Constants.MAX_TITLE_WIDTH;
+    this.maxContentWidth = this.props.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
   }
 
   componentDidMount() {
@@ -181,12 +184,12 @@ export class HugeTable extends React.Component {
       //If the content width is less than the max title width
       //Set the column width based off of max title width
       //Else set column width based off of content width
-      if (maxColumnWidth < Constants.MAX_TITLE_WIDTH) {
+      if (maxColumnWidth < this.maxTitleWidth) {
         const titleWidth = this.getContentSize(schemaItem.name, this.getFontDetails());
         maxColumnWidth = Math.max(titleWidth, maxColumnWidth);
-        maxColumnWidth = Math.min(maxColumnWidth, Constants.MAX_TITLE_WIDTH);
+        maxColumnWidth = Math.min(maxColumnWidth, this.maxTitleWidth);
       } else {
-        maxColumnWidth = Math.min(Constants.MAX_CONTENT_WIDTH, maxColumnWidth);
+        maxColumnWidth = Math.min(this.maxContentWidth, maxColumnWidth);
       } 
     }
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
