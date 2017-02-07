@@ -19,6 +19,8 @@ export class HugeTable extends React.Component {
       mixedContentImage: React.PropTypes.func,
       tableScrolled: React.PropTypes.func,
       id: React.PropTypes.string,
+      maxTitleWidth: React.PropTypes.number,
+      maxContentWidth: React.PropTypes.number,
     }),
     schema: React.PropTypes.arrayOf(React.PropTypes.shape({
       name: React.PropTypes.string,
@@ -51,6 +53,9 @@ export class HugeTable extends React.Component {
       this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
       this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
     }
+
+    this.maxTitleWidth = props.options.maxTitleWidth || Constants.MAX_TITLE_WIDTH;
+    this.maxContentWidth = props.options.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
   }
 
   componentDidMount() {
@@ -92,7 +97,7 @@ export class HugeTable extends React.Component {
   reorderSchema = (schema, columnOrder) => {
     const newSchema = [];
     columnOrder.forEach(col => {
-      const newSchemaItem = schema.find(s => s.name === col);
+      const newSchemaItem = schema.find(s => (s.id || s.name) === col);
       if (newSchemaItem) {
         newSchema.push(newSchemaItem);
       }
@@ -115,7 +120,7 @@ export class HugeTable extends React.Component {
   }
 
   generateInitialColumnOrder = (schema) => {
-    const columnOrder = schema.map(schemaItem => schemaItem.name);
+    const columnOrder = schema.map(schemaItem => schemaItem.id || schemaItem.name);
     this.setState({
       columnOrder,
     });
@@ -144,11 +149,11 @@ export class HugeTable extends React.Component {
     schema.forEach((schemaItem) => {
       const maxColumnWidth = this.props.resizeByContent ? this.getMaxColumnWidth(schemaItem, defaultColumnWidth) : defaultColumnWidth;
       if (this.uniqueId){
-        this.state.columnWidths[schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.name] || this.state.columnWidths[schemaItem.name] || maxColumnWidth || defaultColumnWidth;
+        this.state.columnWidths[schemaItem.id || schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.id || schemaItem.name] || this.state.columnWidths[schemaItem.id || schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       } else {
-        this.state.columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name] || maxColumnWidth || defaultColumnWidth;
+        this.state.columnWidths[schemaItem.id || schemaItem.name] = this.state.columnWidths[schemaItem.id || schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       }
-      columnWidths[schemaItem.name] = this.state.columnWidths[schemaItem.name];
+      columnWidths[schemaItem.id || schemaItem.name] = this.state.columnWidths[schemaItem.id || schemaItem.name];
     });
 
     if (columnKey) {
@@ -160,7 +165,7 @@ export class HugeTable extends React.Component {
       isColumnResizing = false;
     }
 
-    contentWidth = schema.reduce((sum, item) => sum + columnWidths[item.name], 0) + Constants.ROW_NUMBER_COLUMN_WIDTH;
+    contentWidth = schema.reduce((sum, item) => sum + columnWidths[item.id || item.name], 0) + Constants.ROW_NUMBER_COLUMN_WIDTH;
     this.setState({
       columnWidths,
       isColumnResizing,
@@ -181,12 +186,12 @@ export class HugeTable extends React.Component {
       //If the content width is less than the max title width
       //Set the column width based off of max title width
       //Else set column width based off of content width
-      if (maxColumnWidth < Constants.MAX_TITLE_WIDTH) {
+      if (maxColumnWidth < this.maxTitleWidth) {
         const titleWidth = this.getContentSize(schemaItem.name, this.getFontDetails());
         maxColumnWidth = Math.max(titleWidth, maxColumnWidth);
-        maxColumnWidth = Math.min(maxColumnWidth, Constants.MAX_TITLE_WIDTH);
+        maxColumnWidth = Math.min(maxColumnWidth, this.maxTitleWidth);
       } else {
-        maxColumnWidth = Math.min(Constants.MAX_CONTENT_WIDTH, maxColumnWidth);
+        maxColumnWidth = Math.min(this.maxContentWidth, maxColumnWidth);
       } 
     }
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
@@ -231,10 +236,10 @@ export class HugeTable extends React.Component {
     return (
       <Column
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
-        columnKey={schemaItem.name}
+        columnKey={schemaItem.id || schemaItem.name}
         minWidth={Constants.MIN_COLUMN_WIDTH}
-        width={this.state.columnWidths[schemaItem.name]}
-        cell={(props) => this.cellRenderer({...props, schemaItemName: schemaItem.name})}
+        width={this.state.columnWidths[schemaItem.id || schemaItem.name]}
+        cell={(props) => this.cellRenderer({...props, schemaItem })}
         key={schemaItem.name}
         isResizable
         isReorderable
@@ -254,14 +259,14 @@ export class HugeTable extends React.Component {
     }
   }
 
-  cellRenderer = ({rowIndex, width, height, schemaItemName}) => {
+  cellRenderer = ({rowIndex, width, height, schemaItem}) => {
     const rowObject = this.props.data[rowIndex];
     const cellData = {};
-    cellData.main = rowObject[schemaItemName];
+    cellData.main = rowObject[schemaItem.name];
     Constants.RETURNED_DATA_TYPES.forEach(dataType => {
-      cellData[dataType] = rowObject[schemaItemName + '/_' + dataType] || null;
+      cellData[dataType] = rowObject[schemaItem.name + '/_' + dataType] || null;
     });
-    const columnDataType = this.state.columnNameToDataTypeMap[schemaItemName];
+    const columnDataType = this.state.columnNameToDataTypeMap[schemaItem.name];
     const cellCustomRenderer = this.props.renderers && this.props.renderers[columnDataType];
     cellData.type = columnDataType;
 
@@ -272,7 +277,7 @@ export class HugeTable extends React.Component {
           cellData,
           width,
           height,
-          columnKey: schemaItemName,
+          columnKey: schemaItem.id || schemaItem.name,
           mixedContentImage: this.props.options.mixedContentImage,
           cellCustomRenderer})}
       </Cell>
