@@ -19,6 +19,8 @@ export class HugeTable extends React.Component {
       mixedContentImage: React.PropTypes.func,
       tableScrolled: React.PropTypes.func,
       id: React.PropTypes.string,
+      maxTitleWidth: React.PropTypes.number,
+      maxContentWidth: React.PropTypes.number,
     }),
     schema: React.PropTypes.arrayOf(React.PropTypes.shape({
       name: React.PropTypes.string,
@@ -51,9 +53,9 @@ export class HugeTable extends React.Component {
       this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
       this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
     }
-
-    this.maxTitleWidth = this.props.maxTitleWidth || Constants.MAX_TITLE_WIDTH;
-    this.maxContentWidth = this.props.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
+    
+    this.maxTitleWidth = props.options.maxTitleWidth || Constants.MAX_TITLE_WIDTH;
+    this.maxContentWidth = props.options.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
   }
 
   componentDidMount() {
