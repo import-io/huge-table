@@ -47,6 +47,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.3.3
+
+- Add ability to pass in default min column width and move font details to options
+
 ### 6.3.2
 
 - Allow for column keys to be unique id or name. Add props for maxContentWidth and maxTitleWidth
