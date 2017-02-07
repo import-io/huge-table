@@ -53,7 +53,7 @@ export class HugeTable extends React.Component {
       this.savedColumnsWidth = JSON.parse(localStorage.getItem('huge-table-column-widths')) || {};
       this.savedColumnsWidth[this.uniqueId] = this.savedColumnsWidth[this.uniqueId] || {};
     }
-    
+
     this.maxTitleWidth = props.options.maxTitleWidth || Constants.MAX_TITLE_WIDTH;
     this.maxContentWidth = props.options.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
   }
@@ -239,7 +239,7 @@ export class HugeTable extends React.Component {
         columnKey={schemaItem.id || schemaItem.name}
         minWidth={Constants.MIN_COLUMN_WIDTH}
         width={this.state.columnWidths[schemaItem.id || schemaItem.name]}
-        cell={(props) => this.cellRenderer({...props, schemaItem: schemaItem})}
+        cell={(props) => this.cellRenderer({...props, schemaItem })}
         key={schemaItem.name}
         isResizable
         isReorderable
