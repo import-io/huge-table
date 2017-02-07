@@ -21,6 +21,8 @@ export class HugeTable extends React.Component {
       id: React.PropTypes.string,
       maxTitleWidth: React.PropTypes.number,
       maxContentWidth: React.PropTypes.number,
+      minColumnWidth: React.PropTypes.number,
+      fontDetails: React.PropTypes.string,
     }),
     schema: React.PropTypes.arrayOf(React.PropTypes.shape({
       name: React.PropTypes.string,
@@ -34,7 +36,6 @@ export class HugeTable extends React.Component {
     }, {HEADER: React.PropTypes.func})),
     onSchemaChange: React.PropTypes.func,
     resizeByContent: React.PropTypes.bool,
-    getFontDetails: React.PropTypes.string,
   }
 
   constructor(props) {
@@ -56,6 +57,8 @@ export class HugeTable extends React.Component {
 
     this.maxTitleWidth = props.options.maxTitleWidth || Constants.MAX_TITLE_WIDTH;
     this.maxContentWidth = props.options.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
+    this.fontDetails = props.options.fontDetails || Constants.FONT_DETAILS;
+    this.minColumnWidth = props.options.minColumnWidth || Constants.MIN_COLUMN_WIDTH;
   }
 
   componentDidMount() {
@@ -105,13 +108,6 @@ export class HugeTable extends React.Component {
     this.setState({ currentSchema: newSchema });
   }
 
-  getFontDetails = () => {
-    if (this.props.getFontDetails) {
-      return this.props.getFontDetails;
-    } else {
-      return Constants.FONT_DETAILS;
-    }
-  }
 
   setContentHeight = (data) => {
     this.setState({
@@ -144,7 +140,7 @@ export class HugeTable extends React.Component {
 
     // Table width - rowNumberColumn (width + border) - columns border / columnsCount
     const calculatedWidth = (width - Constants.ROW_NUMBER_COLUMN_WIDTH - 5 - (schema.length * 2)) / Math.max(schema.length, 1);
-    const defaultColumnWidth = Math.max(calculatedWidth, Constants.MIN_COLUMN_WIDTH);
+    const defaultColumnWidth = Math.max(calculatedWidth, this.minColumnWidth);
 
     schema.forEach((schemaItem) => {
       const maxColumnWidth = this.props.resizeByContent ? this.getMaxColumnWidth(schemaItem, defaultColumnWidth) : defaultColumnWidth;
@@ -180,14 +176,15 @@ export class HugeTable extends React.Component {
       this.props.data.forEach(row => {
         const cellContent = this.getCellContent(row, schemaItem);
         const cellText = this.getCellText(cellContent);
-        const cellColumnWidth = this.getContentSize(cellText, this.getFontDetails()); 
+        const cellColumnWidth = this.getContentSize(cellText, this.fontDetails); 
         maxColumnWidth = maxColumnWidth > cellColumnWidth ? maxColumnWidth : cellColumnWidth;
       });
+    
       //If the content width is less than the max title width
       //Set the column width based off of max title width
       //Else set column width based off of content width
       if (maxColumnWidth < this.maxTitleWidth) {
-        const titleWidth = this.getContentSize(schemaItem.name, this.getFontDetails());
+        const titleWidth = this.getContentSize(schemaItem.name, this.fontDetails);
         maxColumnWidth = Math.max(titleWidth, maxColumnWidth);
         maxColumnWidth = Math.min(maxColumnWidth, this.maxTitleWidth);
       } else {
@@ -237,7 +234,7 @@ export class HugeTable extends React.Component {
       <Column
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
         columnKey={schemaItem.id || schemaItem.name}
-        minWidth={Constants.MIN_COLUMN_WIDTH}
+        minWidth={this.minColumnWidth}
         width={this.state.columnWidths[schemaItem.id || schemaItem.name]}
         cell={(props) => this.cellRenderer({...props, schemaItem })}
         key={schemaItem.name}

@@ -14,7 +14,7 @@ export const ColumnTypes = keyMirror({
 
 export const ROW_HEIGHT               = rowHeight;
 export const HEADER_HEIGHT            = headerHeight;
-export const MIN_COLUMN_WIDTH         = 120;
+export const MIN_COLUMN_WIDTH         = 140;
 export const ROW_NUMBER_COLUMN_WIDTH  = rowNumberColumnWidth;
 export const FLEX_GROW                = 1;
 export const CELL_EXPANDER_WIDTH      = 35;
