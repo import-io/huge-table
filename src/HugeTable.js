@@ -22,6 +22,7 @@ export class HugeTable extends React.Component {
       maxTitleWidth: React.PropTypes.number,
       maxContentWidth: React.PropTypes.number,
       minColumnWidth: React.PropTypes.number,
+      rowNumberColumnWidth: React.PropTypes.number,
       fontDetails: React.PropTypes.string,
     }),
     schema: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -36,6 +37,7 @@ export class HugeTable extends React.Component {
     }, {HEADER: React.PropTypes.func})),
     onSchemaChange: React.PropTypes.func,
     resizeByContent: React.PropTypes.bool,
+    hideRowNumbers: React.PropTypes.bool,
   }
 
   constructor(props) {
@@ -176,10 +178,10 @@ export class HugeTable extends React.Component {
       this.props.data.forEach(row => {
         const cellContent = this.getCellContent(row, schemaItem);
         const cellText = this.getCellText(cellContent);
-        const cellColumnWidth = this.getContentSize(cellText, this.fontDetails); 
+        const cellColumnWidth = this.getContentSize(cellText, this.fontDetails);
         maxColumnWidth = maxColumnWidth > cellColumnWidth ? maxColumnWidth : cellColumnWidth;
       });
-    
+
       //If the content width is less than the max title width
       //Set the column width based off of max title width
       //Else set column width based off of content width
@@ -189,7 +191,7 @@ export class HugeTable extends React.Component {
         maxColumnWidth = Math.min(maxColumnWidth, this.maxTitleWidth);
       } else {
         maxColumnWidth = Math.min(this.maxContentWidth, maxColumnWidth);
-      } 
+      }
     }
     return maxColumnWidth > defaultColumnWidth ? maxColumnWidth : defaultColumnWidth;
   }
@@ -347,14 +349,19 @@ export class HugeTable extends React.Component {
           onColumnReorderEndCallback={this.onColumnReorderEndCallback}
         isColumnReordering={false}
         >
-          <Column
-            key="hugetable-index-column"
-            columnKey="hugetable-index-column"
-            width={Constants.ROW_NUMBER_COLUMN_WIDTH}
-            header={props => this.renderHeader({...props, cellData: {main: '#'}})}
-            cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
-
-          />
+        {(() => {
+          if (!this.props.hideRowNumbers) {
+            return (
+              <Column
+                key="hugetable-index-column"
+                columnKey="hugetable-index-column"
+                width={this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH }
+                header={props => this.renderHeader({...props, cellData: {main: '#'}})}
+                cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
+              />
+            );
+          }
+        })()}
         {this.state.currentSchema.map(this.createColumn)}
         </Table>
       </TouchWrapper>
