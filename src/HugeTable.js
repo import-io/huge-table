@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table, Column, Cell } from 'fixed-data-table-2';
-
+import { Table, Column, Cell, ColumnGroup } from 'fixed-data-table-2';
+import classNames from 'classnames';
 import * as Constants from './constants';
 import * as CellUtils from './CellUtils';
 import { HeaderCell } from './HeaderCell';
@@ -49,6 +49,8 @@ export class HugeTable extends React.Component {
       columnNameToDataTypeMap: {},
       columnOrder: [],
       currentSchema: [],
+      shouldActivateLeftScroll: false,
+      shouldActivateRightScroll: false,
     };
 
     this.uniqueId = props.options.id || null;
@@ -67,6 +69,8 @@ export class HugeTable extends React.Component {
     this.generateColumnToDataTypeMap(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
     this.generateInitialColumnOrder(this.props.schema);
+    // this.handleScroll();
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,11 +89,14 @@ export class HugeTable extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // const container = this.refs.table.getDOMNode();
+
     if (prevState.columnOrder !== this.state.columnOrder && !_.isEqual(prevState.columnOrder, this.state.columnOrder)) {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
     }
     if (prevState.currentSchema !== this.state.currentSchema && !_.isEqual(prevState.currentSchema, this.state.currentSchema)) {
       this.onSchemaChange(this.state.currentSchema);
+      this.handleScroll();
     }
   }
 
@@ -321,10 +328,73 @@ export class HugeTable extends React.Component {
     });
   }
 
+  setScrollPos = (val) => {
+    this.getHeaderContainer().scrollLeft = val;
+  }
+
+  handleMouseEnter = (scrollVal) => {
+    this.intervalId = setInterval(() => this.moveScrollPos(scrollVal), 10);
+  }
+
+  handleMouseLeave = () => {
+    clearInterval(this.intervalId);
+    this.intervalId = undefined;
+  }
+
+  moveScrollPos = (val) => {
+    this.getHeaderContainer().scrollLeft = this.getHeaderContainer().scrollLeft+val;
+  }
+
+  calcElementsWidth = (elementsArr) => {
+    return elementsArr.map(e => e.getBoundingClientRect().width).reduce((i, n) => i+n, 0);
+  }
+
+  getChildElements = () => {
+    return Array.from(this.getHeaderContainer().children);
+  }
+
+  handleScroll = () => {
+    const ALL_ELEMENTS_WIDTH = this.calcElementsWidth(this.getChildElements());
+    const LIST_CONTAINER_SCROLL_POS = this.getHeaderContainer().scrollLeft;
+    const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width;
+    if(shouldShowScrolls !== this.state.shouldShowScrolls) {
+      setTimeout(this.scrollSelectedFieldToView, 10);
+    }
+    this.setState({
+      shouldShowScrolls,
+      shouldActivateLeftScroll: LIST_CONTAINER_SCROLL_POS > 0,
+      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.getListContainerWidth()+LIST_CONTAINER_SCROLL_POS),
+    });
+  }
+
+
+  getListContainerWidth = () => {
+    return this.getHeaderContainer().getBoundingClientRect().width;
+  }
+
+  getHeaderContainer = () => {
+    const headerCell = document.querySelector('.hugetable-index-column');
+    return headerCell.parentElement;
+  }
+
   render() {
     const controlledScrolling = (this.state.scrollLeft !== undefined && this.state.scrollLeft !== 0) || (this.state.scrollTop !== undefined && this.state.scrollTop !== 0);
     const tableWidth = this.props.options.width;
     const tableHeight = this.props.options.height - Constants.HEADER_HEIGHT;
+    let leftScroll, rightScroll;
+    if(this.state.shouldShowScrolls) {
+      leftScroll = (
+        <section className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-5)} onMouseLeave={() => this.handleMouseLeave()}>
+          <i className="fa fa-chevron-left fa-lg"></i>
+        </section>
+      );
+
+      rightScroll = (
+        <section className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(5)} onMouseLeave={() => this.handleMouseLeave()}>
+          <i className="fa fa-chevron-right fa-lg"></i>
+        </section>
+      );
+    }
     return (
       <TouchWrapper
         onScroll={this.onScroll}
@@ -333,7 +403,10 @@ export class HugeTable extends React.Component {
         contentWidth={this.state.contentWidth}
         contentHeight={this.state.contentHeight}
       >
+      {leftScroll}
+      {rightScroll}
         <Table
+          ref="table"
           rowHeight={Constants.ROW_HEIGHT}
           rowsCount={this.props.data.length}
           width={tableWidth}
@@ -347,22 +420,26 @@ export class HugeTable extends React.Component {
           onColumnResizeEndCallback={this.onColumnResizeEndCallback}
           onContentDimensionsChange={this.onContentDimensionsChange}
           onColumnReorderEndCallback={this.onColumnReorderEndCallback}
-        isColumnReordering={false}
+          isColumnReordering={false}
         >
-        {(() => {
-          if (!this.props.hideRowNumbers) {
-            return (
-              <Column
-                key="hugetable-index-column"
-                columnKey="hugetable-index-column"
-                width={this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH }
-                header={props => this.renderHeader({...props, cellData: {main: '#'}})}
-                cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
-              />
-            );
-          }
-        })()}
-        {this.state.currentSchema.map(this.createColumn)}
+        <ColumnGroup ref="heyo">
+          {(() => {
+            if (!this.props.hideRowNumbers) {
+              return (
+                <Column
+                  cellClassName="hugetable-index-column"
+                  key="hugetable-index-column"
+                  columnKey="hugetable-index-column"
+                  width={this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH }
+                  header={props => this.renderHeader({...props, cellData: {main: '#'}})}
+                  cell={(props) => <Cell cellClassName="testing123"><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
+                />
+              );
+            }
+          })()}
+          {this.state.currentSchema.map(this.createColumn)}
+        </ColumnGroup>
+
         </Table>
       </TouchWrapper>
     );

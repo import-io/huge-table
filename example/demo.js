@@ -31,7 +31,7 @@ const options = {
   id: '1',
 };
 
-render(<HugeTable data={data.results} schema={schema} options={options} resizeByContent onSchemaChange={onSchemaChangeCallback} />, mountNode);
+// render(<HugeTable data={data.results} schema={schema} options={options} resizeByContent onSchemaChange={onSchemaChangeCallback} />, mountNode);
 
 // Rendereres example.
 
