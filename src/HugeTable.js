@@ -51,6 +51,7 @@ export class HugeTable extends React.Component {
       currentSchema: [],
       shouldActivateLeftScroll: false,
       shouldActivateRightScroll: false,
+      scrollLeft: 0,
     };
 
     this.uniqueId = props.options.id || null;
@@ -346,7 +347,11 @@ export class HugeTable extends React.Component {
   }
 
   moveScrollPos = (val) => {
-    this.getHeaderContainer().scrollLeft = this.getHeaderContainer().scrollLeft+val;
+    if (this.state.scrollLeft >= 0) {
+      this.setState({
+        scrollLeft: this.state.scrollLeft+val,
+      });
+    }
   }
 
   calcElementsWidth = (elementsArr) => {
@@ -382,7 +387,7 @@ export class HugeTable extends React.Component {
   }
 
   render() {
-    const controlledScrolling = (this.state.scrollLeft !== undefined && this.state.scrollLeft !== 0) || (this.state.scrollTop !== undefined && this.state.scrollTop !== 0);
+    // const controlledScrolling = (this.state.scrollLeft !== undefined && this.state.scrollLeft !== 0) || (this.state.scrollTop !== undefined && this.state.scrollTop !== 0);
     const tableWidth = this.props.options.width;
     const tableHeight = this.props.options.height - Constants.HEADER_HEIGHT;
     let rowNumberColumnWidth = this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH;
@@ -419,8 +424,7 @@ export class HugeTable extends React.Component {
           width={tableWidth}
           scrollLeft={this.state.scrollLeft}
           scrollTop={this.state.scrollTop}
-          overflowX={controlledScrolling ? 'hidden' : 'auto'}
-          overflowY={controlledScrolling ? 'hidden' : 'auto'}
+
           height={tableHeight}
           headerHeight={Constants.HEADER_HEIGHT}
           isColumnResizing={this.state.isColumnResizing}
