@@ -403,8 +403,9 @@ export class HugeTable extends React.Component {
         contentWidth={this.state.contentWidth}
         contentHeight={this.state.contentHeight}
       >
-      {leftScroll}
-      {rightScroll}
+      <div style={{ position: 'relative', height: tableHeight, width: tableWidth }}>
+        {leftScroll}
+        {rightScroll}
         <Table
           ref="table"
           rowHeight={Constants.ROW_HEIGHT}
@@ -441,6 +442,7 @@ export class HugeTable extends React.Component {
         </ColumnGroup>
 
         </Table>
+      </div>
       </TouchWrapper>
     );
   }
