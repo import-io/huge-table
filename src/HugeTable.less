@@ -1,8 +1,12 @@
 @import (inline) "../node_modules/fixed-data-table-2/dist/fixed-data-table.css";
-
+@import "../node_modules/font-awesome/less/font-awesome.less";
 .public_fixedDataTable_header .public_fixedDataTableCell_main {
   font-size: 16px;
   color: #fff;
+  .right {
+    position: absolute;
+    right: 0;
+  }
 }
 
 .public_fixedDataTable_header, .public_fixedDataTable_header .public_fixedDataTableCell_main {
@@ -24,3 +28,34 @@
     top: 3px;
     left: 50%;
 }
+
+.hugetable-index-column {
+  &.nudge {
+    padding-left: 40px;
+  }
+}
+
+.scroll-toggle {
+    width: 40px;
+    height: 49px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 1000;
+    background-color: #9BB6C7;
+    color: #376F91;
+
+    &.active {
+      background-color: #001B62;
+      color: #fff;
+    }
+
+    &.right{
+      right: 0
+    }
+    &.left {
+      left: 0;
+    }
+  }

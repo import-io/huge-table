@@ -50,11 +50,17 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.5
+
+**API Additions**
+
+- Added `showScrollingArrows` (boolean) prop, which will show horizontal arrows if horizontal scrolling is available
+
 ### 6.4
 
 **API Additions**
 
-- Added `hideRowNumbers` prop, which hides the row number column.
+- Added `hideRowNumbers` (boolean) prop, which hides the row number column.
 - Added `rowNumberColumnWidth` to options prop, which allows an override of the width of the row number column.
 
 ### 6.3.3
