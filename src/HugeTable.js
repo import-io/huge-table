@@ -304,7 +304,7 @@ export class HugeTable extends React.Component {
       scrollLeft,
       scrollTop,
     });
-
+    console.log('in here')
     if(this.props.options.tableScrolled) {
       this.props.options.tableScrolled(scrollLeft, scrollTop);
     }
@@ -348,9 +348,7 @@ export class HugeTable extends React.Component {
 
   moveScrollPos = (val) => {
     if (this.state.scrollLeft >= 0) {
-      this.setState({
-        scrollLeft: this.state.scrollLeft+val,
-      });
+      this.handleScroll(this.state.scrollLeft+val,);
     }
   }
 
@@ -362,18 +360,19 @@ export class HugeTable extends React.Component {
     return Array.from(this.getHeaderContainer().children);
   }
 
-  handleScroll = () => {
+  handleScroll = (scrollLeft) => {
     const ALL_ELEMENTS_WIDTH = this.calcElementsWidth(this.getChildElements());
-    const LIST_CONTAINER_SCROLL_POS = this.getHeaderContainer().scrollLeft;
     const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width;
-    if(shouldShowScrolls !== this.state.shouldShowScrolls) {
-      setTimeout(this.scrollSelectedFieldToView, 10);
-    }
+    // if(shouldShowScrolls !== this.state.shouldShowScrolls) {
+    //   setTimeout(this.scrollSelectedFieldToView, 10);
+    // }
     this.setState({
+      scrollLeft,
       shouldShowScrolls,
-      shouldActivateLeftScroll: LIST_CONTAINER_SCROLL_POS > 0,
-      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.getListContainerWidth()+LIST_CONTAINER_SCROLL_POS),
+      shouldActivateLeftScroll: scrollLeft > 0,
+      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.props.options.width+scrollLeft),
     });
+    return true;
   }
 
 
@@ -418,13 +417,13 @@ export class HugeTable extends React.Component {
         {leftScroll}
         {rightScroll}
         <Table
+          onHorizontalScroll={this.handleScroll}
           ref="table"
           rowHeight={Constants.ROW_HEIGHT}
           rowsCount={this.props.data.length}
           width={tableWidth}
           scrollLeft={this.state.scrollLeft}
           scrollTop={this.state.scrollTop}
-
           height={tableHeight}
           headerHeight={Constants.HEADER_HEIGHT}
           isColumnResizing={this.state.isColumnResizing}
