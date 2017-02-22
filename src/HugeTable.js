@@ -238,9 +238,11 @@ export class HugeTable extends React.Component {
   createColumn = (schemaItem, idx) => {
     let width = this.state.columnWidths[schemaItem.id || schemaItem.name];
     if (this.state.shouldShowScrolls && idx === this.state.currentSchema.length - 1) {
-      width = width + 120;
+      // this adds some extra room to accomodate the scrolling arrows
+      width = width + 120; 
     }
     const addCellClass = this.props.showScrollingArrows && this.props.hideRowNumbers && idx === 0;
+    // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
     return (
       <Column
         cellClassName={addCellClass ? 'hugetable-index-column nudge' : ''}
@@ -382,6 +384,7 @@ export class HugeTable extends React.Component {
     let rowNumberColumnWidth = this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH;
     let leftScroll, rightScroll;
     if(this.state.shouldShowScrolls) {
+      // increase the size of the row number column so there is no overlap
       rowNumberColumnWidth = rowNumberColumnWidth + 40;
       leftScroll = (
         <section className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-5)} onMouseLeave={() => this.handleMouseLeave()}>
@@ -424,6 +427,7 @@ export class HugeTable extends React.Component {
         >
         {(() => {
           if (!this.props.hideRowNumbers) {
+            // add cellClassName nudge if we show scrolls, which adds padding to this cell so we can still see the number
             return (
               <Column
                 cellClassName={this.state.shouldShowScrolls ? 'hugetable-index-column nudge' : 'hugetable-index-column'}
