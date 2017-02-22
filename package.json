@@ -8,10 +8,11 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "mocha",
+    "cleanup": "rm -rf dist",
     "start": "webpack-dev-server --config webpack.config.js --progress --colors --port 8084 --inline --content-base example/public/ --history-api-fallback",
-    "babel": "rm -rf dist/ && mkdir dist/ && babel src --out-dir dist",
+    "babel": "mkdir dist/ && babel src --out-dir dist",
     "less": "lessc src/HugeTable.less dist/HugeTable.css",
-    "release": "npm run babel && npm run less",
+    "release": "npm run cleanup && npm run babel && webpack --config ./webpack.release.config.js",
     "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter",
     "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
   },
@@ -35,6 +36,7 @@
     "react-portal": "^2.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.5.1",
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
     "babel-eslint": "^4.1.5",

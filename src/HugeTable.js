@@ -239,7 +239,7 @@ export class HugeTable extends React.Component {
     let width = this.state.columnWidths[schemaItem.id || schemaItem.name];
     if (this.state.shouldShowScrolls && idx === this.state.currentSchema.length - 1) {
       // this adds some extra room to accomodate the scrolling arrows
-      width = width + 120; 
+      width = width + 120;
     }
     const addCellClass = this.props.showScrollingArrows && this.props.hideRowNumbers && idx === 0;
     // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
