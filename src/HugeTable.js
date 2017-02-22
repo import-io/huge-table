@@ -115,7 +115,6 @@ export class HugeTable extends React.Component {
     this.setState({ currentSchema: newSchema });
   }
 
-
   setContentHeight = (data) => {
     this.setState({
       contentHeight: Constants.ROW_HEIGHT * data.length + Constants.HEADER_HEIGHT,
@@ -300,7 +299,7 @@ export class HugeTable extends React.Component {
 
   onScroll = (scrollLeft, scrollTop) => {
     this.setState({
-      scrollLeft,
+      scrollLeft: scrollLeft ? scrollLeft : this.state.scrollLeft,
       scrollTop,
     });
     if(this.props.options.tableScrolled) {
@@ -359,7 +358,6 @@ export class HugeTable extends React.Component {
   handleScroll = (scrollLeft) => {
     const ALL_ELEMENTS_WIDTH = this.calcElementsWidth(this.getChildElements());
     const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width && this.props.showScrollingArrows;
-    
     this.setState({
       scrollLeft,
       shouldShowScrolls,
@@ -368,7 +366,6 @@ export class HugeTable extends React.Component {
     });
     return true;
   }
-
 
   getListContainerWidth = () => {
     return this.getHeaderContainer().getBoundingClientRect().width;
