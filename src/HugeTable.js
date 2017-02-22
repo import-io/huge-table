@@ -237,15 +237,23 @@ export class HugeTable extends React.Component {
 
   createColumn = (schemaItem, idx) => {
     let width = this.state.columnWidths[schemaItem.id || schemaItem.name];
-    if (this.state.shouldShowScrolls && idx === this.state.currentSchema.length - 1) {
+    const lastColumn = idx === this.state.currentSchema.length - 1;
+    if (this.state.shouldShowScrolls && lastColumn) {
       // this adds some extra room to accomodate the scrolling arrows
       width = width + 120;
     }
-    const addCellClass = this.props.showScrollingArrows && this.props.hideRowNumbers && idx === 0;
+    let cellClass = '';
+    if (this.props.showScrollingArrows) {
+      if (this.props.hideRowNumbers && idx === 0) {
+        cellClass = 'hugetable-index-column nudge';
+      } else if (lastColumn) {
+        cellClass = 'last-field';
+      }
+    }
     // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
     return (
       <Column
-        cellClassName={addCellClass ? 'hugetable-index-column nudge' : ''}
+        cellClassName={cellClass}
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
         columnKey={schemaItem.id || schemaItem.name}
         minWidth={this.minColumnWidth}
