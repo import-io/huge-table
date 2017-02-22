@@ -37,13 +37,21 @@
 
 .scroll-toggle {
     width: 70px;
+    height: 49px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     z-index: 1000;
-    top: 20px;
+    background-color: #9BB6C7;
+    color: #376F91;
+
+    &.active {
+      background-color: #001B62;
+      color: #fff;
+    }
+
     &.right{
       right: 0
     }

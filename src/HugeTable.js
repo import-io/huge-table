@@ -70,8 +70,6 @@ export class HugeTable extends React.Component {
     this.generateColumnToDataTypeMap(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
     this.generateInitialColumnOrder(this.props.schema);
-    // this.handleScroll();
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -97,7 +95,7 @@ export class HugeTable extends React.Component {
     }
     if (prevState.currentSchema !== this.state.currentSchema && !_.isEqual(prevState.currentSchema, this.state.currentSchema)) {
       this.onSchemaChange(this.state.currentSchema);
-      this.handleScroll();
+      this.handleScroll(this.state.scrollLeft);
     }
   }
 
@@ -242,7 +240,7 @@ export class HugeTable extends React.Component {
   createColumn = (schemaItem, idx) => {
     let width = this.state.columnWidths[schemaItem.id || schemaItem.name];
     if (this.state.shouldShowScrolls && idx === this.state.currentSchema.length - 1) {
-      width = width + 70;
+      width = width + 150;
     }
     return (
       <Column
@@ -304,7 +302,6 @@ export class HugeTable extends React.Component {
       scrollLeft,
       scrollTop,
     });
-    console.log('in here')
     if(this.props.options.tableScrolled) {
       this.props.options.tableScrolled(scrollLeft, scrollTop);
     }
@@ -433,7 +430,7 @@ export class HugeTable extends React.Component {
           isColumnReordering={false}
         >
 
-        <ColumnGroup ref="heyo">
+        <ColumnGroup>
           {(() => {
             if (!this.props.hideRowNumbers) {
               return (
@@ -443,7 +440,7 @@ export class HugeTable extends React.Component {
                   columnKey="hugetable-index-column"
                   width={rowNumberColumnWidth}
                   header={props => this.renderHeader({...props, cellData: {main: '#'}})}
-                  cell={(props) => <Cell cellClassName="testing123"><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
+                  cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
                 />
               );
             }
