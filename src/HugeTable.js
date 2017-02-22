@@ -89,8 +89,6 @@ export class HugeTable extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // const container = this.refs.table.getDOMNode();
-
     if (prevState.columnOrder !== this.state.columnOrder && !_.isEqual(prevState.columnOrder, this.state.columnOrder)) {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
     }
@@ -361,9 +359,7 @@ export class HugeTable extends React.Component {
   handleScroll = (scrollLeft) => {
     const ALL_ELEMENTS_WIDTH = this.calcElementsWidth(this.getChildElements());
     const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width && this.props.showScrollingArrows;
-    // if(shouldShowScrolls !== this.state.shouldShowScrolls) {
-    //   setTimeout(this.scrollSelectedFieldToView, 10);
-    // }
+    
     this.setState({
       scrollLeft,
       shouldShowScrolls,
@@ -384,7 +380,6 @@ export class HugeTable extends React.Component {
   }
 
   render() {
-    // const controlledScrolling = (this.state.scrollLeft !== undefined && this.state.scrollLeft !== 0) || (this.state.scrollTop !== undefined && this.state.scrollTop !== 0);
     const tableWidth = this.props.options.width;
     const tableHeight = this.props.options.height - Constants.HEADER_HEIGHT;
     let rowNumberColumnWidth = this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH;
