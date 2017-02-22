@@ -1,7 +1,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
   debug: false,
@@ -24,6 +24,7 @@ const config = {
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader'),
+        options: {strictMath: true},
       },
       {
         test: /\.css$/,
@@ -46,6 +47,9 @@ const config = {
     new ExtractTextPlugin('HugeTable.css', {
       allChunks: true,
     }),
+    new CopyWebpackPlugin([
+      { from: './src/HugeTableLess.less', to: ''},
+    ]),
   ],
   progress: true,
   colors: true,
