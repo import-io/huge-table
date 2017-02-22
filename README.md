@@ -4,6 +4,17 @@ Table component to handle huge sets of data, based on Facebook's FixedDataTable 
 
 ## How to use it
 
+Include the `HugeTable.css` file from the `dist` folder.
+
+**Important** For those using LESS in your projects: import the CSS file then the LESS file after it. This is a workaround to avoid a LESS bug caused when LESS compiles `calc()` from a CSS file. Example below:
+
+```
+@import (less) "../../node_modules/huge-table/dist/HugeTable.css";
+@import "../../node_modules/huge-table/dist/HugeTableLess.less";
+
+```
+
+
 ```javascript
 // data and schema examples can be found inside the examples directory.
 
@@ -49,6 +60,10 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 6.6
+
+- Created separate less file to support users that are using less in their projects
 
 ### 6.5
 
