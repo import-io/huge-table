@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "6.3.3",
+  "version": "6.6.1",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -8,10 +8,11 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "mocha",
+    "cleanup": "rm -rf dist",
     "start": "webpack-dev-server --config webpack.config.js --progress --colors --port 8084 --inline --content-base example/public/ --history-api-fallback",
-    "babel": "rm -rf dist/ && mkdir dist/ && babel src --out-dir dist",
+    "babel": "mkdir dist/ && babel src --out-dir dist",
     "less": "lessc src/HugeTable.less dist/HugeTable.css",
-    "release": "npm run babel && npm run less",
+    "release": "npm run cleanup && npm run babel && webpack --config ./webpack.release.config.js",
     "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter",
     "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
   },
@@ -22,8 +23,10 @@
     "url": "https://github.com/import-io/huge-table"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "fixed-data-table": "^0.6.0",
     "fixed-data-table-2": "^0.7.10",
+    "font-awesome": "^4.7.0",
     "keymirror": "^0.1.1",
     "lodash": "^4.17.4",
     "react": "^0.14.6",
@@ -33,6 +36,7 @@
     "react-portal": "^2.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.5.1",
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
     "babel-eslint": "^4.1.5",
@@ -43,6 +47,7 @@
     "bootstrap": "^3.3.5",
     "chai": "^3.0.0",
     "clean-css": "^3.4.4",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.14.4",
     "enzyme": "^2.0.0",
     "eslint": "^1.10.1",

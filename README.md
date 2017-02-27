@@ -4,6 +4,17 @@ Table component to handle huge sets of data, based on Facebook's FixedDataTable 
 
 ## How to use it
 
+Include the `HugeTable.css` file from the `dist` folder.
+
+**Important** For those using LESS in your projects: import the CSS file then the LESS file after it. This is a workaround to avoid a LESS bug caused when LESS compiles `calc()` from a CSS file. Example below:
+
+```
+@import (less) "../../node_modules/huge-table/dist/HugeTable.css";
+@import "../../node_modules/huge-table/dist/HugeTableLess.less";
+
+```
+
+
 ```javascript
 // data and schema examples can be found inside the examples directory.
 
@@ -28,6 +39,9 @@ More comprehensive example can be found inside the [examples](examples) director
 - **options.width** - Width of the table component,
 - **options.mixedContentImage** - Function that can handle mixed content warnings for images being loaded inside the table. Function will be invoked with image URL, and allows developers to decide what do do when page is loaded for example with `https`, and image url has `http` protocol. Check `examples` directory for an example on how to use this.
 - **options.tableScrolled** - Function that will be called whenever the table has been scrolled. It can be used to hook to the scrolling of the table on mobile devices, and use it to adjust the view around the table according to the table scrolling.
+- **options.rowNumberColumnWidth** - width of the row number column.
+- **hideRowNumbers** Boolean prop that when present will hide the row number column.
+- **onSchemaChange** Function that fires anytime the inserted schema changes. Useful when tapping into column reordering. Returns `currentSchema`
 
 ## Commands
 
@@ -46,6 +60,23 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 6.6
+
+- Created separate less file to support users that are using less in their projects
+
+### 6.5
+
+**API Additions**
+
+- Added `showScrollingArrows` (boolean) prop, which will show horizontal arrows if horizontal scrolling is available
+
+### 6.4
+
+**API Additions**
+
+- Added `hideRowNumbers` (boolean) prop, which hides the row number column.
+- Added `rowNumberColumnWidth` to options prop, which allows an override of the width of the row number column.
 
 ### 6.3.3
 

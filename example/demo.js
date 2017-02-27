@@ -31,7 +31,7 @@ const options = {
   id: '1',
 };
 
-render(<HugeTable data={data.results} schema={schema} options={options} resizeByContent onSchemaChange={onSchemaChangeCallback} />, mountNode);
+render(<HugeTable data={data.results} hideRowNumbers  schema={schema} options={options} resizeByContent onSchemaChange={onSchemaChangeCallback} />, mountNode);
 
 // Rendereres example.
 
@@ -61,4 +61,12 @@ const renderers = {
   },
 };
 
-render(<HugeTable data={data.results} schema={schema} options={options2} renderers={renderers} onSchemaChange={onSchemaChangeCallback} resizeByContent />, mountNode2);
+render(
+  <HugeTable data={data.results}
+    showScrollingArrows
+    schema={schema}
+    options={options2}
+    renderers={renderers}
+    onSchemaChange={onSchemaChangeCallback}
+    resizeByContent
+    />, mountNode2);
