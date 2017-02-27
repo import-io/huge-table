@@ -350,7 +350,7 @@ export class HugeTable extends React.Component {
   }
 
   moveScrollPos = (val) => {
-    if (this.state.scrollLeft >= 0) {
+    if (this.state.scrollLeft === 0 && val >= 0 || this.state.scrollLeft > 0) {
       this.handleScroll(this.state.scrollLeft+val,);
     }
   }
