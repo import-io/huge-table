@@ -237,7 +237,7 @@ export class HugeTable extends React.Component {
 
   createColumn = (schemaItem, idx) => {
     let width = this.state.columnWidths[schemaItem.id || schemaItem.name];
-    const lastColumn = idx === this.state.currentSchema.length - 1;
+    const lastColumn = idx === this.state.currentSchema.length - 1 && this.state.currentSchema > 1;
     if (this.state.shouldShowScrolls && lastColumn) {
       // this adds some extra room to accomodate the scrolling arrows
       width = width + 120;
