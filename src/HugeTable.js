@@ -143,9 +143,14 @@ export class HugeTable extends React.Component {
     const defaultColumnWidth = Math.max(calculatedWidth, this.minColumnWidth);
 
     schema.forEach((schemaItem) => {
-      const maxColumnWidth = this.props.resizeByContent ? this.getMaxColumnWidth(schemaItem, defaultColumnWidth) : defaultColumnWidth;
+      const maxColumnWidth = this.props.resizeByContent ? this.getMaxColumnWidth(schemaItem, this.minColumnWidth) : defaultColumnWidth;
       if (this.uniqueId){
-        this.state.columnWidths[schemaItem.id || schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.id || schemaItem.name] || this.state.columnWidths[schemaItem.id || schemaItem.name] || maxColumnWidth || defaultColumnWidth;
+        //Reference the content width over the width set in state if we have data and we are passed the resizeByContent prop
+        if (this.props.data.length > 0 && this.props.resizeByContent) {
+          this.state.columnWidths[schemaItem.id || schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.id || schemaItem.name] || maxColumnWidth || this.state.columnWidths[schemaItem.id || schemaItem.name] || defaultColumnWidth;
+        } else {
+          this.state.columnWidths[schemaItem.id || schemaItem.name] = this.savedColumnsWidth[this.uniqueId][schemaItem.id || schemaItem.name] || this.state.columnWidths[schemaItem.id || schemaItem.name] || maxColumnWidth || defaultColumnWidth;
+        }
       } else {
         this.state.columnWidths[schemaItem.id || schemaItem.name] = this.state.columnWidths[schemaItem.id || schemaItem.name] || maxColumnWidth || defaultColumnWidth;
       }
