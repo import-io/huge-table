@@ -61,6 +61,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.7
+
+**API Additions**
+
+- Added `scrollToNewColumn` (boolean) prop, which will scroll to a newly added column
+
 ### 6.6.2
 
 - Reference column widths by cell content rather than width in state when resizeByContent prop is set and data is present

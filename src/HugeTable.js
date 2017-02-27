@@ -39,6 +39,7 @@ export class HugeTable extends React.Component {
     resizeByContent: React.PropTypes.bool,
     hideRowNumbers: React.PropTypes.bool,
     showScrollingArrows: React.PropTypes.bool,
+    scrollToNewColumn: React.PropTypes.bool,
   }
 
   constructor(props) {
@@ -96,11 +97,24 @@ export class HugeTable extends React.Component {
       this.onSchemaChange(this.state.currentSchema);
       this.handleScroll(this.state.scrollLeft);
     }
+
+    if (prevState.currentSchema < this.state.currentSchema && this.state.shouldShowScrolls && this.props.scrollToNewColumn) {
+      this.scrollNewColumnIntoView();
+    }
+
   }
 
   onSchemaChange = schema => {
     if (this.props.onSchemaChange) {
       this.props.onSchemaChange(schema);
+    }
+  }
+
+  scrollNewColumnIntoView = () => {
+    const lastField = document.querySelector('.last-field');
+    if (lastField) {
+      const scrollLeft = lastField.getBoundingClientRect().left + 60;
+      this.handleScroll(scrollLeft);
     }
   }
 
