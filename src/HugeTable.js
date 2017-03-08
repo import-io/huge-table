@@ -40,6 +40,7 @@ export class HugeTable extends React.Component {
     hideRowNumbers: React.PropTypes.bool,
     showScrollingArrows: React.PropTypes.bool,
     scrollToNewColumn: React.PropTypes.bool,
+    onScrollToNewColumn: React.PropTypes.func,
   }
 
   constructor(props) {
@@ -97,7 +98,7 @@ export class HugeTable extends React.Component {
       this.onSchemaChange(this.state.currentSchema);
       this.handleScroll(this.state.scrollLeft);
     }
-
+    
     if (prevState.currentSchema < this.state.currentSchema && this.state.shouldShowScrolls && this.props.scrollToNewColumn) {
       this.scrollNewColumnIntoView();
     }
@@ -111,10 +112,11 @@ export class HugeTable extends React.Component {
   }
 
   scrollNewColumnIntoView = () => {
-    const lastField = document.querySelector('.last-field');
-    if (lastField) {
-      const scrollLeft = lastField.getBoundingClientRect().left + 60;
-      this.handleScroll(scrollLeft);
+    if (this.refs.table) {
+      this.handleScroll(this.refs.table.state.maxScrollX);
+      if (this.props.onScrollToNewColumn) {
+        this.props.onScrollToNewColumn();
+      }
     }
   }
 
@@ -266,7 +268,7 @@ export class HugeTable extends React.Component {
       if (this.props.hideRowNumbers && idx === 0) {
         cellClass = 'hugetable-index-column nudge';
       } else if (lastColumn) {
-        cellClass = 'last-field';
+        cellClass = 'last-column';
       }
     }
     // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
@@ -425,6 +427,7 @@ export class HugeTable extends React.Component {
         </section>
       );
     }
+
     return (
       <TouchWrapper
         onScroll={this.onScroll}
