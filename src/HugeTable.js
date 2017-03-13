@@ -41,11 +41,19 @@ export class HugeTable extends React.Component {
     showScrollingArrows: React.PropTypes.bool,
     scrollToNewColumn: React.PropTypes.bool,
     onScrollToNewColumn: React.PropTypes.func,
+    rowHeight: React.PropTypes.number,
+    headerHeight: React.PropTypes.number,
+    cellPadding: React.PropTypes.number,
+    lineHeight: React.PropTypes.number,
   }
 
   constructor(props) {
     super(props);
-
+    const
+      cellPadding = props.cellPadding || Constants.CELL_PADDING,
+      lineHeight = props.lineHeight || Constants.LINE_HEIGHT,
+      headerHeight = props.headerHeight || Constants.HEADER_HEIGHT,
+      rowHeight = props.rowHeight || Constants.ROW_HEIGHT;
     this.state = {
       columnWidths: {},
       isColumnResizing: undefined,
@@ -55,6 +63,10 @@ export class HugeTable extends React.Component {
       shouldActivateLeftScroll: false,
       shouldActivateRightScroll: false,
       scrollLeft: 0,
+      cellPadding,
+      lineHeight,
+      headerHeight,
+      rowHeight,
     };
 
     this.uniqueId = props.options.id || null;
@@ -98,7 +110,7 @@ export class HugeTable extends React.Component {
       this.onSchemaChange(this.state.currentSchema);
       this.handleScroll(this.state.scrollLeft);
     }
-    
+
     if (prevState.currentSchema < this.state.currentSchema && this.state.shouldShowScrolls && this.props.scrollToNewColumn) {
       this.scrollNewColumnIntoView();
     }
@@ -133,7 +145,7 @@ export class HugeTable extends React.Component {
 
   setContentHeight = (data) => {
     this.setState({
-      contentHeight: Constants.ROW_HEIGHT * data.length + Constants.HEADER_HEIGHT,
+      contentHeight: this.state.rowHeight * data.length + this.state.headerHeight,
     });
   }
 
@@ -409,20 +421,21 @@ export class HugeTable extends React.Component {
 
   render() {
     const tableWidth = this.props.options.width;
-    const tableHeight = this.props.options.height - Constants.HEADER_HEIGHT;
+    const tableHeight = this.props.options.height - this.state.headerHeight;
     let rowNumberColumnWidth = this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH;
+
     let leftScroll, rightScroll;
     if(this.state.shouldShowScrolls) {
       // increase the size of the row number column so there is no overlap
       rowNumberColumnWidth = rowNumberColumnWidth + 40;
       leftScroll = (
-        <section className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-5)} onMouseLeave={() => this.handleMouseLeave()}>
+        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-5)} onMouseLeave={() => this.handleMouseLeave()}>
           <i className="fa fa-chevron-left fa-lg"></i>
         </section>
       );
 
       rightScroll = (
-        <section className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(5)} onMouseLeave={() => this.handleMouseLeave()}>
+        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(5)} onMouseLeave={() => this.handleMouseLeave()}>
           <i className="fa fa-chevron-right fa-lg"></i>
         </section>
       );
@@ -442,13 +455,13 @@ export class HugeTable extends React.Component {
         <Table
           onHorizontalScroll={this.handleScroll}
           ref="table"
-          rowHeight={Constants.ROW_HEIGHT}
+          rowHeight={this.state.rowHeight}
           rowsCount={this.props.data.length}
           width={tableWidth}
           scrollLeft={this.state.scrollLeft}
           scrollTop={this.state.scrollTop}
           height={tableHeight}
-          headerHeight={Constants.HEADER_HEIGHT}
+          headerHeight={this.state.headerHeight}
           isColumnResizing={this.state.isColumnResizing}
           onColumnResizeEndCallback={this.onColumnResizeEndCallback}
           onContentDimensionsChange={this.onContentDimensionsChange}
