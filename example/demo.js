@@ -63,6 +63,8 @@ const renderers = {
 
 render(
   <HugeTable data={data.results}
+    rowHeight={30}
+    headerHeight={30}
     showScrollingArrows
     schema={schema}
     options={options2}

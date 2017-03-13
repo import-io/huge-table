@@ -11,7 +11,8 @@ export const ColumnTypes = keyMirror({
   URL: null,
   TEXT: null,
 });
-
+export const CELL_PADDING = cellPadding;
+export const LINE_HEIGHT = lineHeight;
 export const ROW_HEIGHT               = rowHeight;
 export const HEADER_HEIGHT            = headerHeight;
 export const MIN_COLUMN_WIDTH         = 140;

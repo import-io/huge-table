@@ -42,6 +42,10 @@ More comprehensive example can be found inside the [examples](examples) director
 - **options.rowNumberColumnWidth** - width of the row number column.
 - **hideRowNumbers** Boolean prop that when present will hide the row number column.
 - **onSchemaChange** Function that fires anytime the inserted schema changes. Useful when tapping into column reordering. Returns `currentSchema`
+- **rowHeight**
+- **headerHeight**
+- **lineHeight**
+- **cellPadding**
 
 ## Commands
 
@@ -60,6 +64,12 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 6.8
+
+**API Additions**
+
+- Added `rowHeight`, `headerHeight`, `lineHeight`, and `cellPadding` as new props
 
 ### 6.7
 
