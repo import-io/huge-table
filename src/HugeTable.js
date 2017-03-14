@@ -45,6 +45,7 @@ export class HugeTable extends React.Component {
     headerHeight: React.PropTypes.number,
     cellPadding: React.PropTypes.number,
     lineHeight: React.PropTypes.number,
+    buttonColumnWidth: React.PropTypes.number,
   }
 
   constructor(props) {
@@ -469,21 +470,48 @@ export class HugeTable extends React.Component {
           isColumnReordering={false}
         >
         {(() => {
-          if (!this.props.hideRowNumbers) {
-            // add cellClassName nudge if we show scrolls, which adds padding to this cell so we can still see the number
+          if (this.state.shouldShowScrolls) {
             return (
               <Column
-                cellClassName={this.state.shouldShowScrolls ? 'hugetable-index-column nudge' : 'hugetable-index-column'}
-                key="hugetable-index-column"
-                columnKey="hugetable-index-column"
-                width={rowNumberColumnWidth}
-                header={props => this.renderHeader({...props, cellData: {main: '#'}})}
-                cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
+                cellClassName="huge-table-left-scroll-column"
+                key="huge-table-left-scroll-column"
+                columnKey="huge-table-left-scroll-column"
+                width={40}
+                header={props => this.renderHeader({...props, cellData: {main: ''}})}
+                cell={(props) => <Cell><TextCell {...props} cellData={{main: ''}}/></Cell>}
               />
             );
           }
         })()}
+          {(() => {
+            if (!this.props.hideRowNumbers) {
+              return (
+                <Column
+                  cellClassName="hugetable-index-column"
+                  key="hugetable-index-column"
+                  columnKey="hugetable-index-column"
+                  width={rowNumberColumnWidth}
+                  header={props => this.renderHeader({...props, cellData: {main: '#'}})}
+                  cell={(props) => <Cell><TextCell {...props} cellData={{main: props.rowIndex+1}}/></Cell>}
+                />
+              );
+            }
+          })()}
           {this.state.currentSchema.map(this.createColumn)}
+          {(() => {
+            if (this.state.shouldShowScrolls) {
+              return (
+                <Column
+                  cellClassName="huge-table-right-scroll-column"
+                  key="huge-table-right-scroll-column"
+                  columnKey="huge-table-right-scroll-column"
+                  width={this.props.buttonColumnWidth ? 40 + this.props.buttonColumnWidth : 40}
+                  header={props => this.renderHeader({...props, cellData: {main: ''}})}
+                  cell={(props) => <Cell><TextCell {...props} cellData={{main: ''}}/></Cell>}
+                />
+              );
+            }
+          })()}
         </Table>
       </div>
       </TouchWrapper>
