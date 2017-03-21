@@ -93,7 +93,7 @@ export class ImageCell extends React.Component {
             maxWidth: this.props.width - 20,
             minHeight: 5,
             minWidth: 5,
-            'margin-top': '-4px',
+            marginTop: '-4px',
           }}
           title={alt}
           alt={alt ? alt : 'Image'}
