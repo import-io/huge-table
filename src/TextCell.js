@@ -1,7 +1,7 @@
 import React from 'react';
 import OverflowExpander from './OverflowExpander';
 
-const HORZ_PADDING = 5;
+const HORZ_PADDING = 6;
 
 export const TextCell = (props) => {
   let content;

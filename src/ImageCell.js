@@ -1,7 +1,7 @@
 import React from 'react';
 import Portal from 'react-portal';
 import * as Constants from './constants';
-
+import brokenImage from '../assets/broken-image-placeholder.png';
 
 export class ImageCell extends React.Component {
   static propTypes = {
@@ -18,6 +18,7 @@ export class ImageCell extends React.Component {
 
     this.state = {
       showPopover: false,
+      imageErrored: false,
     };
   }
 
@@ -43,6 +44,10 @@ export class ImageCell extends React.Component {
     if (this.refs.img.width * this.refs.img.height <= 25) {
       this.refs.img.src = 'about:blank';
     }
+  }
+
+  handleImageError() {
+    this.setState({imageErrored: true});
   }
 
   render() {
@@ -82,17 +87,18 @@ export class ImageCell extends React.Component {
         <img
           ref="img"
           className="example-image"
-          src={imageUrl}
+          src={this.state.imageErrored ? brokenImage : imageUrl}
           style={{
-            maxHeight: Constants.ROW_HEIGHT - 10,
+            maxHeight: Constants.ROW_HEIGHT - 20,
             maxWidth: this.props.width - 20,
             minHeight: 5,
             minWidth: 5,
+            marginTop: '-4px',
           }}
           title={alt}
           alt={alt ? alt : 'Image'}
           onLoad={this.handleImageLoaded.bind(this)}
-
+          onError={this.handleImageError.bind(this)}
         />
         <Portal isOpened={!!(imageUrl && this.state.showPopover)}>
           <div className="popover fade right in" style={{
@@ -107,9 +113,9 @@ export class ImageCell extends React.Component {
             <div className="popover-content">
               <img
                 style={{width: '100%'}}
-                src={imageUrl}
-                title={alt}
-                alt={alt ? alt : 'Image'}
+                src={this.state.imageErrored ? brokenImage : imageUrl}
+                title={this.state.imageErrored ? 'Image not found' : alt}
+                alt={this.state.imageErrored ? 'Image not found' : alt}
               />
               <span>{alt}</span>
             </div>

@@ -8,7 +8,7 @@ import { TextCell } from './TextCell';
 import TouchWrapper from './TouchWrapper';
 import { RETURNED_DATA_TYPES } from './constants';
 import _ from 'lodash';
-
+import { StyleSheet, css } from 'aphrodite';
 
 export class HugeTable extends React.Component {
   static propTypes = {
@@ -43,7 +43,12 @@ export class HugeTable extends React.Component {
     onScrollToNewColumn: React.PropTypes.func,
     rowHeight: React.PropTypes.number,
     headerHeight: React.PropTypes.number,
-    cellPadding: React.PropTypes.number,
+    cellPadding: React.PropTypes.shape ({
+      top: React.PropTypes.number,
+      bottom: React.PropTypes.number,
+      left: React.PropTypes.number,
+      right: React.PropTypes.number,
+    }),
     lineHeight: React.PropTypes.number,
     buttonColumnWidth: React.PropTypes.number,
   }
@@ -312,6 +317,31 @@ export class HugeTable extends React.Component {
     }
   }
 
+  getCellStyles = (columnDataType) => {
+    let cellStyles = {};
+
+    if (columnDataType == Constants.ColumnTypes.IMAGE) {
+      cellStyles = StyleSheet.create({
+        cellStyle: {
+          paddingTop: Constants.IMAGE_CELL_PADDING.cellPaddingTop,
+          paddingBottom: Constants.IMAGE_CELL_PADDING.cellPaddingBottom,
+          paddingLeft: Constants.IMAGE_CELL_PADDING.cellPaddingLeft,
+          paddingRight: Constants.IMAGE_CELL_PADDING.cellPaddingRight,
+        },
+      });
+    } else {
+      cellStyles = StyleSheet.create({
+        cellStyle: {
+          paddingTop: Constants.CELL_PADDING.cellPaddingTop,
+          paddingBottom: Constants.CELL_PADDING.cellPaddingBottom,
+          paddingLeft: Constants.CELL_PADDING.cellPaddingLeft,
+          paddingRight: Constants.CELL_PADDING.cellPaddingRight,
+        },
+      });
+    }
+    return (cellStyles);
+  };
+
   cellRenderer = ({rowIndex, width, height, schemaItem}) => {
     const rowObject = this.props.data[rowIndex];
     const cellData = {};
@@ -324,7 +354,7 @@ export class HugeTable extends React.Component {
     cellData.type = columnDataType;
 
     return (
-      <Cell>
+      <Cell className={css(this.getCellStyles(columnDataType).cellStyle)}>
         {CellUtils.getComponentDataType({
           columnDataType,
           cellData,
@@ -332,7 +362,8 @@ export class HugeTable extends React.Component {
           height,
           columnKey: schemaItem.id || schemaItem.name,
           mixedContentImage: this.props.options.mixedContentImage,
-          cellCustomRenderer})}
+          cellCustomRenderer,
+        })}
       </Cell>
     );
   }

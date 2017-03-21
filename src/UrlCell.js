@@ -1,7 +1,11 @@
 import React from 'react';
 import OverflowExpander from './OverflowExpander';
+import * as Constants from './constants';
 
-const HORZ_PADDING = 5;
+let HORZ_PADDING = 5;
+if (Constants.CELL_EXPANDER_SAMELINE) {
+  HORZ_PADDING = 5;
+}
 
 export const UrlCell = (props) => {
   let content = props.cellData.text || props.cellData.main;
@@ -20,6 +24,9 @@ export const UrlCell = (props) => {
         href={props.cellData.main}
         title={props.cellData.title || props.cellData.text || props.cellData.main}
         target={'_blank'}
+        style={{
+          display: 'inline-block',
+        }}
       >
         <OverflowExpander availableWidth={props.width - HORZ_PADDING * 2}>{content}</OverflowExpander>
       </a>
