@@ -21,6 +21,7 @@ const config = {
       //   exclude: /node_modules/,
       //   loader: 'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0',
       // },
+      { test: /\.png$/, loader: 'file' },
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader'),

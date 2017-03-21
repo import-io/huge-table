@@ -30,12 +30,18 @@ export function handleArrayOfData({columnDataType, cellData, width, height, key,
   }
 }
 
-export function getComponentDataType ({columnDataType, cellData, width, height, key, columnKey, mixedContentImage, cellCustomRenderer = getComponentContent}) {
+export function getComponentDataType ({
+  columnDataType,
+  cellData,
+  width, height, key, columnKey,
+  mixedContentImage,
+  cellCustomRenderer = getComponentContent,
+  cellStyles}) {
   if (!columnDataType) {
     return null;
   }
 
-  const props = {columnDataType, cellData, key, columnKey, mixedContentImage, width, height};
+  const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height};
 
   if (Array.isArray(cellData.main)) {
     return handleArrayOfData({...props, cellCustomRenderer});

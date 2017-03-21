@@ -11,6 +11,7 @@ module.exports = {
   },
   module: {
     loaders: [
+      { test: /\.png$/, loader: 'file' },
       {
         test: /\.js$/,
         exclude: /node_modules/,

@@ -65,6 +65,17 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.9
+
+**API Additions**
+
+- Changed `cellPadding` prop to be an object with 4 members: cellPaddingTop, cellPaddingBottom, cellPaddingLeft, cellPaddingRight
+- Included aphrodite library (https://github.com/Khan/aphrodite) for injecting inline styling into components
+- Reworked the way CellExpander element is displayed and interacts with ImageCell/URLCell/TextCell; it's now right-justified within field context and on the same line
+  - note: backwards-compatible; set CELL_EXPANDER_SAMELINE = true for new behavior, false for previous version behavior
+- Added code/behavior supplying a default image for ImageCell images that are broken/404
+- Added more styling flexibility when dealing with cells/content, although not all is being used at present
+
 ### 6.8
 
 **API Additions**
