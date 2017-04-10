@@ -296,8 +296,13 @@ export class HugeTable extends React.Component {
       }
     }
 
-    let column = (
+    if (idx === this.props.activeColumnIndex) {
+      cellClass = `${cellClass} active-column`;
+    }
+    // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
+    return (
       <Column
+        ref="activeColumn"
         cellClassName={cellClass}
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
         columnKey={schemaItem.id || schemaItem.name}
@@ -309,26 +314,6 @@ export class HugeTable extends React.Component {
         isReorderable
       />
     );
-
-    if (idx === this.props.activeColumnIndex) {
-      cellClass = `${cellClass} active-column`;
-      column = (
-        <Column
-          ref="activeColumn"
-          cellClassName={cellClass}
-          header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
-          columnKey={schemaItem.id || schemaItem.name}
-          minWidth={this.minColumnWidth}
-          width={width}
-          cell={(props) => this.cellRenderer({...props, schemaItem })}
-          key={schemaItem.name}
-          isResizable
-          isReorderable
-        />
-      );
-    }
-    // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
-    return column;
   }
 
   renderHeader = (props) => {
@@ -497,10 +482,6 @@ export class HugeTable extends React.Component {
           <i className="fa fa-chevron-right fa-lg"></i>
         </section>
       );
-    }
-
-    if (this.refs.activeColumn) {
-      console.log(this.refs.activeColumn);
     }
 
     return (
