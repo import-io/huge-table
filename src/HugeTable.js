@@ -500,20 +500,6 @@ export class HugeTable extends React.Component {
           onColumnReorderEndCallback={this.onColumnReorderEndCallback}
           isColumnReordering={false}
         >
-        {(() => {
-          if (this.state.shouldShowScrolls) {
-            return (
-              <Column
-                cellClassName="huge-table-left-scroll-column"
-                key="huge-table-left-scroll-column"
-                columnKey="huge-table-left-scroll-column"
-                width={40}
-                header={props => this.renderHeader({...props, cellData: {main: ''}})}
-                cell={(props) => <Cell><TextCell {...props} cellData={{main: ''}}/></Cell>}
-              />
-            );
-          }
-        })()}
           {(() => {
             if (!this.props.hideRowNumbers) {
               return (
