@@ -72,4 +72,5 @@ render(
     renderers={renderers}
     onSchemaChange={onSchemaChangeCallback}
     resizeByContent
+    activeColumnIndex={6}
     />, mountNode2);

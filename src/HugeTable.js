@@ -51,6 +51,8 @@ export class HugeTable extends React.Component {
     }),
     lineHeight: React.PropTypes.number,
     buttonColumnWidth: React.PropTypes.number,
+    activeColumnIndex: React.PropTypes.number,
+    onActiveColumnChange: React.PropTypes.func,
   }
 
   constructor(props) {
@@ -119,6 +121,10 @@ export class HugeTable extends React.Component {
 
     if (prevState.currentSchema < this.state.currentSchema && this.state.shouldShowScrolls && this.props.scrollToNewColumn) {
       this.scrollNewColumnIntoView();
+    }
+
+    if (prevProps.activeColumnIndex !== this.props.activeColumnIndex && this.props.onActiveColumnChange) {
+      this.props.onActiveColumnChange();
     }
 
   }
@@ -289,8 +295,8 @@ export class HugeTable extends React.Component {
         cellClass = 'last-column';
       }
     }
-    // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
-    return (
+
+    let column = (
       <Column
         cellClassName={cellClass}
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
@@ -303,6 +309,26 @@ export class HugeTable extends React.Component {
         isReorderable
       />
     );
+
+    if (idx === this.props.activeColumnIndex) {
+      cellClass = `${cellClass} active-column`;
+      column = (
+        <Column
+          ref="activeColumn"
+          cellClassName={cellClass}
+          header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
+          columnKey={schemaItem.id || schemaItem.name}
+          minWidth={this.minColumnWidth}
+          width={width}
+          cell={(props) => this.cellRenderer({...props, schemaItem })}
+          key={schemaItem.name}
+          isResizable
+          isReorderable
+        />
+      );
+    }
+    // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
+    return column;
   }
 
   renderHeader = (props) => {
@@ -471,6 +497,10 @@ export class HugeTable extends React.Component {
           <i className="fa fa-chevron-right fa-lg"></i>
         </section>
       );
+    }
+
+    if (this.refs.activeColumn) {
+      console.log(this.refs.activeColumn);
     }
 
     return (
