@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "6.10.0",
+  "version": "6.11.0",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -30,11 +30,12 @@
     "font-awesome": "^4.7.0",
     "keymirror": "^0.1.1",
     "lodash": "^4.17.4",
-    "react": "^0.14.6",
-    "react-addons-test-utils": "^0.14.7",
+    "mocha": "^3.2.0",
+    "react": "^15.5.3",
+    "react-addons-test-utils": "^15.4.2",
     "react-bootstrap": "^0.28.3",
-    "react-dom": "^0.14.7",
-    "react-portal": "^2.0.0"
+    "react-dom": "^15.4.2",
+    "react-portal": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
