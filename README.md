@@ -65,6 +65,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.10
+
+- Moved scrolling arrows to right side
+
 ### 6.9
 
 **API Additions**
