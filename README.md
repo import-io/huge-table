@@ -65,7 +65,7 @@ Build the project in a production ready way.
 
 ## Changelog
 
-### 6.12
+### 6.13
 
 **API Additions**
 - added `scrollToColumn` (number) prop which is the index of column to scroll to.
