@@ -6,8 +6,8 @@ export default class TouchWrapper extends React.Component {
   static propTypes = {
     tableWidth: React.PropTypes.number.isRequired,
     tableHeight: React.PropTypes.number.isRequired,
-    contentWidth: React.PropTypes.number.isRequired,
-    contentHeight: React.PropTypes.number.isRequired,
+    contentWidth: React.PropTypes.number,
+    contentHeight: React.PropTypes.number,
     onScroll: React.PropTypes.func.isRequired,
     children: React.PropTypes.any,
   }
