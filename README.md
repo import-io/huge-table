@@ -65,6 +65,17 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.12
+
+**API Additions**
+- added `scrollToColumn` (number) prop which is the index of column to scroll to.
+
+### 6.11
+
+**API Additions**
+- added `activeColumnIndex` and `onActiveColumnChange` props
+
+
 ### 6.10
 
 - Moved scrolling arrows to right side

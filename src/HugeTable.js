@@ -53,6 +53,7 @@ export class HugeTable extends React.Component {
     buttonColumnWidth: React.PropTypes.number,
     activeColumnIndex: React.PropTypes.number,
     onActiveColumnChange: React.PropTypes.func,
+    scrollToColumn: React.PropTypes.number,
   }
 
   constructor(props) {
@@ -75,6 +76,8 @@ export class HugeTable extends React.Component {
       lineHeight,
       headerHeight,
       rowHeight,
+      contentHeight: 500,
+      contentWidth: 500,
     };
 
     this.uniqueId = props.options.id || null;
@@ -510,6 +513,7 @@ export class HugeTable extends React.Component {
           onColumnResizeEndCallback={this.onColumnResizeEndCallback}
           onContentDimensionsChange={this.onContentDimensionsChange}
           onColumnReorderEndCallback={this.onColumnReorderEndCallback}
+          scrollToColumn={this.props.scrollToColumn}
           isColumnReordering={false}
         >
           {(() => {
