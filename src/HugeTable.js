@@ -469,12 +469,11 @@ export class HugeTable extends React.Component {
   render() {
     const tableWidth = this.props.options.width;
     const tableHeight = this.props.options.height - this.state.headerHeight;
-    let rowNumberColumnWidth = this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH;
+    const rowNumberColumnWidth = this.props.options.rowNumberColumnWidth ? this.props.options.rowNumberColumnWidth : Constants.ROW_NUMBER_COLUMN_WIDTH;
 
     let leftScroll, rightScroll;
     if(this.state.shouldShowScrolls) {
       // increase the size of the row number column so there is no overlap
-      rowNumberColumnWidth = rowNumberColumnWidth + 40;
       leftScroll = (
         <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-5)} onMouseLeave={() => this.handleMouseLeave()}>
           <i className="fa fa-chevron-left fa-lg"></i>
