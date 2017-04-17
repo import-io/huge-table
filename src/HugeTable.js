@@ -106,6 +106,7 @@ export class HugeTable extends React.Component {
 
     if(this.props.schema !== nextProps.schema || this.props.options.width !== nextProps.options.width) {
       this.generateColumnWidths(nextProps.schema, nextProps.options.width);
+      this.checkForScrollArrows(this.state.scrollLeft);
     }
 
     if(this.props.data.length !== nextProps.data.length) {
@@ -447,14 +448,21 @@ export class HugeTable extends React.Component {
 
   handleScroll = (scrollLeft) => {
     const ALL_ELEMENTS_WIDTH = this.calcElementsWidth(this.getChildElements());
-    const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width && this.props.showScrollingArrows;
+    this.checkForScrollArrows(scrollLeft, ALL_ELEMENTS_WIDTH);
     this.setState({
       scrollLeft,
-      shouldShowScrolls,
-      shouldActivateLeftScroll: scrollLeft > 0,
-      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.props.options.width+scrollLeft),
     });
     return true;
+  }
+
+  checkForScrollArrows = (scrollLeft, allElementsWidth) => {
+    const ALL_ELEMENTS_WIDTH =  allElementsWidth ? allElementsWidth : this.calcElementsWidth(this.getChildElements());
+    const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width && this.props.showScrollingArrows;
+    this.setState({
+      shouldShowScrolls,
+      shouldActivateLeftScroll: scrollLeft > 0,
+      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.props.options.width + scrollLeft),
+    });
   }
 
   getListContainerWidth = () => {
