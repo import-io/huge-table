@@ -448,19 +448,21 @@ export class HugeTable extends React.Component {
 
   handleScroll = (scrollLeft) => {
     const ALL_ELEMENTS_WIDTH = this.calcElementsWidth(this.getChildElements());
-    this.checkForScrollArrows(ALL_ELEMENTS_WIDTH);
+    this.checkForScrollArrows(scrollLeft, ALL_ELEMENTS_WIDTH);
     this.setState({
       scrollLeft,
-      shouldActivateLeftScroll: scrollLeft > 0,
-      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.props.options.width+scrollLeft),
     });
     return true;
   }
 
-  checkForScrollArrows = (allElementsWidth) => {
+  checkForScrollArrows = (scrollLeft, allElementsWidth) => {
     const ALL_ELEMENTS_WIDTH =  allElementsWidth ? allElementsWidth : this.calcElementsWidth(this.getChildElements());
     const shouldShowScrolls = ALL_ELEMENTS_WIDTH > this.props.options.width && this.props.showScrollingArrows;
-    this.setState({ shouldShowScrolls });
+    this.setState({
+      shouldShowScrolls,
+      shouldActivateLeftScroll: scrollLeft > 0,
+      shouldActivateRightScroll: ALL_ELEMENTS_WIDTH-1 > (this.props.options.width + scrollLeft),
+    });
   }
 
   getListContainerWidth = () => {
