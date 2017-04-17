@@ -118,7 +118,7 @@ export class HugeTable extends React.Component {
       this.reorderSchema(this.props.schema, this.state.columnOrder);
     }
     if (prevState.currentSchema !== this.state.currentSchema && !_.isEqual(prevState.currentSchema, this.state.currentSchema)) {
-      this.onSchemaChange(this.state.currentSchema);
+      this.onSchemaChange(this.state.currentSchema, prevState.currentSchema);
       this.handleScroll(this.state.scrollLeft);
     }
 
