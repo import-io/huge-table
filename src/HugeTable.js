@@ -132,9 +132,9 @@ export class HugeTable extends React.Component {
 
   }
 
-  onSchemaChange = schema => {
+  onSchemaChange = (schema, prevSchema) => {
     if (this.props.onSchemaChange) {
-      this.props.onSchemaChange(schema);
+      this.props.onSchemaChange(schema, prevSchema);
     }
   }
 
