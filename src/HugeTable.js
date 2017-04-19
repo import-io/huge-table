@@ -487,13 +487,13 @@ export class HugeTable extends React.Component {
     if(this.state.shouldShowScrolls) {
       // increase the size of the row number column so there is no overlap
       leftScroll = (
-        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-20)} onMouseLeave={() => this.handleMouseLeave()}>
+        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-10)} onMouseLeave={() => this.handleMouseLeave()}>
           <i className="fa fa-chevron-left fa-lg"></i>
         </section>
       );
 
       rightScroll = (
-        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(20)} onMouseLeave={() => this.handleMouseLeave()}>
+        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(10)} onMouseLeave={() => this.handleMouseLeave()}>
           <i className="fa fa-chevron-right fa-lg"></i>
         </section>
       );
