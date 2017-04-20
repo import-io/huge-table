@@ -78,6 +78,7 @@ export class HugeTable extends React.Component {
       rowHeight,
       contentHeight: 500,
       contentWidth: 500,
+      currentTableScroll: 0,
     };
 
     this.uniqueId = props.options.id || null;
@@ -123,14 +124,19 @@ export class HugeTable extends React.Component {
       this.checkForScrollArrows(this.state.scrollLeft);
     }
 
-    if (prevState.currentSchema < this.state.currentSchema && this.state.shouldShowScrolls && this.props.scrollToNewColumn) {
+    if (prevState.currentSchema < this.state.currentSchema && this.state.shouldShowScrolls) {
       this.scrollNewColumnIntoView();
+      this.checkForScrollArrows(this.state.scrollLeft);
     }
 
     if (prevProps.activeColumnIndex !== this.props.activeColumnIndex && this.props.onActiveColumnChange) {
       this.props.onActiveColumnChange();
     }
 
+  }
+
+  onScrollEnd = (scrollLeft) => {
+    this.setState({ scrollLeft });
   }
 
   onSchemaChange = (schema, prevSchema) => {
@@ -140,7 +146,7 @@ export class HugeTable extends React.Component {
   }
 
   scrollNewColumnIntoView = () => {
-    if (this.refs.table) {
+    if (this.refs.table && this.props.scrollToNewColumn) {
       this.scrollAndCheckForArrows(this.refs.table.state.maxScrollX);
       if (this.props.onScrollToNewColumn) {
         this.props.onScrollToNewColumn();
@@ -425,7 +431,7 @@ export class HugeTable extends React.Component {
     this.intervalId = setInterval(() => this.moveScrollPos(scrollVal), 10);
   }
 
-  handleMouseLeave = () => {
+  stopScrollInterval = () => {
     clearInterval(this.intervalId);
     this.intervalId = undefined;
   }
@@ -433,6 +439,9 @@ export class HugeTable extends React.Component {
   moveScrollPos = (val) => {
     if (this.state.scrollLeft === 0 && val >= 0 || this.state.scrollLeft > 0) {
       this.scrollAndCheckForArrows(this.state.scrollLeft+val);
+    }
+    if (this.state.scrollLeft >= this.refs.table.state.maxScrollX) {
+      this.stopScrollInterval();
     }
   }
 
@@ -487,13 +496,13 @@ export class HugeTable extends React.Component {
     if(this.state.shouldShowScrolls) {
       // increase the size of the row number column so there is no overlap
       leftScroll = (
-        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-10)} onMouseLeave={() => this.handleMouseLeave()}>
+        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'left', {'active': this.state.shouldActivateLeftScroll})} onMouseEnter={() => this.handleMouseEnter(-10)} onMouseLeave={() => this.stopScrollInterval()}>
           <i className="fa fa-chevron-left fa-lg"></i>
         </section>
       );
 
       rightScroll = (
-        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(10)} onMouseLeave={() => this.handleMouseLeave()}>
+        <section style={{ height: this.state.headerHeight }} className={classNames('scroll-toggle', 'right', {'active': this.state.shouldActivateRightScroll})} onMouseEnter={() => this.handleMouseEnter(10)} onMouseLeave={() => this.stopScrollInterval()}>
           <i className="fa fa-chevron-right fa-lg"></i>
         </section>
       );
@@ -512,6 +521,7 @@ export class HugeTable extends React.Component {
         {rightScroll}
         <Table
           onHorizontalScroll={this.checkForScrollArrows}
+          onScrollEnd={this.onScrollEnd}
           ref="table"
           rowHeight={this.state.rowHeight}
           rowsCount={this.props.data.length}
