@@ -78,7 +78,6 @@ export class HugeTable extends React.Component {
       rowHeight,
       contentHeight: 500,
       contentWidth: 500,
-      currentTableScroll: 0,
     };
 
     this.uniqueId = props.options.id || null;
