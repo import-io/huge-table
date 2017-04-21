@@ -437,7 +437,8 @@ export class HugeTable extends React.Component {
 
   moveScrollPos = (val) => {
     if (this.state.scrollLeft === 0 && val >= 0 || this.state.scrollLeft > 0) {
-      this.scrollAndCheckForArrows(this.state.scrollLeft+val);
+      const scrollLeft = this.state.scrollLeft + val >= 0 ? this.state.scrollLeft + val : 0;
+      this.scrollAndCheckForArrows(scrollLeft);
     }
     if (this.state.scrollLeft >= this.refs.table.state.maxScrollX) {
       this.stopScrollInterval();
