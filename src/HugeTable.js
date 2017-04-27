@@ -96,6 +96,7 @@ export class HugeTable extends React.Component {
     this.generateColumnToDataTypeMap(this.props.schema);
     this.generateColumnWidths(this.props.schema, this.props.options.width);
     this.generateInitialColumnOrder(this.props.schema);
+    this.checkForScrollArrows(this.state.scrollLeft);
   }
 
   componentWillReceiveProps(nextProps) {
