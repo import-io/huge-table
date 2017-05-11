@@ -62,7 +62,7 @@ export default class OverflowExpander extends React.Component {
     return (
       <span onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} style={{
         display: 'inline-block',
-        width: '250px',
+        width: this.props.availableWidth,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -83,7 +83,7 @@ export default class OverflowExpander extends React.Component {
             backgroundColor: '#fff',
           }}>
             <div className="arrow" style={{top: '50%'}}></div>
-            <div className="popover-content" style={{wordWrap: 'break-word'}}>{this.props.children}</div>
+            <div className="popover-content" style={{wordWrap: 'break-word', overflow: 'hidden', marginRight: '14px'}}>{this.props.children}</div>
           </div>
         </Portal>
       </span>
