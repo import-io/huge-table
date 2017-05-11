@@ -65,6 +65,12 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.13.10
+- patch to fix availableWidth calculation from sizing for OverflowExpander
+
+**API Additions**
+- added `scrollToColumn` (number) prop which is the index of column to scroll to.
+
 ### 6.13
 
 **API Additions**
