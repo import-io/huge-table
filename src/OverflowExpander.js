@@ -62,7 +62,7 @@ export default class OverflowExpander extends React.Component {
     return (
       <span onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} style={{
         display: 'inline-block',
-        width: this.props.availableWidth,
+        width: '250px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
