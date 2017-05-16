@@ -19,9 +19,9 @@
   "author": "James Morrow (@wtfdaemon)",
   "license": "Apache-2.0",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/import-io/huge-table"
-},
+    "type": "git",
+    "url": "https://github.com/import-io/huge-table"
+  },
   "dependencies": {
     "aphrodite": "^1.2.0",
     "classnames": "^2.2.5",
@@ -29,12 +29,13 @@
     "font-awesome": "^4.7.0",
     "keymirror": "^0.1.1",
     "lodash": "^4.17.4",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.0",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
     "react-portal": "^3.0.0"
-},
+  },
   "devDependencies": {
     "autoprefixer": "^6.5.1",
     "babel-cli": "^6.5.1",
