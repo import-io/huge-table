@@ -16,7 +16,7 @@
   "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter",
   "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
 },
-  "author": "Yacine Rezgui (@yrezgui)",
+  "author": "James Morrow (@wtfdaemon)",
   "license": "Apache-2.0",
   "repository": {
   "type": "git",
