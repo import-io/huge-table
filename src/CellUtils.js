@@ -59,7 +59,6 @@ export function getComponentContent({columnDataType, cellData, width, key, colum
       return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
 
     case Constants.ColumnTypes.AUTO:
-      console.log(cellData, 'cellData from getComponentContent() AUTO case');
       if (cellData.main && cellData.main.src) {
         return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
       } else {
