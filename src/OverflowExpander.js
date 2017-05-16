@@ -1,10 +1,11 @@
 import React            from 'react';
 import Portal           from 'react-portal';
+import PropTypes from 'prop-types';
 
 export default class OverflowExpander extends React.Component {
   static propTypes = {
-    availableWidth: React.PropTypes.number.isRequired,
-    children: React.PropTypes.any,
+    availableWidth: PropTypes.number.isRequired,
+    children: PropTypes.any,
   }
 
   constructor(props) {

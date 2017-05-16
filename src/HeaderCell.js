@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cell } from 'fixed-data-table-2';
+import PropTypes from 'prop-types';
 
 export const HeaderCell = ({cellData, ...props}) => {
   const content = cellData.main;
@@ -20,8 +21,8 @@ export const HeaderCell = ({cellData, ...props}) => {
 };
 
 HeaderCell.propTypes = {
-  columnKey: React.PropTypes.string.isRequired,
-  cellData: React.PropTypes.object.isRequired,
-  height: React.PropTypes.number.isRequired,
-  width: React.PropTypes.number.isRequired,
+  columnKey: PropTypes.string.isRequired,
+  cellData: PropTypes.object.isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
 };
