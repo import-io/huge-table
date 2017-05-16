@@ -25,6 +25,7 @@ export const ColumnTypes = keyMirror({
   IMAGE: null,
   URL: null,
   TEXT: null,
+  AUTO: null,
 });
 
 export const CELL_PADDING             = defaultCellPadding;

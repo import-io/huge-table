@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "6.13.11",
+  "version": "6.14.0",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -16,7 +16,7 @@
   "test-circle": "MOCHA_FILE=$CIRCLE_TEST_REPORTS/file.xml mocha test --reporter mocha-junit-reporter",
   "npmrc": "printf \"//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN\" > .npmrc"
 },
-  "author": "Yacine Rezgui (@yrezgui)",
+  "author": "James Morrow (@wtfdaemon)",
   "license": "Apache-2.0",
   "repository": {
   "type": "git",
