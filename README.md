@@ -65,6 +65,21 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 6.14.1
+- removed console logging accidentally left in
+
+### 6.14.0
+- introduced code in CellUtils.getComponentContent to account for a schemaItem type of "AUTO".  A schemaItem type of AUTO will first look for a cellData.item.src value, and if this exists, will use the ImageCell cellRenderer; if it doesn't exist, will use the default TextCell cellRenderer
+
+### 6.13.11
+- patch to fix edge case for OverflowExpander max-width
+
+### 6.13.10
+- patch to fix availableWidth calculation from sizing for OverflowExpander
+
+**API Additions**
+- added `scrollToColumn` (number) prop which is the index of column to scroll to.
+
 ### 6.13
 
 **API Additions**
