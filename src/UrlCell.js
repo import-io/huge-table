@@ -1,6 +1,7 @@
 import React from 'react';
 import OverflowExpander from './OverflowExpander';
 import * as Constants from './constants';
+import PropTypes from 'prop-types';
 
 let HORZ_PADDING = 5;
 if (Constants.CELL_EXPANDER_SAMELINE) {
@@ -35,6 +36,6 @@ export const UrlCell = (props) => {
 };
 
 UrlCell.propTypes = {
-  cellData: React.PropTypes.object.isRequired,
-  width: React.PropTypes.number.isRequired,
+  cellData: PropTypes.object.isRequired,
+  width: PropTypes.number.isRequired,
 };

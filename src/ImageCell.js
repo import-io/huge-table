@@ -2,12 +2,13 @@ import React from 'react';
 import Portal from 'react-portal';
 import * as Constants from './constants';
 import brokenImage from '../assets/broken-image-placeholder.png';
+import PropTypes from 'prop-types';
 
 export class ImageCell extends React.Component {
   static propTypes = {
-    cellData: React.PropTypes.object.isRequired,
-    width: React.PropTypes.number.isRequired,
-    mixedContentImage: React.PropTypes.func,
+    cellData: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    mixedContentImage: PropTypes.func,
   }
 
   constructor(props) {

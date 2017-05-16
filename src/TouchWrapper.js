@@ -1,15 +1,16 @@
 import React from 'react';
 import ZyngaScroller from './ZyngaScroller';
 import TouchableArea from './TouchableArea';
+import PropTypes from 'prop-types';
 
 export default class TouchWrapper extends React.Component {
   static propTypes = {
-    tableWidth: React.PropTypes.number.isRequired,
-    tableHeight: React.PropTypes.number.isRequired,
-    contentWidth: React.PropTypes.number,
-    contentHeight: React.PropTypes.number,
-    onScroll: React.PropTypes.func.isRequired,
-    children: React.PropTypes.any,
+    tableWidth: PropTypes.number.isRequired,
+    tableHeight: PropTypes.number.isRequired,
+    contentWidth: PropTypes.number,
+    contentHeight: PropTypes.number,
+    onScroll: PropTypes.func.isRequired,
+    children: PropTypes.any,
   }
 
   state = {
