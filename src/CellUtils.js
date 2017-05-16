@@ -58,6 +58,14 @@ export function getComponentContent({columnDataType, cellData, width, key, colum
     case Constants.ColumnTypes.IMAGE:
       return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
 
+    case Constants.ColumnTypes.AUTO:
+      console.log(cellData, 'cellData from getComponentContent() AUTO case');
+      if (cellData.main && cellData.main.src) {
+        return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
+      } else {
+        return <TextCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
+      }
+
     default:
       return <TextCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
   }
