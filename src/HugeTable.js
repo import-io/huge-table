@@ -331,7 +331,7 @@ export class HugeTable extends React.Component {
   renderHeader = (props) => {
     if(this.props.renderers && this.props.renderers.HEADER && typeof this.props.renderers.HEADER === 'function') {
       return (
-        <Cell {...props}>
+        <Cell>
           {this.props.renderers.HEADER(props)}
         </Cell>
       );
