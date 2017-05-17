@@ -2,7 +2,7 @@ import React from 'react';
 import { Cell } from 'fixed-data-table-2';
 import PropTypes from 'prop-types';
 
-export const HeaderCell = ({cellData}) => {
+export const HeaderCell = ({cellData, ...props}) => {
   const content = cellData.main;
 
   const style = {
@@ -14,7 +14,7 @@ export const HeaderCell = ({cellData}) => {
   };
 
   return (
-    <Cell>
+    <Cell {...props}>
       <div style={style} title={content}>{content} </div>
     </Cell>
   );
