@@ -25,7 +25,7 @@ export const TextCell = (props) => {
       if (props.cellData.main.text && typeof props.cellData.main.text === 'string') {
         content = props.cellData.main.text;
       } else {
-        content = JSON.stringify(props.cellData.main);
+        content = props.cellData.main;
       }
     } else {
       content = '';
