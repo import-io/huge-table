@@ -65,6 +65,9 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 7.0.3
+- fixed case in which cellData where text data was passed under main.text rather than in .text works correctly now
+
 ### 7.0.2
 - fixed case in which TextCell would improperly stringify text when given cellData.type of 'AUTO'
 
