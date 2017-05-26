@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class TouchableArea extends React.Component {
   static propTypes = {
-    scroller: React.PropTypes.object,
-    touchable: React.PropTypes.bool.isRequired,
-    children: React.PropTypes.any,
+    scroller: PropTypes.object,
+    touchable: PropTypes.bool.isRequired,
+    children: PropTypes.any,
   }
 
   static defaultProps = {

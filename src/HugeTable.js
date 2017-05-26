@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Table, Column, Cell } from 'fixed-data-table-2';
 import classNames from 'classnames';
 import * as Constants from './constants';
@@ -12,48 +13,48 @@ import { StyleSheet, css } from 'aphrodite';
 
 export class HugeTable extends React.Component {
   static propTypes = {
-    data: React.PropTypes.arrayOf(React.PropTypes.object),
-    options: React.PropTypes.shape({
-      height: React.PropTypes.number,
-      width: React.PropTypes.number,
-      mixedContentImage: React.PropTypes.func,
-      tableScrolled: React.PropTypes.func,
-      id: React.PropTypes.string,
-      maxTitleWidth: React.PropTypes.number,
-      maxContentWidth: React.PropTypes.number,
-      minColumnWidth: React.PropTypes.number,
-      rowNumberColumnWidth: React.PropTypes.number,
-      fontDetails: React.PropTypes.string,
+    data: PropTypes.arrayOf(PropTypes.object),
+    options: PropTypes.shape({
+      height: PropTypes.number,
+      width: PropTypes.number,
+      mixedContentImage: PropTypes.func,
+      tableScrolled: PropTypes.func,
+      id: PropTypes.string,
+      maxTitleWidth: PropTypes.number,
+      maxContentWidth: PropTypes.number,
+      minColumnWidth: PropTypes.number,
+      rowNumberColumnWidth: PropTypes.number,
+      fontDetails: PropTypes.string,
     }),
-    schema: React.PropTypes.arrayOf(React.PropTypes.shape({
-      name: React.PropTypes.string,
-      type: React.PropTypes.string,
+    schema: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      type: PropTypes.string,
     })),
-    renderers: React.PropTypes.shape(RETURNED_DATA_TYPES.reduce((initial, next) => {
+    renderers: PropTypes.shape(RETURNED_DATA_TYPES.reduce((initial, next) => {
       return {
         ...initial,
-        [next]: React.PropTypes.func,
+        [next]: PropTypes.func,
       };
-    }, {HEADER: React.PropTypes.func})),
-    onSchemaChange: React.PropTypes.func,
-    resizeByContent: React.PropTypes.bool,
-    hideRowNumbers: React.PropTypes.bool,
-    showScrollingArrows: React.PropTypes.bool,
-    scrollToNewColumn: React.PropTypes.bool,
-    onScrollToNewColumn: React.PropTypes.func,
-    rowHeight: React.PropTypes.number,
-    headerHeight: React.PropTypes.number,
-    cellPadding: React.PropTypes.shape ({
-      top: React.PropTypes.number,
-      bottom: React.PropTypes.number,
-      left: React.PropTypes.number,
-      right: React.PropTypes.number,
+    }, {HEADER: PropTypes.func})),
+    onSchemaChange: PropTypes.func,
+    resizeByContent: PropTypes.bool,
+    hideRowNumbers: PropTypes.bool,
+    showScrollingArrows: PropTypes.bool,
+    scrollToNewColumn: PropTypes.bool,
+    onScrollToNewColumn: PropTypes.func,
+    rowHeight: PropTypes.number,
+    headerHeight: PropTypes.number,
+    cellPadding: PropTypes.shape ({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number,
     }),
-    lineHeight: React.PropTypes.number,
-    buttonColumnWidth: React.PropTypes.number,
-    activeColumnIndex: React.PropTypes.number,
-    onActiveColumnChange: React.PropTypes.func,
-    scrollToColumn: React.PropTypes.number,
+    lineHeight: PropTypes.number,
+    buttonColumnWidth: PropTypes.number,
+    activeColumnIndex: PropTypes.number,
+    onActiveColumnChange: PropTypes.func,
+    scrollToColumn: PropTypes.number,
   }
 
   constructor(props) {
@@ -330,7 +331,7 @@ export class HugeTable extends React.Component {
   renderHeader = (props) => {
     if(this.props.renderers && this.props.renderers.HEADER && typeof this.props.renderers.HEADER === 'function') {
       return (
-        <Cell {...props}>
+        <Cell>
           {this.props.renderers.HEADER(props)}
         </Cell>
       );

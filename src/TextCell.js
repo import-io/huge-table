@@ -1,5 +1,6 @@
 import React from 'react';
 import OverflowExpander from './OverflowExpander';
+import PropTypes from 'prop-types';
 
 const HORZ_PADDING = 6;
 
@@ -49,6 +50,6 @@ export const TextCell = (props) => {
 };
 
 TextCell.propTypes = {
-  cellData: React.PropTypes.object.isRequired,
-  width: React.PropTypes.number.isRequired,
+  cellData: PropTypes.object.isRequired,
+  width: PropTypes.number.isRequired,
 };

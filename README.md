@@ -93,7 +93,6 @@ Build the project in a production ready way.
 **API Additions**
 - added `activeColumnIndex` and `onActiveColumnChange` props
 
-
 ### 6.10
 
 - Moved scrolling arrows to right side

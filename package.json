@@ -19,14 +19,13 @@
   "author": "James Morrow (@wtfdaemon)",
   "license": "Apache-2.0",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/import-io/huge-table"
-},
+    "type": "git",
+    "url": "https://github.com/import-io/huge-table"
+  },
   "dependencies": {
     "aphrodite": "^1.2.0",
     "classnames": "^2.2.5",
-    "fixed-data-table": "^0.6.0",
-    "fixed-data-table-2": "^0.7.10",
+    "fixed-data-table-2": "^0.7.17",
     "font-awesome": "^4.7.0",
     "keymirror": "^0.1.1",
     "lodash": "^4.17.4",
