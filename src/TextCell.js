@@ -16,10 +16,23 @@ export const TextCell = (props) => {
         content = <a href={href} target="_blank">{content}</a>;
       }
     }
-
   } else {
-    content = props.cellData.text || props.cellData.main || '';
-    content = typeof content === 'object' ?  JSON.stringify(content) : content;
+    // type === 'AUTO', probably
+    if (props.cellData.text) {
+      content = props.cellData.text;
+    } else if (props.cellData.main) {
+      if (props.cellData.main.text && typeof props.cellData.main.text === 'string') {
+        content = props.cellData.main.text;
+      } else {
+        content = props.cellData.main;
+      }
+    } else {
+      content = '';
+    }
+
+    if (!typeof content === 'string') {
+      content = JSON.stringify(content);
+    }
   }
 
   return (
