@@ -65,6 +65,9 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 7.0.2
+- fixed case in which TextCell would improperly stringify text when given cellData.type of 'AUTO'
+
 ### 6.14.1
 - removed console logging accidentally left in
 
