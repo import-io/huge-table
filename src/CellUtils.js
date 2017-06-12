@@ -43,7 +43,7 @@ export function getComponentDataType ({
     return null;
   }
 
-    const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height,rowIndex};// console.log('%cLogging-----props.height in cellutils-              ==', 'color: blue; font-size:16px;', props.rowIndex);
+  const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height,rowIndex};// console.log('%cLogging-----props.height in cellutils-              ==', 'color: blue; font-size:16px;', props.rowIndex);
 
   if (Array.isArray(cellData.main)) {
     return handleArrayOfData({...props, cellCustomRenderer});
