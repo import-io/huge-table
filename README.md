@@ -64,11 +64,14 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
-### 6.14.3
--Fixes for FE-769- where Column popovers go offscreen when many items in cell.
+### 7.0.5
+- Fixes for FE-769- where Column popovers go offscreen when many items in cell.
 
-### 6.14.2
-- fixes for TextCell handling of content type 'Auto' and when text data is passed in via cellData.main.text rather than cellData.text
+### 7.0.3
+- fixed case in which cellData where text data was passed under main.text rather than in .text works correctly now
+
+### 7.0.2
+- fixed case in which TextCell would improperly stringify text when given cellData.type of 'AUTO'
 
 ### 6.14.1
 - removed console logging accidentally left in
@@ -94,6 +97,7 @@ Build the project in a production ready way.
 
 **API Additions**
 - added `activeColumnIndex` and `onActiveColumnChange` props
+
 
 ### 6.10
 
