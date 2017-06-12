@@ -1,6 +1,6 @@
 {
   "name": "huge-table",
-  "version": "6.14.2",
+  "version": "6.14.3",
   "description": "Table component to handle huge sets of data, based on Facebook's FixedDataTable",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
