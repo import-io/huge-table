@@ -66,10 +66,11 @@ function getExpanderStyle () {
   return (expanderStyle);
 };
 
-export const CellExpander = ({firstElement, children}) => {
+export const CellExpander = ({firstElement, children, totalRows, rowIndex}) => {
   const innerText = `+ ${Array.isArray(children) ? children.length-1 : 0} items`;
   const expanderOnSameline = Constants.CELL_EXPANDER_SAMELINE;
   const expanderStyle = getExpanderStyle();
+  const popover_placement = rowIndex<=(totalRows-1)/2 ? 'bottom': 'top';
 
   if (expanderOnSameline) {
     return (
@@ -80,7 +81,7 @@ export const CellExpander = ({firstElement, children}) => {
         <OverlayTrigger
            rootClose
            trigger="click"
-           placement="top"
+           placement= {popover_placement}
            overlay={(
              <Popover id="details-popover">
                {children.map((c, id) => (
@@ -106,7 +107,7 @@ export const CellExpander = ({firstElement, children}) => {
         <OverlayTrigger
            rootClose
            trigger="click"
-           placement="top"
+           placement= {popover_placement}
            overlay={(
              <Popover id="details-popover">
                {children.map((c, id) => (

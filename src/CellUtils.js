@@ -6,7 +6,7 @@ import { TextCell } from './TextCell';
 import * as Constants from './constants';
 import { CellExpander } from './CellExpander';
 
-export function handleArrayOfData({columnDataType, cellData, width, height, key, columnKey, mixedContentImage, cellCustomRenderer}) {
+export function handleArrayOfData({columnDataType, cellData, width, height, key, columnKey,rowIndex, mixedContentImage, cellCustomRenderer}) {
   const childrenCellData = generateChildCellData(cellData);
 
   const properties = {
@@ -17,13 +17,14 @@ export function handleArrayOfData({columnDataType, cellData, width, height, key,
     columnKey,
     mixedContentImage,
     height,
+    rowIndex,
   };
 
   if (childrenCellData.length === 1) {
     return cellCustomRenderer(properties);
   } else {
     return (
-      <CellExpander firstElement={cellCustomRenderer(properties)}>
+        <CellExpander firstElement={cellCustomRenderer(properties)} totalRows={properties.height} rowIndex={properties.rowIndex}>
         {childrenCellData.map((cellData, key) => cellCustomRenderer({...properties, cellData, key}))}
       </CellExpander>
     );
@@ -36,12 +37,13 @@ export function getComponentDataType ({
   width, height, key, columnKey,
   mixedContentImage,
   cellCustomRenderer = getComponentContent,
-  cellStyles}) {
+  cellStyles,
+  rowIndex}) {
   if (!columnDataType) {
     return null;
   }
 
-  const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height};
+    const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height,rowIndex};// console.log('%cLogging-----props.height in cellutils-              ==', 'color: blue; font-size:16px;', props.rowIndex);
 
   if (Array.isArray(cellData.main)) {
     return handleArrayOfData({...props, cellCustomRenderer});
