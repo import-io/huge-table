@@ -387,6 +387,7 @@ export class HugeTable extends React.Component {
           mixedContentImage: this.props.options.mixedContentImage,
           cellCustomRenderer,
           rowIndex,
+
         })}
       </Cell>
     );
