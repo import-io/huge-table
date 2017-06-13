@@ -386,6 +386,8 @@ export class HugeTable extends React.Component {
           columnKey: schemaItem.id || schemaItem.name,
           mixedContentImage: this.props.options.mixedContentImage,
           cellCustomRenderer,
+          rowIndex,
+
         })}
       </Cell>
     );
