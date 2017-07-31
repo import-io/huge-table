@@ -22,7 +22,7 @@ export const TextCell = (props) => {
     if (props.cellData.text) {
       content = props.cellData.text;
     } else if (props.cellData.main) {
-      if (props.cellData.main.text && typeof props.cellData.main.text === 'string') {
+      if (typeof props.cellData.main.text === 'string') {
         content = props.cellData.main.text;
       } else {
         content = props.cellData.main;
