@@ -64,6 +64,9 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+### 7.0.6
+- Fixed case where TextCell would improperly identify empty strings as falsey and pass an object to OverflowExpander causing it to break.
+
 ### 7.0.5
 - Fixes for FE-769- where Column popovers go offscreen when many items in cell.
 
