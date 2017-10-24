@@ -25,6 +25,7 @@ export class HugeTable extends React.Component {
       minColumnWidth: PropTypes.number,
       rowNumberColumnWidth: PropTypes.number,
       fontDetails: PropTypes.string,
+      headerOffsetWidth: PropTypes.number,
     }),
     schema: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
