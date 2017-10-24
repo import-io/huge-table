@@ -264,6 +264,22 @@ export class HugeTable extends React.Component {
     return tsize.width;
   }
 
+  resizeHeader = (field) => {
+    const columnWidths = { ...this.state.columnWidths };
+    const maxColumnWidth = this.getContentSize(field.name, this.fontDetails) + 73;
+
+    if (this.uniqueId){
+      this.savedColumnsWidth[this.uniqueId][field.id] = maxColumnWidth;
+      localStorage.setItem('huge-table-column-widths', JSON.stringify(this.savedColumnsWidth));
+    }
+
+    columnWidths[field.id] = maxColumnWidth;
+
+    this.setState({
+      columnWidths,
+    });
+  }
+
   getCellContent = (row, schemaItem) => {
     let content;
     if (schemaItem.type === Constants.ColumnTypes.TEXT) {
