@@ -91,6 +91,7 @@ export class HugeTable extends React.Component {
     this.maxContentWidth = props.options.maxContentWidth || Constants.MAX_CONTENT_WIDTH;
     this.fontDetails = props.options.fontDetails || Constants.FONT_DETAILS;
     this.minColumnWidth = props.options.minColumnWidth || Constants.MIN_COLUMN_WIDTH;
+    this.headerOffsetWidth = props.options.headerOffsetWidth || 0;
   }
 
   componentDidMount() {
@@ -246,7 +247,7 @@ export class HugeTable extends React.Component {
       //Set the column width based off of max title width
       //Else set column width based off of content width
       if (maxColumnWidth < this.maxTitleWidth) {
-        const titleWidth = this.getContentSize(schemaItem.name, this.fontDetails);
+        const titleWidth = this.getContentSize(schemaItem.name, this.fontDetails) + this.headerOffsetWidth;
         maxColumnWidth = Math.max(titleWidth, maxColumnWidth);
         maxColumnWidth = Math.min(maxColumnWidth, this.maxTitleWidth);
       } else {
@@ -266,7 +267,7 @@ export class HugeTable extends React.Component {
 
   resizeHeader = (field) => {
     const columnWidths = { ...this.state.columnWidths };
-    const maxColumnWidth = this.getContentSize(field.name, this.fontDetails) + 73;
+    const maxColumnWidth = this.getContentSize(field.name, this.fontDetails) + this.headerOffsetWidth;
 
     if (this.uniqueId){
       this.savedColumnsWidth[this.uniqueId][field.id] = maxColumnWidth;
