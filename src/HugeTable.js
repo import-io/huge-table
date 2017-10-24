@@ -266,8 +266,7 @@ export class HugeTable extends React.Component {
     return tsize.width;
   }
 
-  resizeHeader = (field) => {
-    const columnWidths = { ...this.state.columnWidths };
+  setMaxHeaderWidth = (field) => {
     let maxColumnWidth = this.getContentSize(field.name, this.fontDetails) + this.headerOffsetWidth;
     maxColumnWidth = maxColumnWidth > this.minColumnWidth ? maxColumnWidth : this.minColumnWidth;
 
@@ -276,8 +275,14 @@ export class HugeTable extends React.Component {
       localStorage.setItem('huge-table-column-widths', JSON.stringify(this.savedColumnsWidth));
     }
 
-    columnWidths[field.id] = maxColumnWidth > this.minColumnWidth ? maxColumnWidth : this.minColumnWidth;
+    return maxColumnWidth;
+  }
 
+  resizeHeader = (field) => {
+    const columnWidths = { ...this.state.columnWidths };
+
+    columnWidths[field.id] = setMaxHeaderWidth(field);
+    
     this.setState({
       columnWidths,
     });
@@ -287,13 +292,7 @@ export class HugeTable extends React.Component {
     const columnWidths = { ...this.state.columnWidths };
 
     fields.forEach(field => {
-      let maxColumnWidth = this.getContentSize(field.name, this.fontDetails) + this.headerOffsetWidth;
-      maxColumnWidth = maxColumnWidth > this.minColumnWidth ? maxColumnWidth : this.minColumnWidth;
-      if (this.uniqueId){
-        this.savedColumnsWidth[this.uniqueId][field.id] = maxColumnWidth;
-        localStorage.setItem('huge-table-column-widths', JSON.stringify(this.savedColumnsWidth));
-      }
-      columnWidths[field.id] = maxColumnWidth;
+      columnWidths[field.id] = setMaxHeaderWidth(field);
     });
 
     this.setState({
