@@ -281,8 +281,8 @@ export class HugeTable extends React.Component {
   resizeHeader = (field) => {
     const columnWidths = { ...this.state.columnWidths };
 
-    columnWidths[field.id] = setMaxHeaderWidth(field);
-    
+    columnWidths[field.id] = this.setMaxHeaderWidth(field);
+
     this.setState({
       columnWidths,
     });
@@ -292,7 +292,7 @@ export class HugeTable extends React.Component {
     const columnWidths = { ...this.state.columnWidths };
 
     fields.forEach(field => {
-      columnWidths[field.id] = setMaxHeaderWidth(field);
+      columnWidths[field.id] = this.setMaxHeaderWidth(field);
     });
 
     this.setState({
