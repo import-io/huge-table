@@ -6,10 +6,11 @@ import { TextCell } from './TextCell';
 import * as Constants from './constants';
 import { CellExpander } from './CellExpander';
 
-export function handleArrayOfData({columnDataType, cellData, width, height, key, columnKey,rowIndex, mixedContentImage, cellCustomRenderer}) {
+export function handleArrayOfData({columnDataType, cellData, width, height, key, columnKey,rowIndex, mixedContentImage, cellCustomRenderer, disableClickEvents}) {
   const childrenCellData = generateChildCellData(cellData);
 
   const properties = {
+    disableClickEvents,
     columnDataType,
     cellData: childrenCellData[0],
     width,
