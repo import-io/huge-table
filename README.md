@@ -64,6 +64,14 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
+
+### 7.2.0
+
+**API Additions**
+- `resizableColumns` ability to override resizable columns, default is `true`
+- `reorderableColumns` ability to override reorderable columns, default is `true`
+- `disableClickEvents` disables clickable links on table
+
 ### 7.1.0
 - Add ability to resize headers based off of text length.
 

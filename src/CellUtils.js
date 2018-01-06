@@ -38,12 +38,13 @@ export function getComponentDataType ({
   mixedContentImage,
   cellCustomRenderer = getComponentContent,
   cellStyles,
+  disableClickEvents,
   rowIndex}) {
   if (!columnDataType) {
     return null;
   }
 
-  const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height,rowIndex};// console.log('%cLogging-----props.height in cellutils-              ==', 'color: blue; font-size:16px;', props.rowIndex);
+  const props = {cellStyles, columnDataType, cellData, key, columnKey, mixedContentImage, width, height,rowIndex, disableClickEvents };// console.log('%cLogging-----props.height in cellutils-              ==', 'color: blue; font-size:16px;', props.rowIndex);
 
   if (Array.isArray(cellData.main)) {
     return handleArrayOfData({...props, cellCustomRenderer});
@@ -52,17 +53,17 @@ export function getComponentDataType ({
   }
 }
 
-export function getComponentContent({columnDataType, cellData, width, key, columnKey, mixedContentImage}) { // eslint-disable-line react/no-multi-comp
+export function getComponentContent({columnDataType, cellData, width, key, columnKey, mixedContentImage, disableClickEvents = false }) { // eslint-disable-line react/no-multi-comp
   switch(columnDataType) {
     case Constants.ColumnTypes.URL:
-      return <UrlCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
+      return <UrlCell cellData={cellData} width={width} key={key} columnKey={columnKey} disabled={disableClickEvents} />;
 
     case Constants.ColumnTypes.IMAGE:
-      return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
+      return <ImageCell cellData={cellData} width={width} key={key} disabled={disableClickEvents} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
 
     case Constants.ColumnTypes.AUTO:
       if (cellData.main && cellData.main.src) {
-        return <ImageCell cellData={cellData} width={width} key={key} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
+        return <ImageCell cellData={cellData} width={width} key={key} disabled={disableClickEvents} columnKey={columnKey} mixedContentImage={mixedContentImage} />;
       } else {
         return <TextCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
       }

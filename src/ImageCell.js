@@ -9,6 +9,7 @@ export class ImageCell extends React.Component {
     cellData: PropTypes.object.isRequired,
     width: PropTypes.number.isRequired,
     mixedContentImage: PropTypes.func,
+    disabled: PropTypes.bool,
   }
 
   constructor(props) {
@@ -73,10 +74,9 @@ export class ImageCell extends React.Component {
     if (this.props.mixedContentImage) {
       imageUrl =  this.props.mixedContentImage(imageUrl, imageUrl);
     }
-
     return (
       <a
-        href={href}
+        href={this.props.disabled ? 'javascript:void(0);' : href}
         title={alt}
         target="_blank"
         style={{

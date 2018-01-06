@@ -63,6 +63,7 @@ const renderers = {
 
 render(
   <HugeTable data={data.results}
+    disableClickEvents
     buttonColumnWidth={40}
     rowHeight={30}
     headerHeight={30}

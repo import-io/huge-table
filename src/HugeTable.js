@@ -56,7 +56,15 @@ export class HugeTable extends React.Component {
     activeColumnIndex: PropTypes.number,
     onActiveColumnChange: PropTypes.func,
     scrollToColumn: PropTypes.number,
+    disableClickEvents: PropTypes.bool,
+    resizeableColumns: PropTypes.bool,
+    reorderableColumns: PropTypes.bool,
   }
+
+  static defaultProps = {
+    resizeableColumns: true,
+    reorderableColumns: true,
+  };
 
   constructor(props) {
     super(props);
@@ -358,8 +366,8 @@ export class HugeTable extends React.Component {
         width={width}
         cell={(props) => this.cellRenderer({...props, schemaItem })}
         key={schemaItem.name}
-        isResizable
-        isReorderable
+        isResizable={this.props.resizeableColumns}
+        isReorderable={this.props.reorderableColumns}
       />
     );
   }
@@ -415,6 +423,7 @@ export class HugeTable extends React.Component {
     return (
       <Cell className={css(this.getCellStyles(columnDataType).cellStyle)}>
         {CellUtils.getComponentDataType({
+          disableClickEvents: this.props.disableClickEvents,
           columnDataType,
           cellData,
           width,

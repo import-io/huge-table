@@ -22,7 +22,8 @@ export const UrlCell = (props) => {
     >
       <a
         className="url-cell-content"
-        href={props.cellData.main}
+        disabled
+        href={props.disabled ? 'javascript:void(0);' : props.cellData.main}
         title={props.cellData.title || props.cellData.text || props.cellData.main}
         target={'_blank'}
         style={{
@@ -38,4 +39,5 @@ export const UrlCell = (props) => {
 UrlCell.propTypes = {
   cellData: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
