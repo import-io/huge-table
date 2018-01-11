@@ -12,7 +12,7 @@ export const TextCell = (props) => {
       content = '';
     } else {
       content = props.cellData.main.text;
-      const href = props.cellData.main.href;
+      const href = props.disabled ? 'javascript:void(0);' : props.cellData.main.href;
       if (href) {
         content = <a href={href} target="_blank">{content}</a>;
       }
@@ -52,4 +52,5 @@ export const TextCell = (props) => {
 TextCell.propTypes = {
   cellData: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };

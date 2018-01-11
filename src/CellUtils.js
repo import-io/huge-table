@@ -70,7 +70,7 @@ export function getComponentContent({columnDataType, cellData, width, key, colum
       }
 
     default:
-      return <TextCell cellData={cellData} width={width} key={key} columnKey={columnKey} />;
+      return <TextCell cellData={cellData} width={width} key={key} columnKey={columnKey} disabled={disableClickEvents} />;
   }
 }
 
