@@ -358,7 +358,7 @@ export class HugeTable extends React.Component {
     // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
     return (
       <Column
-        cellClassName={cellClass}
+        cellClassName={`${cellClass} huge-table-column-${idx}`}
         headerClassName={headerClass}
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
         columnKey={schemaItem.id || schemaItem.name}
