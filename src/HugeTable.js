@@ -356,9 +356,17 @@ export class HugeTable extends React.Component {
       headerClass = 'active-column-header';
     }
     // if we are hiding the row numbers but showing scrolling arrows, need to nudge this column with padding
+
+
+    //Add styling for redactPII
+    let piiClass = '';
+    if (schemaItem.redactPII) {
+      piiClass = 'hide-pii';
+    }
+
     return (
       <Column
-        cellClassName={`${cellClass} huge-table-column-${idx}`}
+        cellClassName={`${cellClass} huge-table-column-${idx} ${piiClass}`}
         headerClassName={headerClass}
         header={props => this.renderHeader({...props, cellData: {main: schemaItem.name}})}
         columnKey={schemaItem.id || schemaItem.name}
