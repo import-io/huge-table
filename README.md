@@ -65,6 +65,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 7.2.4
+
+- Add class for columns with redactPII enabled.
+
 ### 7.2.0
 
 **API Additions**
