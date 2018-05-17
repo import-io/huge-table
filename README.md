@@ -65,6 +65,10 @@ Build the project in a production ready way.
 
 ## Changelog
 
+### 8.0.0
+
+- React 16 support
+
 ### 7.2.4
 
 - Add class for columns with redactPII enabled.
