@@ -1,11 +1,11 @@
 ---
   machine:
     node:
-      version: "4.2.6"
+      version: "8.2.1"
   test:
     override:
       - npm run lint
-      - npm run test-circle
+      # - npm run test-circle
       - npm run release
   deployment:
     production:
