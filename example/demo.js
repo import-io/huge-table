@@ -41,6 +41,7 @@ const options2 = {
   width: 1200,
   mixedContentImage: proxyImages,
   id: '2',
+  hideHeader: true,
 };
 const renderers = {
   HEADER(properties) {
