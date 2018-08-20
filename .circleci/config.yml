@@ -1,0 +1,27 @@
+
+version: 3
+jobs:
+  build:
+    docker:
+      - image: "circleci/node:8.11.4-browsers"
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ arch }}-{{ checksum "package.json" }}-v1
+      - run: npm install
+      - save_cache:
+          key: dependency-cache-{{ arch }}-{{ checksum "package.json" }}-v1
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: |
+            npm run lint
+            npm run release
+      - run: 
+          name: deploy
+          command: |
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              npm run npmrc
+              npm publish
+            fi
