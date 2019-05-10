@@ -65,7 +65,7 @@ Build the project in a production ready way.
 
 ## Changelog
 
-### 8.1.1
+### 8.1.2
 
 - changed drag-and-drop behavior so that a drop failure leaves the order unchanged
 
