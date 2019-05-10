@@ -478,9 +478,13 @@ export class HugeTable extends React.Component {
     if (event.columnAfter) {
       const index = columnOrder.indexOf(event.columnAfter);
       columnOrder.splice(index, 0, event.reorderColumn);
-    } else {
+    } else if (!event.columnAfter && event.columnBefore ) {
       columnOrder.push(event.reorderColumn);
+    } else {
+      // in the case of the drag-and-drop event being aborted
+      columnOrder = this.state.columnOrder;
     }
+
     this.setState({
       columnOrder,
     });

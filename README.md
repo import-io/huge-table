@@ -64,10 +64,14 @@ Build the project in a production ready way.
 - After changes are merged into master branch, checkout master branch, run tests one more time, and publish this package to npm repository.
 
 ## Changelog
-### 8.0.0
+
+### 8.1.1
+
+- changed drag-and-drop behavior so that a drop failure leaves the order unchanged
+
+### 8.1.0
 
 - Add ability to optionally show column names
-
 
 ### 8.0.0
 
