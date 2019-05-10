@@ -471,7 +471,7 @@ export class HugeTable extends React.Component {
   }
 
   onColumnReorderEndCallback = (event) => {
-    const columnOrder = this.state.columnOrder.filter((columnKey) => {
+    let columnOrder = this.state.columnOrder.filter((columnKey) => {
       return columnKey !== event.reorderColumn;
     });
 
