@@ -52,5 +52,5 @@ export const TextCell = (props) => {
 TextCell.propTypes = {
   cellData: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
 };
